@@ -43,10 +43,5 @@ package ember
 			return _attributes[attribute] != null;
 		}
 
-		public function get attributeRemoved():Signal
-		{
-			return _attributeRemoved;
-		}
-		
 	}
 }
