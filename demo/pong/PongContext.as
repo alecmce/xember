@@ -23,10 +23,6 @@ package pong
 		{
 			injector.mapSingletonOf(Time, SimpleTime);
 			
-//			var root:BitmapData = new BitmapData(800, 600, true, 0xFFFFFFFF);
-//			contextView.addChild(new Bitmap(root));
-//			injector.mapValue(BitmapData, root);
-
 			commandMap.execute(BootstrapGameCommand);
 			commandMap.execute(BootstrapScoreCommand);
 			

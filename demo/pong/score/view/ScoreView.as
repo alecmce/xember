@@ -59,7 +59,7 @@ package pong.score.view
 
 			var tf:TextField = new TextField();
 			tf.y = 50;
-			tf.width = 380;
+			tf.width = 360;
 			tf.height = 500;
 			tf.selectable = false;
 			tf.embedFonts = true;
@@ -78,9 +78,9 @@ package pong.score.view
 			format.color = 0xFFFF0000;
 
 			var tf:TextField = new TextField();
-			tf.x = 420;
+			tf.x = 440;
 			tf.y = 50;
-			tf.width = 380;
+			tf.width = 360;
 			tf.height = 500;
 			tf.selectable = false;
 			tf.embedFonts = true;

@@ -41,8 +41,8 @@ package pong.game.ctrl.setup
 			var x:Number = 200 + Math.random() * 400;
 			var y:Number = 200 + Math.random() * 200;
 			var a:Number = Math.random() * Math.PI * 0.5 - 0.25;
-			var ax:Number = 400 * Math.cos(a);
-			var ay:Number = 400 * Math.sin(a);
+			var ax:Number = 800 * Math.cos(a);
+			var ay:Number = 800 * Math.sin(a);
 			var b:Number = Math.random() * Math.PI - Math.PI;
 			
 			var def:b2BodyDef = new b2BodyDef();
@@ -67,7 +67,7 @@ package pong.game.ctrl.setup
 		private function createRender():RenderAttribute
 		{
 			var shape:Shape = new Shape();
-			shape.graphics.beginFill(0x008800);
+			shape.graphics.beginFill(0xFFEE00);
 			shape.graphics.drawCircle(10, 10, 10);
 			shape.graphics.endFill();
 			

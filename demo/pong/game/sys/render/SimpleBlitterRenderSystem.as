@@ -1,17 +1,19 @@
 package pong.game.sys.render
 {
 	import Box2D.Common.Math.b2Vec2;
+
 	import alecmce.time.Time;
+
 	import ember.EntitySet;
-	import flash.display.BitmapData;
-	import flash.geom.Point;
+
 	import pong.game.attr.RenderAttribute;
 	import pong.game.sys.physics.PhysicsConfig;
 
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
 
-
-
-	
 	public class SimpleBlitterRenderSystem
 	{
 		
@@ -25,18 +27,19 @@ package pong.game.sys.render
 		public var config:PhysicsConfig;
 		
 		[Inject]
-		public var data:BitmapData;
+		public var view:DisplayObjectContainer;
+		
+		private var data:BitmapData;
 		
 		private var dest:Point;
 		private var toPixels:Number;
 		
-		public function SimpleBlitterRenderSystem() 
-		{
-			dest = new Point();
-		}
-		
 		public function onRegister():void
 		{
+			data = new BitmapData(800, 600, true, 0xFFFFFFFF);
+			dest = new Point();
+			view.addChild(new Bitmap(data));
+			
 			time.tick.add(iterate);
 			toPixels = config.toPixels;
 		}

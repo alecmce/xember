@@ -4,10 +4,13 @@ package ember
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertTrue;
 
+	import ember.mocks.NodelessSystem;
 	import ember.mocks.RenderNode;
 	import ember.mocks.RenderSystem;
 
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
+
+
 	
 	public class EntitySystemTests
 	{
@@ -46,6 +49,12 @@ package ember
 		public function can_add_a_system():void
 		{
 			entitySystem.addSystem(RenderSystem, RenderNode);
+		}
+		
+		[Test]
+		public function can_add_a_nodeless_system():void
+		{
+			entitySystem.addSystem(NodelessSystem);
 		}
 		
 		[Test]

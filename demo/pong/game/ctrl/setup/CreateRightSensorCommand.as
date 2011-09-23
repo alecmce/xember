@@ -35,7 +35,7 @@ package pong.game.ctrl.setup
 			var toMeters:Number = _config.toMeters;
 			
 			var def:b2BodyDef = new b2BodyDef();
-			def.position.Set(805 * toMeters, 300 * toMeters);
+			def.position.Set(810 * toMeters, 300 * toMeters);
 			def.type = b2Body.b2_staticBody;
 			
 			var shape:b2PolygonShape = new b2PolygonShape();

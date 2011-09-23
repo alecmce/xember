@@ -41,7 +41,7 @@ package pong.game.ctrl.setup
 			var player:PlayerAttribute = new PlayerAttribute();
 
 			player.dx = 0;
-			player.dy = 200 * config.toMeters;
+			player.dy = 300 * config.toMeters;
 			
 			return player;
 		}
@@ -72,8 +72,10 @@ package pong.game.ctrl.setup
 		private function generateRender():RenderAttribute
 		{
 			var display:RenderAttribute = new RenderAttribute();
-			display.data = new BitmapData(30, 150, false, 0xFF1E90FF);
+			display.data = new BitmapData(20, 150, false, 0xFF1E90FF);
 			display.rect = display.data.rect;
+			display.offsetX = -10;
+			display.offsetY = -75;
 			
 			return display;
 		}

@@ -36,7 +36,7 @@ package ember
 			_entities.remove(entity as ConcreteEntity);
 		}
 
-		public function addSystem(systemClass:Class, nodeClass:Class):void
+		public function addSystem(systemClass:Class, nodeClass:Class = null):void
 		{
 			_systems.add(systemClass, nodeClass);
 		}

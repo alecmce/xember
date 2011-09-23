@@ -38,7 +38,7 @@ package pong.game.ctrl.setup
 			var ai:AIAttribute = new AIAttribute();
 
 			ai.dx = 0;
-			ai.dy = 225 * config.toMeters;
+			ai.dy = 350 * config.toMeters;
 			
 			return ai;
 		}
@@ -69,8 +69,10 @@ package pong.game.ctrl.setup
 		private function generateRender():RenderAttribute
 		{
 			var display:RenderAttribute = new RenderAttribute();
-			display.data = new BitmapData(30, 150, false, 0xFFFF0000);
+			display.data = new BitmapData(20, 150, false, 0xFFFF0000);
 			display.rect = display.data.rect;
+			display.offsetX = -10;
+			display.offsetY = -75;
 			
 			return display;
 		}

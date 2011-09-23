@@ -4,11 +4,11 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
+
 	import ember.Entity;
 	import ember.EntitySystem;
-	import flash.display.BitmapData;
+
 	import pong.game.attr.PhysicalAttribute;
-	import pong.game.attr.RenderAttribute;
 	import pong.game.sys.physics.PhysicsConfig;
 
 
@@ -28,7 +28,6 @@ package pong.game.ctrl.setup
 			var entity:Entity = system.createEntity();
 			
 			entity.addAttribute(generatePhysical());
-			entity.addAttribute(generateRender());
 		}
 
 		private function generatePhysical():PhysicalAttribute
@@ -52,15 +51,6 @@ package pong.game.ctrl.setup
 			physical.fixture = fixture;
 			
 			return physical;
-		}
-
-		private function generateRender():RenderAttribute
-		{
-			var display:RenderAttribute = new RenderAttribute();
-			display.data = new BitmapData(800, 20, false, 0xFF00FF00);
-			display.rect = display.data.rect;
-			
-			return display;
 		}
 		
 	}
