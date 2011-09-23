@@ -11,6 +11,8 @@ package tomsbunnies
 		public function TomsBunnies()
 		{
 			context = new TomsBunniesContext(this);
+			
+//			addChild(new Stats());
 		}
 		
 	}
