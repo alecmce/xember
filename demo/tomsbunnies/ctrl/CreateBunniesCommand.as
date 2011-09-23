@@ -48,8 +48,8 @@ package tomsbunnies.ctrl
 			spatial.position = new Point(100, 100);
 			spatial.velocity = new Point(Math.random() * 10, (Math.random() * 10) - 5);
 
-			entity.addAttribute(graphics);
-			entity.addAttribute(spatial);
+			entity.addComponent(graphics);
+			entity.addComponent(spatial);
 		}
 
 	}

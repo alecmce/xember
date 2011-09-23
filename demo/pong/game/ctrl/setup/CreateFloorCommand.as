@@ -8,7 +8,7 @@ package pong.game.ctrl.setup
 	import ember.Entity;
 	import ember.EntitySystem;
 
-	import pong.game.attr.PhysicalAttribute;
+	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 	
 	public class CreateFloorCommand
@@ -23,10 +23,10 @@ package pong.game.ctrl.setup
 		{
 			var entity:Entity = system.createEntity();
 			
-			entity.addAttribute(generatePhysical());
+			entity.addComponent(generatePhysical());
 		}
 
-		private function generatePhysical():PhysicalAttribute
+		private function generatePhysical():PhysicalComponent
 		{
 			var toMeters:Number = config.toMeters;
 			
@@ -42,7 +42,7 @@ package pong.game.ctrl.setup
 			fixture.density = 0.0;
 			fixture.friction = 0;
 			
-			var physical:PhysicalAttribute = new PhysicalAttribute();
+			var physical:PhysicalComponent = new PhysicalComponent();
 			physical.def = def;
 			physical.fixture = fixture;
 			

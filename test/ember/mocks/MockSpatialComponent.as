@@ -2,7 +2,7 @@ package ember.mocks
 {
 	import flash.geom.Point;
 	
-	public class SpatialAttribute
+	public class MockSpatialComponent
 	{
 		
 		public var position:Point;

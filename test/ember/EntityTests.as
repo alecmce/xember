@@ -1,11 +1,12 @@
 package ember
 {
-	import org.robotlegs.adapters.SwiftSuspendersInjector;
 	import asunit.asserts.assertFalse;
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertTrue;
-	import ember.mocks.SpatialAttribute;
 
+	import tomsbunnies.components.SpatialComponent;
+
+	import org.robotlegs.adapters.SwiftSuspendersInjector;
 
 	public class EntityTests
 	{
@@ -25,38 +26,38 @@ package ember
 		}
 		
 		[Test]
-		public function can_add_attribute_to_entity():void
+		public function can_add_component_to_entity():void
 		{
 			var entity:Entity = entitySystem.createEntity();
-			entity.addAttribute(new SpatialAttribute());
-			assertTrue(entity.hasAttribute(SpatialAttribute));
+			entity.addComponent(new SpatialComponent());
+			assertTrue(entity.hasComponent(SpatialComponent));
 		}
 		
 //		[Test]
-//		public function can_add_attribute_to_entity_fluently():void
+//		public function can_add_component_to_entity_fluently():void
 //		{
 //			var entity:Entity = entitySystem.createEntity();
-//			var fluent:Entity = entity.addAttribute(new SpatialAttribute());
+//			var fluent:Entity = entity.addComponent(new SpatialComponent());
 //			assertSame(entity, fluent);
 //		}
 		
 		[Test]
-		public function can_reference_attribute_instance_by_class():void
+		public function can_reference_component_instance_by_class():void
 		{
 			var entity:Entity = entitySystem.createEntity();
-			var attribute:SpatialAttribute = new SpatialAttribute();
+			var component:SpatialComponent = new SpatialComponent();
 			
-			entity.addAttribute(attribute);
-			assertSame(attribute, entity.getAttribute(SpatialAttribute));
+			entity.addComponent(component);
+			assertSame(component, entity.getComponent(SpatialComponent));
 		}
 		
 		[Test]
-		public function can_remove_attribute_from_entity():void
+		public function can_remove_component_from_entity():void
 		{
 			var entity:Entity = entitySystem.createEntity();
-			entity.addAttribute(new SpatialAttribute());
-			entity.removeAttribute(SpatialAttribute);
-			assertFalse(entity.hasAttribute(SpatialAttribute));
+			entity.addComponent(new SpatialComponent());
+			entity.removeComponent(SpatialComponent);
+			assertFalse(entity.hasComponent(SpatialComponent));
 		}
 		
 	}

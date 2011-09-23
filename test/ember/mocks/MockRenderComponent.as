@@ -3,7 +3,7 @@ package ember.mocks
 	import flash.geom.Rectangle;
 	import flash.display.BitmapData;
 	
-	public class RenderAttribute
+	public class MockRenderComponent
 	{
 		
 		public var data:BitmapData;

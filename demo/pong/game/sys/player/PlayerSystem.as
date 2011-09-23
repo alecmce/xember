@@ -6,7 +6,7 @@ package pong.game.sys.player
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
-	import pong.game.attr.PlayerAttribute;
+	import pong.game.attr.PlayerComponent;
 
 	public class PlayerSystem
 	{
@@ -81,7 +81,7 @@ package pong.game.sys.player
 			var node:PlayerNode = entitySet.head as PlayerNode;
 			while (node)
 			{
-				var player:PlayerAttribute = node.player;
+				var player:PlayerComponent = node.player;
 				
 				velocity.x = 0;
 				velocity.y = 0;

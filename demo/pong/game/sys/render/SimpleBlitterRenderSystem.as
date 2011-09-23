@@ -6,7 +6,7 @@ package pong.game.sys.render
 
 	import ember.EntitySet;
 
-	import pong.game.attr.RenderAttribute;
+	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
 	import flash.display.Bitmap;
@@ -57,7 +57,7 @@ package pong.game.sys.render
 			var node:RenderNode = nodes.head as RenderNode;
 			while (node)
 			{
-				var render:RenderAttribute = node.render;
+				var render:RenderComponent = node.render;
 				var position:b2Vec2 = node.physical.body.GetPosition();
 				
 				dest.x = (position.x * toPixels) + render.offsetX;

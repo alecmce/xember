@@ -39,8 +39,8 @@ package ember
 				if (nodeName == "next" || nodeName == "prev" || nodeName == "entity")
 					continue;
 
-				var attribute:Class = getDefinitionByName(atom.@type) as Class;
-				configuration.add(nodeName, attribute);
+				var component:Class = getDefinitionByName(atom.@type) as Class;
+				configuration.add(nodeName, component);
 			}
 			
 			return configuration;

@@ -3,7 +3,7 @@ package pong.game.attr
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	
-	public class RenderAttribute
+	public class RenderComponent
 	{
 		public var offsetX:int;
 		public var offsetY:int;

@@ -4,29 +4,29 @@ package ember
 	{
 		
 		private var _nodeNames:Vector.<String>;
-		private var _attributes:Vector.<Class>;
+		private var _components:Vector.<Class>;
 		private var _count:uint;
 
 		public function EntitySetConfiguration()
 		{
 			_nodeNames = new Vector.<String>();
-			_attributes = new Vector.<Class>();
+			_components = new Vector.<Class>();
 			_count = 0;
 		}
 		
-		public function add(nodeName:String, attribute:Class):void
+		public function add(nodeName:String, component:Class):void
 		{
 			_nodeNames.push(nodeName);
-			_attributes.push(attribute);
+			_components.push(component);
 			++_count;
 		}
 		
 		public function matchesConfiguration(entity:Entity):Boolean
 		{
-			var i:int = _attributes.length;
+			var i:int = _components.length;
 			while (i--)
 			{
-				if (!entity.hasAttribute(_attributes[i]))
+				if (!entity.hasComponent(_components[i]))
 					return false;
 			}
 			
@@ -41,15 +41,15 @@ package ember
 			while (i--)
 			{
 				var nodeName:String = _nodeNames[i];
-				var attribute:Class = _attributes[i];
-				var value:Object = entity.getAttribute(attribute);
+				var component:Class = _components[i];
+				var value:Object = entity.getComponent(component);
 				node[nodeName] = value;
 			}
 		}
 
-		public function contains(attribute:Class):Boolean
+		public function contains(component:Class):Boolean
 		{
-			return _attributes.indexOf(attribute) != -1;
+			return _components.indexOf(component) != -1;
 		}
 		
 	}

@@ -1,13 +1,13 @@
 package pong.game.sys.render
 {
 	import ember.Node;
-	import pong.game.attr.PhysicalAttribute;
-	import pong.game.attr.RenderAttribute;
+	import pong.game.attr.PhysicalComponent;
+	import pong.game.attr.RenderComponent;
 
 
 	public class RenderNode extends Node
 	{
-		public var physical:PhysicalAttribute;
-		public var render:RenderAttribute;
+		public var physical:PhysicalComponent;
+		public var render:RenderComponent;
 	}
 }

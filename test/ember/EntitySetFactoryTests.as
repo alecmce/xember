@@ -4,9 +4,9 @@ package ember
 	import asunit.asserts.assertNull;
 	import asunit.asserts.assertSame;
 
-	import ember.mocks.RenderAttribute;
-	import ember.mocks.RenderNode;
-	import ember.mocks.SpatialAttribute;
+	import ember.mocks.MockRenderComponent;
+	import ember.mocks.MockRenderNode;
+	import ember.mocks.MockSpatialComponent;
 	
 	public class EntitySetFactoryTests
 	{
@@ -27,24 +27,24 @@ package ember
 		[Test]
 		public function a_factory_can_get_set_configuration():void
 		{
-			var configuration:EntitySetConfiguration = factory.getClassConfiguration(RenderNode);
+			var configuration:EntitySetConfiguration = factory.getClassConfiguration(MockRenderNode);
 			assertNotNull(configuration);
 		}
 		
 		[Test]
 		public function set_configuration_properly_configures_nodes():void
 		{
-			var render:RenderAttribute = new RenderAttribute();
-			var spatial:SpatialAttribute = new SpatialAttribute();
+			var render:MockRenderComponent = new MockRenderComponent();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
 			
 			var entities:Entities = new Entities();
 			var entity:Entity = entities.create();
-			entity.addAttribute(spatial);
-			entity.addAttribute(render);
+			entity.addComponent(spatial);
+			entity.addComponent(render);
 
-			var configuration:EntitySetConfiguration = factory.getClassConfiguration(RenderNode);
+			var configuration:EntitySetConfiguration = factory.getClassConfiguration(MockRenderNode);
 
-			var node:RenderNode = new RenderNode();
+			var node:MockRenderNode = new MockRenderNode();
 			configuration.configureNode(node, entity);
 			
 			assertSame(render, node.render);
@@ -54,15 +54,15 @@ package ember
 		[Test]
 		public function a_factory_can_generate_an_entity_set():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
-			var render:RenderAttribute = new RenderAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var render:MockRenderComponent = new MockRenderComponent();
 			var entities:Entities = new Entities();
 
 			var entity:Entity = entities.create();
-			entity.addAttribute(spatial);
-			entity.addAttribute(render);
+			entity.addComponent(spatial);
+			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = factory.generateSet(RenderNode, entities.list);
+			var entitySet:ConcreteEntitySet = factory.generateSet(MockRenderNode, entities.list);
 			
 			assertSame(entity, entitySet.head.entity);
 		}
@@ -70,13 +70,13 @@ package ember
 		[Test]
 		public function a_factory_does_not_include_entities_that_do_not_satisfy_criteria():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
 			var entities:Entities = new Entities();
 
 			var entity:Entity = entities.create();
-			entity.addAttribute(spatial);
+			entity.addComponent(spatial);
 			
-			var entitySet:ConcreteEntitySet = factory.generateSet(RenderNode, entities.list);
+			var entitySet:ConcreteEntitySet = factory.generateSet(MockRenderNode, entities.list);
 			
 			assertNull(entitySet.head);
 		}

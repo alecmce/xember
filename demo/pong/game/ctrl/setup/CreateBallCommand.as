@@ -10,8 +10,8 @@ package pong.game.ctrl.setup
 	import ember.EntitySystem;
 
 	import pong.game.Names;
-	import pong.game.attr.PhysicalAttribute;
-	import pong.game.attr.RenderAttribute;
+	import pong.game.attr.PhysicalComponent;
+	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
 	import flash.display.BitmapData;
@@ -30,11 +30,11 @@ package pong.game.ctrl.setup
 		{
 			var entity:Entity = system.createEntity(Names.BALL);
 			
-			entity.addAttribute(createPhysics());
-			entity.addAttribute(createRender());
+			entity.addComponent(createPhysics());
+			entity.addComponent(createRender());
 		}
 
-		private function createPhysics():PhysicalAttribute
+		private function createPhysics():PhysicalComponent
 		{
 			var toMeters:Number = config.toMeters;
 			
@@ -57,14 +57,14 @@ package pong.game.ctrl.setup
 			fixture.restitution = 1.03;
 			fixture.friction = 0.4;
 			
-			var physical:PhysicalAttribute = new PhysicalAttribute();
+			var physical:PhysicalComponent = new PhysicalComponent();
 			physical.def = def;
 			physical.fixture = fixture;
 			
 			return physical;
 		}
 
-		private function createRender():RenderAttribute
+		private function createRender():RenderComponent
 		{
 			var shape:Shape = new Shape();
 			shape.graphics.beginFill(0xFFEE00);
@@ -74,7 +74,7 @@ package pong.game.ctrl.setup
 			var data:BitmapData = new BitmapData(20, 20, true, 0);
 			data.draw(shape);
 			
-			var render:RenderAttribute = new RenderAttribute();
+			var render:RenderComponent = new RenderComponent();
 			render.offsetX = -10;
 			render.offsetY = -10;
 			render.data = data;

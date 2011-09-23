@@ -9,7 +9,7 @@ package pong.game.ctrl.setup
 	import ember.EntitySystem;
 
 	import pong.game.Names;
-	import pong.game.attr.PhysicalAttribute;
+	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
 	public class CreateLeftSensorCommand
@@ -27,10 +27,10 @@ package pong.game.ctrl.setup
 		{
 			var entity:Entity = _system.createEntity();
 			
-			entity.addAttribute(generatePhysical());
+			entity.addComponent(generatePhysical());
 		}
 
-		private function generatePhysical():PhysicalAttribute
+		private function generatePhysical():PhysicalComponent
 		{
 			var toMeters:Number = _config.toMeters;
 			
@@ -46,7 +46,7 @@ package pong.game.ctrl.setup
 			fixture.isSensor = true;
 			fixture.userData = Names.LEFT;
 			
-			var physical:PhysicalAttribute = new PhysicalAttribute();
+			var physical:PhysicalComponent = new PhysicalComponent();
 			physical.def = def;
 			physical.fixture = fixture;
 			

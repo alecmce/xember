@@ -6,9 +6,9 @@ package ember
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertTrue;
 
-	import ember.mocks.RenderAttribute;
-	import ember.mocks.RenderNode;
-	import ember.mocks.SpatialAttribute;
+	import ember.mocks.MockRenderComponent;
+	import ember.mocks.MockRenderNode;
+	import ember.mocks.MockSpatialComponent;
 
 	public class EntitySetTests
 	{
@@ -32,50 +32,50 @@ package ember
 		[Test]
 		public function you_create_a_set_by_node_class():void
 		{
-			var entitySet:ConcreteEntitySet = sets.get(RenderNode);
+			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
 			assertNotNull(entitySet);
 		}
 		
 		[Test]
 		public function a_set_contains_a_node_that_represents_each_member_entity():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
-			var render:RenderAttribute = new RenderAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var render:MockRenderComponent = new MockRenderComponent();
 
 			var entity:Entity = _entities.create();
-			entity.addAttribute(spatial);
-			entity.addAttribute(render);
+			entity.addComponent(spatial);
+			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(RenderNode);
+			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
 			
 			assertSame(entity, entitySet.head.entity);
 		}
 		
 		[Test]
-		public function a_set_does_not_contain_a_node_that_misses_attribute():void
+		public function a_set_does_not_contain_a_node_that_misses_component():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
 
 			var entity:Entity = _entities.create();
-			entity.addAttribute(spatial);
+			entity.addComponent(spatial);
 			
-			var entitySet:ConcreteEntitySet = sets.get(RenderNode);
+			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
 			
 			assertNull(entitySet.head);
 		}
 		
 		[Test]
-		public function if_an_enitities_attributes_no_longer_satisfy_set_it_is_removed():void
+		public function if_an_enitities_components_no_longer_satisfy_set_it_is_removed():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
-			var render:RenderAttribute = new RenderAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var render:MockRenderComponent = new MockRenderComponent();
 
 			var entity:Entity = _entities.create();
-			entity.addAttribute(spatial);
-			entity.addAttribute(render);
+			entity.addComponent(spatial);
+			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(RenderNode);
-			entity.removeAttribute(SpatialAttribute);
+			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
+			entity.removeComponent(MockSpatialComponent);
 			
 			assertNull(entitySet.head);
 		}
@@ -83,14 +83,14 @@ package ember
 		[Test]
 		public function once_a_set_is_defined_if_an_entity_later_satisfies_set_it_is_added():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
-			var render:RenderAttribute = new RenderAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var render:MockRenderComponent = new MockRenderComponent();
 
 			var entity:Entity = _entities.create();
-			entity.addAttribute(spatial);
-			entity.addAttribute(render);
+			entity.addComponent(spatial);
+			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(RenderNode);
+			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
 			
 			assertSame(entity, entitySet.head.entity);
 		}
@@ -98,18 +98,18 @@ package ember
 		[Test]
 		public function more_than_one_entity_can_be_added_to_a_set():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
-			var render:RenderAttribute = new RenderAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var render:MockRenderComponent = new MockRenderComponent();
 
 			var a:Entity = _entities.create();
-			a.addAttribute(spatial);
-			a.addAttribute(render);
+			a.addComponent(spatial);
+			a.addComponent(render);
 			
 			var b:Entity = _entities.create();
-			b.addAttribute(spatial);
-			b.addAttribute(render);
+			b.addComponent(spatial);
+			b.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(RenderNode);
+			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
 			
 			var node:Node = entitySet.head;
 			assertTrue(node.entity == a || node.entity == b);
@@ -121,18 +121,18 @@ package ember
 		}
 		
 		[Test]
-		public function when_a_node_is_created_attributes_are_copied_into_the_node():void
+		public function when_a_node_is_created_components_are_copied_into_the_node():void
 		{
-			var spatial:SpatialAttribute = new SpatialAttribute();
-			var render:RenderAttribute = new RenderAttribute();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var render:MockRenderComponent = new MockRenderComponent();
 
 			var entity:Entity = _entities.create();
-			entity.addAttribute(spatial);
-			entity.addAttribute(render);
+			entity.addComponent(spatial);
+			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(RenderNode);
+			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
 
-			var node:RenderNode = entitySet.head as RenderNode;
+			var node:MockRenderNode = entitySet.head as MockRenderNode;
 			assertSame(spatial, node.spatial);
 			assertSame(render, node.render);
 		}

@@ -10,8 +10,8 @@ package ember
 		private var _nameMap:Dictionary;
 		private var _count:uint;
 		
-		private var _entityAttributeAdded:Signal;
-		private var _entityAttributeRemoved:Signal;
+		private var _entityComponentAdded:Signal;
+		private var _entityComponentRemoved:Signal;
 		
 		public function Entities()
 		{
@@ -19,13 +19,13 @@ package ember
 			_nameMap = new Dictionary();
 			_count = 0;
 			
-			_entityAttributeAdded = new Signal(ConcreteEntity, Class);
-			_entityAttributeRemoved = new Signal(ConcreteEntity, Class);
+			_entityComponentAdded = new Signal(ConcreteEntity, Class);
+			_entityComponentRemoved = new Signal(ConcreteEntity, Class);
 		}
 
 		public function create(name:String = ""):ConcreteEntity
 		{
-			var entity:ConcreteEntity = new ConcreteEntity(_entityAttributeAdded, _entityAttributeRemoved);
+			var entity:ConcreteEntity = new ConcreteEntity(_entityComponentAdded, _entityComponentRemoved);
 			_count = _list.push(entity);
 			
 			if (name != "")
@@ -72,14 +72,14 @@ package ember
 			return _list;
 		}
 		
-		public function get entityAttributeAdded():Signal
+		public function get entityComponentAdded():Signal
 		{
-			return _entityAttributeAdded;
+			return _entityComponentAdded;
 		}
 		
-		public function get entityAttributeRemoved():Signal
+		public function get entityComponentRemoved():Signal
 		{
-			return _entityAttributeRemoved;
+			return _entityComponentRemoved;
 		}
 		
 	}

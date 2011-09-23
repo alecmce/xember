@@ -1,6 +1,6 @@
 package pong.game.attr
 {
-	public class AIAttribute
+	public class AIComponent
 	{
 		public var dx:Number;
 		public var dy:Number;

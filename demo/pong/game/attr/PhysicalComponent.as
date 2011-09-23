@@ -4,7 +4,7 @@ package pong.game.attr
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	
-	public class PhysicalAttribute
+	public class PhysicalComponent
 	{
 		public var def:b2BodyDef;
 		public var fixture:b2FixtureDef;

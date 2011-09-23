@@ -3,13 +3,13 @@ package ember
 	public interface Entity
 	{
 		
-		function addAttribute(attribute:Object, attributeClass:Class = null):void;
+		function addComponent(component:Object, componentClass:Class = null):void;
 		
-		function getAttribute(attribute:Class):Object;
+		function getComponent(component:Class):Object;
 
-		function removeAttribute(attribute:Class):void;
+		function removeComponent(component:Class):void;
 		
-		function hasAttribute(attribute:Class):Boolean;
+		function hasComponent(component:Class):Boolean;
 		
 	}
 }

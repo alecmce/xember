@@ -6,7 +6,7 @@ package pong.game.sys.physics
 
 	import ember.EntitySet;
 
-	import pong.game.attr.PhysicalAttribute;
+	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.actions.PhysicsActions;
 
 	public class PhysicsSystem
@@ -54,14 +54,14 @@ package pong.game.sys.physics
 
 		private function onNodeAdded(node:PhysicsNode):void
 		{
-			var physical:PhysicalAttribute = node.physical;
+			var physical:PhysicalComponent = node.physical;
 			physical.body = world.CreateBody(physical.def);
 			physical.body.CreateFixture(physical.fixture);
 		}
 
 		private function onNodeRemoved(node:PhysicsNode):void
 		{
-			var physical:PhysicalAttribute = node.physical;
+			var physical:PhysicalComponent = node.physical;
 			world.DestroyBody(physical.body);
 			physical.body = null;
 		}

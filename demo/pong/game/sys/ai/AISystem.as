@@ -10,8 +10,8 @@ package pong.game.sys.ai
 	import ember.EntitySystem;
 
 	import pong.game.Names;
-	import pong.game.attr.AIAttribute;
-	import pong.game.attr.PhysicalAttribute;
+	import pong.game.attr.AIComponent;
+	import pong.game.attr.PhysicalComponent;
 	
 	public class AISystem
 	{
@@ -24,7 +24,7 @@ package pong.game.sys.ai
 		[Inject]
 		public var time:Time;
 		
-		private var physicalBall:PhysicalAttribute;
+		private var physicalBall:PhysicalComponent;
 		private var velocity:b2Vec2;
 		
 		public function onRegister():void
@@ -33,7 +33,7 @@ package pong.game.sys.ai
 			if (!ball)
 				return;
 			
-			physicalBall = ball.getAttribute(PhysicalAttribute) as PhysicalAttribute;
+			physicalBall = ball.getComponent(PhysicalComponent) as PhysicalComponent;
 			
 			time.tick.add(iterate);
 			
@@ -57,7 +57,7 @@ package pong.game.sys.ai
 				}
 				else
 				{
-					var ai:AIAttribute = node.ai;
+					var ai:AIComponent = node.ai;
 					var pos:b2Vec2 = node.physical.body.GetPosition();
 					
 					var y:Number = ball.GetPosition().y - pos.y;

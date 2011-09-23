@@ -8,9 +8,9 @@ package pong.game.ctrl.setup
 	import ember.Entity;
 	import ember.EntitySystem;
 
-	import pong.game.attr.PhysicalAttribute;
-	import pong.game.attr.PlayerAttribute;
-	import pong.game.attr.RenderAttribute;
+	import pong.game.attr.PhysicalComponent;
+	import pong.game.attr.PlayerComponent;
+	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
 	import flash.display.BitmapData;
@@ -31,14 +31,14 @@ package pong.game.ctrl.setup
 		{
 			var entity:Entity = system.createEntity();
 			
-			entity.addAttribute(generateControl());
-			entity.addAttribute(generatePhysical());
-			entity.addAttribute(generateRender());
+			entity.addComponent(generateControl());
+			entity.addComponent(generatePhysical());
+			entity.addComponent(generateRender());
 		}
 
-		private function generateControl():PlayerAttribute
+		private function generateControl():PlayerComponent
 		{
-			var player:PlayerAttribute = new PlayerAttribute();
+			var player:PlayerComponent = new PlayerComponent();
 
 			player.dx = 0;
 			player.dy = 300 * config.toMeters;
@@ -46,7 +46,7 @@ package pong.game.ctrl.setup
 			return player;
 		}
 		
-		private function generatePhysical():PhysicalAttribute
+		private function generatePhysical():PhysicalComponent
 		{
 			var toMeters:Number = config.toMeters;
 			
@@ -62,16 +62,16 @@ package pong.game.ctrl.setup
 			fixture.shape = shape;
 			fixture.density = 1.0;
 			
-			var physical:PhysicalAttribute = new PhysicalAttribute();
+			var physical:PhysicalComponent = new PhysicalComponent();
 			physical.def = def;
 			physical.fixture = fixture;
 			
 			return physical;
 		}
 
-		private function generateRender():RenderAttribute
+		private function generateRender():RenderComponent
 		{
-			var display:RenderAttribute = new RenderAttribute();
+			var display:RenderComponent = new RenderComponent();
 			display.data = new BitmapData(20, 150, false, 0xFF1E90FF);
 			display.rect = display.data.rect;
 			display.offsetX = -10;

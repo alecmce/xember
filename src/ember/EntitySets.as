@@ -11,8 +11,8 @@ package ember
 		public function EntitySets(entities:Entities)
 		{
 			_entities = entities;
-			_entities.entityAttributeAdded.add(onEntityAttributeAdded);
-			_entities.entityAttributeRemoved.add(onEntityAttributeRemoved);
+			_entities.entityComponentAdded.add(onEntityComponentAdded);
+			_entities.entityComponentRemoved.add(onEntityComponentRemoved);
 			
 			_setMap = new Dictionary();
 			_factory = new EntitySetFactory();
@@ -23,7 +23,7 @@ package ember
 			return _setMap[nodeClass] ||= _factory.generateSet(nodeClass, _entities.list);
 		}
 		
-		private function onEntityAttributeAdded(entity:ConcreteEntity, attribute:Class):void
+		private function onEntityComponentAdded(entity:ConcreteEntity, component:Class):void
 		{
 			for each (var entitySet:ConcreteEntitySet in _setMap)
 			{
@@ -32,11 +32,11 @@ package ember
 			}
 		}
 		
-		private function onEntityAttributeRemoved(entity:ConcreteEntity, attribute:Class):void
+		private function onEntityComponentRemoved(entity:ConcreteEntity, component:Class):void
 		{
 			for each (var entitySet:ConcreteEntitySet in _setMap)
 			{
-				if (entitySet.configuration.contains(attribute))
+				if (entitySet.configuration.contains(component))
 					entitySet.remove(entity);
 			}
 		}
