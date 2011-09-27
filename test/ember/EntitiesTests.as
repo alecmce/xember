@@ -27,14 +27,14 @@ package ember
 		[Test]
 		public function can_create_entity():void
 		{
-			var entity:ConcreteEntity = entities.create();
+			var entity:Entity = entities.create();
 			assertTrue(entities.contains(entity));
 		}
 		
 		[Test]
 		public function can_remove_entity():void
 		{
-			var entity:ConcreteEntity = entities.create();
+			var entity:Entity = entities.create();
 			entities.remove(entity);
 			assertFalse(entities.contains(entity));
 		}
@@ -42,15 +42,15 @@ package ember
 		[Test]
 		public function can_create_named_entity():void
 		{
-			var entity:ConcreteEntity = entities.create(BRIAN);
+			var entity:Entity = entities.create(BRIAN);
 			assertTrue(entities.contains(entity));
 		}
 		
 		[Test]
 		public function can_reference_named_entity():void
 		{
-			var entity:ConcreteEntity = entities.create(BRIAN);
-			var referenced:ConcreteEntity = entities.get(BRIAN);
+			var entity:Entity = entities.create(BRIAN);
+			var referenced:Entity = entities.get(BRIAN);
 			assertSame(entity, referenced);
 		}
 		
@@ -68,9 +68,9 @@ package ember
 		[Test]
 		public function can_reuse_name_after_named_entity_is_deleted():void
 		{
-			var entity:ConcreteEntity = entities.create(BRIAN);
+			var entity:Entity = entities.create(BRIAN);
 			entities.remove(entity);
-			var other:ConcreteEntity = entities.create(BRIAN);
+			var other:Entity = entities.create(BRIAN);
 			assertNotSame(entity, other);
 		}
 	}

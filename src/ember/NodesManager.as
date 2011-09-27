@@ -23,7 +23,7 @@ package ember
 			return _setMap[nodeClass] ||= _factory.generateSet(nodeClass, _entities.list);
 		}
 		
-		private function onEntityComponentAdded(entity:ConcreteEntity, component:Class):void
+		private function onEntityComponentAdded(entity:Entity, component:Class):void
 		{
 			for each (var entitySet:Nodes in _setMap)
 			{
@@ -32,7 +32,7 @@ package ember
 			}
 		}
 		
-		private function onEntityComponentRemoved(entity:ConcreteEntity, component:Class):void
+		private function onEntityComponentRemoved(entity:Entity, component:Class):void
 		{
 			for each (var entitySet:Nodes in _setMap)
 			{

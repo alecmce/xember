@@ -40,7 +40,7 @@ package ember
 			return _config;
 		}
 		
-		public function add(entity:ConcreteEntity):void
+		public function add(entity:Entity):void
 		{
 			if (_entityMap[entity] != null)
 				return;
@@ -54,7 +54,7 @@ package ember
 				_nodeAdded.dispatch(node);
 		}
 		
-		public function remove(entity:ConcreteEntity):void
+		public function remove(entity:Entity):void
 		{
 			if (_entityMap[entity] == null)
 				return;

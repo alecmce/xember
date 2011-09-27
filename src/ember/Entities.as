@@ -6,7 +6,7 @@ package ember
 	
 	final internal class Entities
 	{
-		private var _list:Vector.<ConcreteEntity>;
+		private var _list:Vector.<Entity>;
 		private var _nameMap:Dictionary;
 		private var _count:uint;
 		
@@ -15,22 +15,22 @@ package ember
 		
 		public function Entities()
 		{
-			_list = new Vector.<ConcreteEntity>();
+			_list = new Vector.<Entity>();
 			_nameMap = new Dictionary();
 			_count = 0;
 			
-			_entityComponentAdded = new Signal(ConcreteEntity, Class);
-			_entityComponentRemoved = new Signal(ConcreteEntity, Class);
+			_entityComponentAdded = new Signal(Entity, Class);
+			_entityComponentRemoved = new Signal(Entity, Class);
 		}
 
-		public function create(name:String = ""):ConcreteEntity
+		public function create(name:String = ""):Entity
 		{
-			var entity:ConcreteEntity = new ConcreteEntity(_entityComponentAdded, _entityComponentRemoved);
+			var entity:Entity = new Entity(_entityComponentAdded, _entityComponentRemoved);
 			_count = _list.push(entity);
 			
 			if (name != "")
 			{
-				var existing:ConcreteEntity = _nameMap[name];
+				var existing:Entity = _nameMap[name];
 				if (existing != null)
 					throw new Error("You cannot call two entities the same name");
 				
@@ -41,17 +41,17 @@ package ember
 			return entity;
 		}
 		
-		public function get(name:String):ConcreteEntity
+		public function get(name:String):Entity
 		{
 			return _nameMap[name];
 		}
 
-		public function contains(entity:ConcreteEntity):Boolean
+		public function contains(entity:Entity):Boolean
 		{
 			return _list.indexOf(entity) != -1;
 		}
 		
-		public function remove(entity:ConcreteEntity):void
+		public function remove(entity:Entity):void
 		{
 			var i:int = _list.indexOf(entity);
 			if (i == -1)
@@ -67,7 +67,7 @@ package ember
 			_list.splice(i, 1);
 		}
 
-		public function get list():Vector.<ConcreteEntity>
+		public function get list():Vector.<Entity>
 		{
 			return _list;
 		}

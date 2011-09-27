@@ -30,12 +30,12 @@ package ember
 
 		public function containsEntity(entity:Entity):Boolean
 		{
-			return _entities.contains(entity as ConcreteEntity);
+			return _entities.contains(entity as Entity);
 		}
 
 		public function removeEntity(entity:Entity):void
 		{
-			_entities.remove(entity as ConcreteEntity);
+			_entities.remove(entity as Entity);
 		}
 
 		public function addSystem(systemClass:Class):void

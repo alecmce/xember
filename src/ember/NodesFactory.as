@@ -13,7 +13,7 @@ package ember
 			_nodeClassConfigurations = new Dictionary();
 		}
 		
-		public function generateSet(nodeClass:Class, list:Vector.<ConcreteEntity>):Nodes
+		public function generateSet(nodeClass:Class, list:Vector.<Entity>):Nodes
 		{
 			var configuration:NodesConfig = getClassConfiguration(nodeClass);
 			
@@ -22,7 +22,7 @@ package ember
 			var len:int = list.length;
 			for (var i:int = 0; i < len; i++)
 			{
-				var entity:ConcreteEntity = list[i];
+				var entity:Entity = list[i];
 				
 				if (configuration.matchesConfiguration(entity))
 					entitySet.add(entity);
