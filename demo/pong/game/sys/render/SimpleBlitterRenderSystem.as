@@ -4,7 +4,7 @@ package pong.game.sys.render
 
 	import alecmce.time.Time;
 
-	import ember.EntitySet;
+	import ember.Nodes;
 	import ember.EntitySystem;
 
 	import pong.game.attr.RenderComponent;
@@ -35,7 +35,7 @@ package pong.game.sys.render
 		private var dest:Point;
 		private var toPixels:Number;
 		
-		private var _nodes:EntitySet;
+		private var _nodes:Nodes;
 
 		public function onRegister():void
 		{

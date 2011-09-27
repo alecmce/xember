@@ -1,6 +1,6 @@
 package ember
 {
-	final internal class EntitySetConfig
+	final internal class NodesConfig
 	{
 		
 		private var _nodeNames:Vector.<String>;
@@ -10,7 +10,7 @@ package ember
 		public var nodeClass:Class;
 		public var entityField:String;
 
-		public function EntitySetConfig()
+		public function NodesConfig()
 		{
 			_nodeNames = new Vector.<String>();
 			_components = new Vector.<Class>();

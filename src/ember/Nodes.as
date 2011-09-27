@@ -4,10 +4,10 @@ package ember
 
 	import flash.utils.Dictionary;
 	
-	final internal class ConcreteEntitySet implements EntitySet
+	final public class Nodes
 	{
 		private var _node:Class;
-		private var _config:EntitySetConfig;
+		private var _config:NodesConfig;
 		
 		private var _nodeRemoved:Signal;
 		private var _nodeAdded:Signal;
@@ -17,10 +17,10 @@ package ember
 		private var _head:*;
 		private var _tail:*;
 		
-		public function ConcreteEntitySet(node:Class, configuration:EntitySetConfig)
+		public function Nodes(node:Class, config:NodesConfig)
 		{
 			_node = node;
-			_config = configuration;
+			_config = config;
 			
 			_entityMap = new Dictionary();
 		}
@@ -35,7 +35,7 @@ package ember
 			return _tail;
 		}
 		
-		public function get configuration():EntitySetConfig
+		public function get config():NodesConfig
 		{
 			return _config;
 		}

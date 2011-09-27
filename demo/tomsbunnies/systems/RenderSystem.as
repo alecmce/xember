@@ -1,6 +1,6 @@
 package tomsbunnies.systems
 {
-	import ember.EntitySet;
+	import ember.Nodes;
 	import ember.EntitySystem;
 
 	import tomsbunnies.components.GraphicComponent;
@@ -35,7 +35,7 @@ package tomsbunnies.systems
 		private var _bitmap:Bitmap;
 		private var _buffer:BitmapData;
 		
-		private var _nodes:EntitySet;
+		private var _nodes:Nodes;
 
 		public function onRegister():void
 		{

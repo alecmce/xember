@@ -1,6 +1,6 @@
 package tomsbunnies.systems
 {
-	import ember.EntitySet;
+	import ember.Nodes;
 	import ember.EntitySystem;
 
 	import tomsbunnies.components.SpatialComponent;
@@ -23,7 +23,7 @@ package tomsbunnies.systems
 		private const _minY:int = 0;
 		private const _gravity:int = 3;
 		
-		private var _entities:EntitySet;
+		private var _entities:Nodes;
 
 		public function onRegister():void
 		{

@@ -76,15 +76,15 @@ package ember
 		[Test]
 		public function can_get_entity_set_on_demand():void
 		{
-			var entitySet:EntitySet = entitySystem.getSet(MockRenderNode);
+			var entitySet:Nodes = entitySystem.getSet(MockRenderNode);
 			assertNotNull(entitySet);
 		}
 		
 		[Test]
 		public function entity_sets_are_not_duplicated():void
 		{
-			var a:EntitySet = entitySystem.getSet(MockRenderNode);
-			var b:EntitySet = entitySystem.getSet(MockRenderNode);
+			var a:Nodes = entitySystem.getSet(MockRenderNode);
+			var b:Nodes = entitySystem.getSet(MockRenderNode);
 			assertSame(a, b);
 		}
 		

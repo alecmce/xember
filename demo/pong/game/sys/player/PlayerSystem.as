@@ -4,7 +4,7 @@ package pong.game.sys.player
 
 	import alecmce.time.Time;
 
-	import ember.EntitySet;
+	import ember.Nodes;
 	import ember.EntitySystem;
 
 	import pong.game.attr.PlayerComponent;
@@ -33,7 +33,7 @@ package pong.game.sys.player
 		
 		private var velocity:b2Vec2;
 		
-		private var _nodes:EntitySet;
+		private var _nodes:Nodes;
 		
 		public function onRegister():void
 		{

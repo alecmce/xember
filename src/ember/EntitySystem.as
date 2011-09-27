@@ -6,13 +6,13 @@ package ember
 	{
 		
 		private var _entities:Entities;
-		private var _sets:EntitySets;
+		private var _sets:NodesManager;
 		private var _systems:Systems;
 
 		public function EntitySystem(injector:IInjector)
 		{
 			_entities = new Entities();
-			_sets = new EntitySets(_entities);
+			_sets = new NodesManager(_entities);
 			_systems = new Systems(injector);
 			
 			injector.mapValue(EntitySystem, this);
@@ -43,7 +43,7 @@ package ember
 			_systems.addSystem(systemClass);
 		}
 
-		public function getSet(nodeClass:Class):EntitySet
+		public function getSet(nodeClass:Class):Nodes
 		{
 			return _sets.get(nodeClass);
 		}

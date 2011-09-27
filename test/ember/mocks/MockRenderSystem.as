@@ -1,6 +1,6 @@
 package ember.mocks
 {
-	import ember.EntitySet;
+	import ember.Nodes;
 	import ember.EntitySystem;
 
 	import flash.display.BitmapData;
@@ -10,7 +10,7 @@ package ember.mocks
 		
 		private var data:BitmapData;
 		
-		public var render:EntitySet;
+		public var render:Nodes;
 
 		public function MockRenderSystem(system:EntitySystem)
 		{

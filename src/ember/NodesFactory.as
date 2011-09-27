@@ -4,20 +4,20 @@ package ember
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	
-	final internal class EntitySetFactory
+	final internal class NodesFactory
 	{
 		private var _nodeClassConfigurations:Dictionary;
 		
-		public function EntitySetFactory()
+		public function NodesFactory()
 		{
 			_nodeClassConfigurations = new Dictionary();
 		}
 		
-		public function generateSet(nodeClass:Class, list:Vector.<ConcreteEntity>):ConcreteEntitySet
+		public function generateSet(nodeClass:Class, list:Vector.<ConcreteEntity>):Nodes
 		{
-			var configuration:EntitySetConfig = getClassConfiguration(nodeClass);
+			var configuration:NodesConfig = getClassConfiguration(nodeClass);
 			
-			var entitySet:ConcreteEntitySet = new ConcreteEntitySet(nodeClass, configuration);
+			var entitySet:Nodes = new Nodes(nodeClass, configuration);
 			
 			var len:int = list.length;
 			for (var i:int = 0; i < len; i++)
@@ -31,9 +31,9 @@ package ember
 			return entitySet;
 		}
 		
-		public function getClassConfiguration(nodeClass:Class):EntitySetConfig
+		public function getClassConfiguration(nodeClass:Class):NodesConfig
 		{
-			var config:EntitySetConfig = _nodeClassConfigurations[nodeClass];
+			var config:NodesConfig = _nodeClassConfigurations[nodeClass];
 			if (config)
 				return config;
 			
@@ -45,9 +45,9 @@ package ember
 			return config;
 		}
 
-		private function generateConfig(variables:XMLList, nodeClass:Class):EntitySetConfig
+		private function generateConfig(variables:XMLList, nodeClass:Class):NodesConfig
 		{
-			var config:EntitySetConfig = new EntitySetConfig();
+			var config:NodesConfig = new NodesConfig();
 			config.nodeClass = nodeClass;
 			for each (var atom:XML in variables)
 			{

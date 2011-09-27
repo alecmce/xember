@@ -6,7 +6,7 @@ package pong.game.sys.ai
 	import alecmce.time.Time;
 
 	import ember.Entity;
-	import ember.EntitySet;
+	import ember.Nodes;
 	import ember.EntitySystem;
 
 	import pong.game.Names;
@@ -24,7 +24,7 @@ package pong.game.sys.ai
 		private var physicalBall:PhysicalComponent;
 		private var velocity:b2Vec2;
 		
-		private var _nodes:EntitySet;
+		private var _nodes:Nodes;
 		
 		public function onRegister():void
 		{

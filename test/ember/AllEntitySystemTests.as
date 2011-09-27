@@ -6,9 +6,9 @@ package ember
 	{
 		
 		public var entitiesTests:EntitiesTests;
-		public var entitySetConfigurationTests:EntitySetConfigTests;
-		public var entitySetFactoryTests:EntitySetFactoryTests;
-		public var entitySetTests:EntitySetTests;
+		public var nodesConfigTests:NodesConfigTests;
+		public var nodesFactoryTests:NodesFactoryTests;
+		public var nodesManagerTests:NodesManagerTests;
 		public var entitySystemTests:EntitySystemTests;
 		public var entityTests:EntityTests;
 		

@@ -9,7 +9,7 @@ package ember
 	import ember.mocks.MockRenderNode;
 	import ember.mocks.MockSpatialComponent;
 
-	public class EntitySetConfigTests
+	public class NodesConfigTests
 	{
 		
 		[Test]
@@ -20,7 +20,7 @@ package ember
 			entity.addComponent(new MockSpatialComponent());
 			entity.addComponent(new MockRenderComponent());
 
-			var config:EntitySetConfig = new EntitySetConfig();
+			var config:NodesConfig = new NodesConfig();
 			config.add("spatial", MockSpatialComponent);
 			config.add("render", MockRenderComponent);
 			
@@ -34,7 +34,7 @@ package ember
 			var entity:Entity = entities.create();
 			entity.addComponent(new MockSpatialComponent());
 
-			var config:EntitySetConfig = new EntitySetConfig();
+			var config:NodesConfig = new NodesConfig();
 			config.add("spatial", MockSpatialComponent);
 			config.add("render", MockRenderComponent);
 			
@@ -52,7 +52,7 @@ package ember
 			entity.addComponent(spatial);
 			entity.addComponent(render);
 
-			var config:EntitySetConfig = new EntitySetConfig();
+			var config:NodesConfig = new NodesConfig();
 			config.nodeClass = MockRenderNode;
 			config.add("spatial", MockSpatialComponent);
 			config.add("render", MockRenderComponent);

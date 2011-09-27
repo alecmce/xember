@@ -4,7 +4,7 @@ package pong.game.sys.physics
 
 	import alecmce.time.Time;
 
-	import ember.EntitySet;
+	import ember.Nodes;
 	import ember.EntitySystem;
 
 	import pong.game.attr.PhysicalComponent;
@@ -28,7 +28,7 @@ package pong.game.sys.physics
 		
 		private var world:b2World;
 		
-		private var _nodes:EntitySet;
+		private var _nodes:Nodes;
 		
 		public function onRegister():void
 		{

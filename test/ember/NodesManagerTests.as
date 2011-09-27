@@ -8,34 +8,34 @@ package ember
 	import ember.mocks.MockRenderNode;
 	import ember.mocks.MockSpatialComponent;
 
-	public class EntitySetTests
+	public class NodesManagerTests
 	{
-		private var sets:EntitySets;
 		private var _entities:Entities;
+		private var _manager:NodesManager;
 		
 		[Before]
 		public function before():void
 		{
 			_entities = new Entities();
-			sets = new EntitySets(_entities);
+			_manager = new NodesManager(_entities);
 		}
 		
 		[After]
 		public function after():void
 		{
 			_entities = null;
-			sets = null;
+			_manager = null;
 		}
 		
 		[Test]
 		public function you_create_a_set_by_node_class():void
 		{
-			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
-			assertNotNull(entitySet);
+			var nodes:Nodes = _manager.get(MockRenderNode);
+			assertNotNull(nodes);
 		}
 		
 		[Test]
-		public function a_set_contains_a_node_that_represents_each_member_entity():void
+		public function nodes_contains_a_node_that_represents_each_member_entity():void
 		{
 			var spatial:MockSpatialComponent = new MockSpatialComponent();
 			var render:MockRenderComponent = new MockRenderComponent();
@@ -44,26 +44,26 @@ package ember
 			entity.addComponent(spatial);
 			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockRenderNode);
 			
-			assertSame(entity, entitySet.head.entity);
+			assertSame(entity, nodes.head.entity);
 		}
 		
 		[Test]
-		public function a_set_does_not_contain_a_node_that_misses_component():void
+		public function nodes_does_not_contain_a_node_that_misses_component():void
 		{
 			var spatial:MockSpatialComponent = new MockSpatialComponent();
 
 			var entity:Entity = _entities.create();
 			entity.addComponent(spatial);
 			
-			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockRenderNode);
 			
-			assertNull(entitySet.head);
+			assertNull(nodes.head);
 		}
 		
 		[Test]
-		public function if_an_enitities_components_no_longer_satisfy_set_it_is_removed():void
+		public function if_an_enititys_components_no_longer_satisfy_requirements_it_is_removed():void
 		{
 			var spatial:MockSpatialComponent = new MockSpatialComponent();
 			var render:MockRenderComponent = new MockRenderComponent();
@@ -72,14 +72,14 @@ package ember
 			entity.addComponent(spatial);
 			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockRenderNode);
 			entity.removeComponent(MockSpatialComponent);
 			
-			assertNull(entitySet.head);
+			assertNull(nodes.head);
 		}
 		
 		[Test]
-		public function once_a_set_is_defined_if_an_entity_later_satisfies_set_it_is_added():void
+		public function once_nodes_is_defined_if_an_entity_later_satisfies_requirements_it_is_added():void
 		{
 			var spatial:MockSpatialComponent = new MockSpatialComponent();
 			var render:MockRenderComponent = new MockRenderComponent();
@@ -88,13 +88,13 @@ package ember
 			entity.addComponent(spatial);
 			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockRenderNode);
 			
-			assertSame(entity, entitySet.head.entity);
+			assertSame(entity, nodes.head.entity);
 		}
 		
 		[Test]
-		public function more_than_one_entity_can_be_added_to_a_set():void
+		public function more_than_one_entity_can_be_added_to_nodes():void
 		{
 			var aSpatial:MockSpatialComponent = new MockSpatialComponent();
 			var aRender:MockRenderComponent = new MockRenderComponent();
@@ -108,9 +108,9 @@ package ember
 			b.addComponent(bSpatial);
 			b.addComponent(bRender);
 			
-			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockRenderNode);
 			
-			var node:MockRenderNode = entitySet.head as MockRenderNode;
+			var node:MockRenderNode = nodes.head as MockRenderNode;
 			assertSame(aRender, node.render);
 			assertSame(aSpatial, node.spatial);
 			
@@ -130,18 +130,18 @@ package ember
 			entity.addComponent(spatial);
 			entity.addComponent(render);
 			
-			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockRenderNode);
 
-			var node:MockRenderNode = entitySet.head as MockRenderNode;
+			var node:MockRenderNode = nodes.head as MockRenderNode;
 			assertSame(spatial, node.spatial);
 			assertSame(render, node.render);
 		}
 		
 		[Test]
-		public function entity_sets_are_not_duplicated():void
+		public function nodes_are_not_duplicated():void
 		{
-			var a:EntitySet = sets.get(MockRenderNode);
-			var b:EntitySet = sets.get(MockRenderNode);
+			var a:Nodes = _manager.get(MockRenderNode);
+			var b:Nodes = _manager.get(MockRenderNode);
 			assertSame(a, b);
 		}
 		
