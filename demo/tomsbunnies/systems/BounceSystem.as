@@ -27,7 +27,7 @@ package tomsbunnies.systems
 
 		public function onRegister():void
 		{
-			_entities = system.getSet(SpatialNode);
+			_entities = system.getNodes(SpatialNode);
 			
 			tick.add(onTick);
 		}

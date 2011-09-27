@@ -44,7 +44,7 @@ package tomsbunnies.systems
 			contextView.addChild(_bitmap);
 			render.add(onRender);
 			
-			_nodes = system.getSet(RendererNode);
+			_nodes = system.getNodes(RendererNode);
 		}
 
 		public function onRender():void

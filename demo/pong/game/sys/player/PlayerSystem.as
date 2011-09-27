@@ -46,7 +46,7 @@ package pong.game.sys.player
 			
 			velocity = new b2Vec2();
 			
-			_nodes = system.getSet(PlayerNode);
+			_nodes = system.getNodes(PlayerNode);
 		}
 
 		public function onRemove():void

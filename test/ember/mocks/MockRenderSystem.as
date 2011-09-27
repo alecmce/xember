@@ -14,7 +14,7 @@ package ember.mocks
 
 		public function MockRenderSystem(system:EntitySystem)
 		{
-			render = system.getSet(MockRenderNode);
+			render = system.getNodes(MockRenderNode);
 		}
 
 		public function onRegister():void

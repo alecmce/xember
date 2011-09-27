@@ -46,7 +46,7 @@ package pong.game.sys.render
 			time.tick.add(iterate);
 			toPixels = config.toPixels;
 			
-			_nodes = system.getSet(RenderNode);
+			_nodes = system.getNodes(RenderNode);
 		}
 		
 		public function onRemove():void

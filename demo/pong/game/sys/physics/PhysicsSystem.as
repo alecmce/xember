@@ -36,7 +36,7 @@ package pong.game.sys.physics
 			
 			time.tick.add(iterate);
 			
-			_nodes = system.getSet(PhysicsNode);
+			_nodes = system.getNodes(PhysicsNode);
 			_nodes.nodeAdded.add(onNodeAdded);
 			_nodes.nodeRemoved.add(onNodeRemoved);
 

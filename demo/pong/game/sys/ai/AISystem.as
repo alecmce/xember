@@ -38,7 +38,7 @@ package pong.game.sys.ai
 			
 			velocity = new b2Vec2();
 			
-			_nodes = system.getSet(AINode);
+			_nodes = system.getNodes(AINode);
 		}
 
 		public function onRemove():void
