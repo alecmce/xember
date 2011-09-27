@@ -145,6 +145,23 @@ package ember
 			assertSame(a, b);
 		}
 		
+		[Test]
+		public function all_nodes_are_removed_when_clear_is_called():void
+		{
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var render:MockRenderComponent = new MockRenderComponent();
+
+			var entity:Entity = _entities.create();
+			entity.addComponent(spatial);
+			entity.addComponent(render);
+			
+			var nodes:Nodes = _manager.get(MockRenderNode);
+			
+			_manager.clear();
+			
+			assertNull(nodes.head);
+		}
+		
 	}
 	
 }

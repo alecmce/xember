@@ -68,6 +68,14 @@ package ember
 				_nodeRemoved.dispatch(node);
 		}
 		
+		public function clear():void
+		{
+			_head = null;
+			_tail = null;
+			
+			_entityMap = new Dictionary();
+		}
+		
 		private function addToLinkedList(node:*):void
 		{
 			if (!_head)

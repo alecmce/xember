@@ -43,6 +43,12 @@ package ember
 			_entities.remove(entity as Entity);
 		}
 
+		public function removeAllEntities():void
+		{
+			_entities.removeAll();
+			_nodes.clear();
+		}
+		
 		public function addSystem(systemClass:Class):void
 		{
 			_systems.addSystem(systemClass);
@@ -52,6 +58,6 @@ package ember
 		{
 			return _nodes.get(nodeClass);
 		}
-		
+
 	}
 }

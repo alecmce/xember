@@ -71,6 +71,11 @@ package ember
 			
 			_list.splice(i, 1);
 		}
+		
+		public function removeAll():void
+		{
+			_list.length = 0;
+		}
 
 		public function get list():Vector.<Entity>
 		{

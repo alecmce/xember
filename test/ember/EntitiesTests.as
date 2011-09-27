@@ -105,5 +105,17 @@ package ember
 			assertSame(a, list[0]);
 		}
 		
+		[Test]
+		public function all_entities_can_be_removed_easily():void
+		{
+			var a:Entity = entities.create();
+			var b:Entity = entities.create();
+			
+			entities.removeAll();
+			
+			assertFalse(entities.contains(a));
+			assertFalse(entities.contains(b));
+		}
+		
 	}
 }
