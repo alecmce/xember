@@ -1,14 +1,12 @@
 package tomsbunnies.ctrl
 {
 	import ember.EntitySystem;
-	import org.robotlegs.mvcs.Command;
+
 	import tomsbunnies.systems.BounceSystem;
 	import tomsbunnies.systems.ProcessManager;
 	import tomsbunnies.systems.RenderSystem;
-	import tomsbunnies.systems.nodes.RendererNode;
-	import tomsbunnies.systems.nodes.SpatialNode;
 
-
+	import org.robotlegs.mvcs.Command;
 	
 	public class RegisterSystemsCommand extends Command
 	{
@@ -22,8 +20,8 @@ package tomsbunnies.ctrl
 		
 		override public function execute():void
 		{
-			_system.addSystem(RenderSystem, RendererNode);			
-			_system.addSystem(BounceSystem, SpatialNode);
+			_system.addSystem(RenderSystem);			
+			_system.addSystem(BounceSystem);
 			_system.addSystem(ProcessManager);
 		}
 		

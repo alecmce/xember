@@ -5,6 +5,7 @@ package pong.game.sys.physics
 	import alecmce.time.Time;
 
 	import ember.EntitySet;
+	import ember.EntitySystem;
 
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.actions.PhysicsActions;
@@ -14,7 +15,7 @@ package pong.game.sys.physics
 		private static const INV_FPS:Number = 1 / 60;
 		
 		[Inject]
-		public var nodes:EntitySet;
+		public var system:EntitySystem;
 
 		[Inject]
 		public var time:Time;
@@ -27,20 +28,21 @@ package pong.game.sys.physics
 		
 		private var world:b2World;
 		
+		private var _nodes:EntitySet;
+		
 		public function onRegister():void
 		{
 			world = config.world;
 			
 			time.tick.add(iterate);
 			
-			nodes.nodeAdded.add(onNodeAdded);
-			nodes.nodeRemoved.add(onNodeRemoved);
+			_nodes = system.getSet(PhysicsNode);
+			_nodes.nodeAdded.add(onNodeAdded);
+			_nodes.nodeRemoved.add(onNodeRemoved);
 
-			var node:PhysicsNode = nodes.head as PhysicsNode;
-			while (node)
+			for (var node:PhysicsNode = _nodes.head; node; node = node.next)
 			{
 				onNodeAdded(node);
-				node = node.next as PhysicsNode;
 			}
 		}
 
@@ -48,8 +50,8 @@ package pong.game.sys.physics
 		{
 			time.tick.remove(iterate);
 			
-			nodes.nodeAdded.remove(onNodeAdded);
-			nodes.nodeRemoved.remove(onNodeRemoved);
+			_nodes.nodeAdded.remove(onNodeAdded);
+			_nodes.nodeRemoved.remove(onNodeRemoved);
 		}
 
 		private function onNodeAdded(node:PhysicsNode):void

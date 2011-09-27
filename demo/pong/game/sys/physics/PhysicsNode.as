@@ -1,11 +1,12 @@
 package pong.game.sys.physics
 {
-	import ember.Node;
 	import pong.game.attr.PhysicalComponent;
-
 	
-	public class PhysicsNode extends Node
+	public class PhysicsNode
 	{
+		public var prev:PhysicsNode;
+		public var next:PhysicsNode;
+		
 		public var physical:PhysicalComponent;
 	}
 }

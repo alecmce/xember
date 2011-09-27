@@ -5,17 +5,12 @@ package pong.game.sys.physics
 
 	import alecmce.time.Time;
 
-	import ember.EntitySet;
-
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 
 	public class RenderPhysicsSystem
 	{
 		
-		[Inject]
-		public var nodes:EntitySet;
-
 		[Inject]
 		public var time:Time;
 		
@@ -27,7 +22,7 @@ package pong.game.sys.physics
 		
 		private var world:b2World;
 		private var debugDraw:b2DebugDraw;
-
+		
 		public function onRegister():void
 		{
 			debugDraw = generateDebugDraw();

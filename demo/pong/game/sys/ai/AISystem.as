@@ -19,13 +19,12 @@ package pong.game.sys.ai
 		public var system:EntitySystem;
 		
 		[Inject]
-		public var entitySet:EntitySet;
-		
-		[Inject]
 		public var time:Time;
 		
 		private var physicalBall:PhysicalComponent;
 		private var velocity:b2Vec2;
+		
+		private var _nodes:EntitySet;
 		
 		public function onRegister():void
 		{
@@ -38,6 +37,8 @@ package pong.game.sys.ai
 			time.tick.add(iterate);
 			
 			velocity = new b2Vec2();
+			
+			_nodes = system.getSet(AINode);
 		}
 
 		public function onRemove():void
@@ -47,8 +48,7 @@ package pong.game.sys.ai
 
 		private function iterate(time:uint):void
 		{
-			var node:AINode = entitySet.head as AINode;
-			while (node)
+			for (var node:AINode = _nodes.head as AINode; node; node = node.next)
 			{
 				var ball:b2Body = physicalBall.body;
 				if (ball.GetLinearVelocity().x < 0)
@@ -70,8 +70,6 @@ package pong.game.sys.ai
 				}
 				
 				node.physical.body.SetLinearVelocity(velocity);
-				
-				node = node.next as AINode;
 			}
 		}
 	}

@@ -1,12 +1,13 @@
 package pong.game.sys.ai
 {
-	import ember.Node;
 	import pong.game.attr.AIComponent;
 	import pong.game.attr.PhysicalComponent;
-
-
-	public class AINode extends Node
+	
+	public class AINode
 	{
+		public var prev:AINode;
+		public var next:AINode;
+		
 		public var ai:AIComponent;
 		public var physical:PhysicalComponent;
 	}

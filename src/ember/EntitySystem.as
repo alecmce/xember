@@ -13,7 +13,9 @@ package ember
 		{
 			_entities = new Entities();
 			_sets = new EntitySets(_entities);
-			_systems = new Systems(_sets, injector);
+			_systems = new Systems(injector);
+			
+			injector.mapValue(EntitySystem, this);
 		}
 		
 		public function createEntity(name:String = ""):Entity
@@ -36,9 +38,14 @@ package ember
 			_entities.remove(entity as ConcreteEntity);
 		}
 
-		public function addSystem(systemClass:Class, nodeClass:Class = null):void
+		public function addSystem(systemClass:Class):void
 		{
-			_systems.add(systemClass, nodeClass);
+			_systems.addSystem(systemClass);
+		}
+
+		public function getSet(nodeClass:Class):EntitySet
+		{
+			return _sets.get(nodeClass);
 		}
 		
 	}

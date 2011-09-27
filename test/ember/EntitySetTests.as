@@ -1,10 +1,8 @@
 package ember
 {
 	import asunit.asserts.assertNotNull;
-	import asunit.asserts.assertNotSame;
 	import asunit.asserts.assertNull;
 	import asunit.asserts.assertSame;
-	import asunit.asserts.assertTrue;
 
 	import ember.mocks.MockRenderComponent;
 	import ember.mocks.MockRenderNode;
@@ -98,26 +96,28 @@ package ember
 		[Test]
 		public function more_than_one_entity_can_be_added_to_a_set():void
 		{
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
-			var render:MockRenderComponent = new MockRenderComponent();
-
+			var aSpatial:MockSpatialComponent = new MockSpatialComponent();
+			var aRender:MockRenderComponent = new MockRenderComponent();
 			var a:Entity = _entities.create();
-			a.addComponent(spatial);
-			a.addComponent(render);
+			a.addComponent(aSpatial);
+			a.addComponent(aRender);
 			
+			var bSpatial:MockSpatialComponent = new MockSpatialComponent();
+			var bRender:MockRenderComponent = new MockRenderComponent();
 			var b:Entity = _entities.create();
-			b.addComponent(spatial);
-			b.addComponent(render);
+			b.addComponent(bSpatial);
+			b.addComponent(bRender);
 			
 			var entitySet:ConcreteEntitySet = sets.get(MockRenderNode);
 			
-			var node:Node = entitySet.head;
-			assertTrue(node.entity == a || node.entity == b);
+			var node:MockRenderNode = entitySet.head as MockRenderNode;
+			assertSame(aRender, node.render);
+			assertSame(aSpatial, node.spatial);
 			
 			node = node.next;
 			assertNotNull(node);
-			assertTrue(node.entity == a || node.entity == b);
-			assertNotSame(node.entity, entitySet.head.entity);
+			assertSame(bRender, node.render);
+			assertSame(bSpatial, node.spatial);
 		}
 		
 		[Test]
@@ -135,6 +135,14 @@ package ember
 			var node:MockRenderNode = entitySet.head as MockRenderNode;
 			assertSame(spatial, node.spatial);
 			assertSame(render, node.render);
+		}
+		
+		[Test]
+		public function entity_sets_are_not_duplicated():void
+		{
+			var a:EntitySet = sets.get(MockRenderNode);
+			var b:EntitySet = sets.get(MockRenderNode);
+			assertSame(a, b);
 		}
 		
 	}

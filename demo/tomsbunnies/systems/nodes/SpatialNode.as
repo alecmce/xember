@@ -1,11 +1,12 @@
 package tomsbunnies.systems.nodes
 {
-	import ember.Node;
 	import tomsbunnies.components.SpatialComponent;
 
-	
-	public class SpatialNode extends Node
+	public class SpatialNode
 	{
+		public var prev:SpatialNode;
+		public var next:SpatialNode;
+		
 		public var spatial:SpatialComponent;
 	}
 	

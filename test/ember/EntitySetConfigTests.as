@@ -1,6 +1,7 @@
 package ember
 {
 	import asunit.asserts.assertFalse;
+	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertTrue;
 
@@ -8,40 +9,40 @@ package ember
 	import ember.mocks.MockRenderNode;
 	import ember.mocks.MockSpatialComponent;
 
-	public class EntitySetConfigurationTests
+	public class EntitySetConfigTests
 	{
 		
 		[Test]
-		public function configuration_matches_matching_entity():void
+		public function config_matches_matching_entity():void
 		{
 			var entities:Entities = new Entities();
 			var entity:Entity = entities.create();
 			entity.addComponent(new MockSpatialComponent());
 			entity.addComponent(new MockRenderComponent());
 
-			var configuration:EntitySetConfiguration = new EntitySetConfiguration();
-			configuration.add("spatial", MockSpatialComponent);
-			configuration.add("render", MockRenderComponent);
+			var config:EntitySetConfig = new EntitySetConfig();
+			config.add("spatial", MockSpatialComponent);
+			config.add("render", MockRenderComponent);
 			
-			assertTrue(configuration.matchesConfiguration(entity));
+			assertTrue(config.matchesConfiguration(entity));
 		}
 		
 		[Test]
-		public function configuration_doesnt_match_non_matching_entity():void
+		public function config_doesnt_match_non_matching_entity():void
 		{
 			var entities:Entities = new Entities();
 			var entity:Entity = entities.create();
 			entity.addComponent(new MockSpatialComponent());
 
-			var configuration:EntitySetConfiguration = new EntitySetConfiguration();
-			configuration.add("spatial", MockSpatialComponent);
-			configuration.add("render", MockRenderComponent);
+			var config:EntitySetConfig = new EntitySetConfig();
+			config.add("spatial", MockSpatialComponent);
+			config.add("render", MockRenderComponent);
 			
-			assertFalse(configuration.matchesConfiguration(entity));
+			assertFalse(config.matchesConfiguration(entity));
 		}
 		
 		[Test]
-		public function configuration_will_configure_node():void
+		public function config_will_generate_node_from_entity():void
 		{
 			var render:MockRenderComponent = new MockRenderComponent();
 			var spatial:MockSpatialComponent = new MockSpatialComponent();
@@ -51,13 +52,14 @@ package ember
 			entity.addComponent(spatial);
 			entity.addComponent(render);
 
-			var configuration:EntitySetConfiguration = new EntitySetConfiguration();
-			configuration.add("spatial", MockSpatialComponent);
-			configuration.add("render", MockRenderComponent);
+			var config:EntitySetConfig = new EntitySetConfig();
+			config.nodeClass = MockRenderNode;
+			config.add("spatial", MockSpatialComponent);
+			config.add("render", MockRenderComponent);
 
-			var node:MockRenderNode = new MockRenderNode();
-			configuration.configureNode(node, entity);
+			var node:MockRenderNode = config.generateNode(entity);
 			
+			assertNotNull(node);
 			assertSame(render, node.render);
 			assertSame(spatial, node.spatial);
 		}

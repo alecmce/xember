@@ -5,6 +5,7 @@ package ember
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertThrows;
 	import asunit.asserts.assertTrue;
+	
 	public class EntitiesTests
 	{
 		private static const BRIAN:String = "brian";

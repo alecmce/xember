@@ -7,37 +7,37 @@ package ember
 	final internal class ConcreteEntitySet implements EntitySet
 	{
 		private var _node:Class;
-		private var _configuration:EntitySetConfiguration;
+		private var _config:EntitySetConfig;
 		
 		private var _nodeRemoved:Signal;
 		private var _nodeAdded:Signal;
 		
 		private var _entityMap:Dictionary;
 		
-		private var _head:Node;
-		private var _tail:Node;
+		private var _head:*;
+		private var _tail:*;
 		
-		public function ConcreteEntitySet(node:Class, configuration:EntitySetConfiguration)
+		public function ConcreteEntitySet(node:Class, configuration:EntitySetConfig)
 		{
 			_node = node;
-			_configuration = configuration;
+			_config = configuration;
 			
 			_entityMap = new Dictionary();
 		}
 		
-		public function get head():Node
+		public function get head():*
 		{
 			return _head;
 		}
 
-		public function get tail():Node
+		public function get tail():*
 		{
 			return _tail;
 		}
 		
-		public function get configuration():EntitySetConfiguration
+		public function get configuration():EntitySetConfig
 		{
-			return _configuration;
+			return _config;
 		}
 		
 		public function add(entity:ConcreteEntity):void
@@ -45,7 +45,7 @@ package ember
 			if (_entityMap[entity] != null)
 				return;
 			
-			var node:Node = generateNode(entity);
+			var node:* = _config.generateNode(entity);
 			addToLinkedList(node);
 			
 			_entityMap[entity] = node;
@@ -59,7 +59,7 @@ package ember
 			if (_entityMap[entity] == null)
 				return;
 
-			var node:Node = _entityMap[entity];
+			var node:* = _entityMap[entity];
 			removeFromLinkedList(node);
 			
 			delete _entityMap[entity];
@@ -68,14 +68,7 @@ package ember
 				_nodeRemoved.dispatch(node);
 		}
 		
-		private function generateNode(entity:ConcreteEntity):Node
-		{
-			var node:Node = new _node();
-			_configuration.configureNode(node, entity);
-			return node;
-		}
-		
-		private function addToLinkedList(node:Node):void
+		private function addToLinkedList(node:*):void
 		{
 			if (!_head)
 			{
@@ -88,7 +81,7 @@ package ember
 			_tail = node;
 		}
 		
-		private function removeFromLinkedList(node:Node):void
+		private function removeFromLinkedList(node:*):void
 		{
 			if (_head == node)
 				_head = _head.next;
@@ -108,12 +101,12 @@ package ember
 
 		public function get nodeAdded():Signal
 		{
-			return _nodeAdded ||= new Signal(Node);
+			return _nodeAdded ||= new Signal();
 		}
 
 		public function get nodeRemoved():Signal
 		{
-			return _nodeRemoved ||= new Signal(Node);
+			return _nodeRemoved ||= new Signal();
 		}
 		
 	}

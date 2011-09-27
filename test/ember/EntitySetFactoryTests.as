@@ -3,10 +3,14 @@ package ember
 	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertNull;
 	import asunit.asserts.assertSame;
+	import asunit.asserts.assertThrows;
 
+	import ember.mocks.MockEntityLessNode;
 	import ember.mocks.MockRenderComponent;
 	import ember.mocks.MockRenderNode;
 	import ember.mocks.MockSpatialComponent;
+
+	import flash.display.Sprite;
 	
 	public class EntitySetFactoryTests
 	{
@@ -25,14 +29,38 @@ package ember
 		}
 		
 		[Test]
-		public function a_factory_can_get_set_configuration():void
+		public function a_factory_can_get_set_config():void
 		{
-			var configuration:EntitySetConfiguration = factory.getClassConfiguration(MockRenderNode);
-			assertNotNull(configuration);
+			var config:EntitySetConfig = factory.getClassConfiguration(MockRenderNode);
+			assertNotNull(config);
 		}
 		
 		[Test]
-		public function set_configuration_properly_configures_nodes():void
+		public function config_will_throw_error_if_non_node_is_passed_as_class():void
+		{
+			assertThrows(Error, throwing_method);
+		}
+		private function throwing_method():void
+		{
+			factory.getClassConfiguration(Sprite);
+		}
+		
+		[Test]
+		public function a_node_doesnt_need_an_entity_reference_to_be_a_node():void
+		{
+			var config:EntitySetConfig = factory.getClassConfiguration(MockEntityLessNode);
+			assertNotNull(config);
+		}
+		
+		[Test]
+		public function config_has_node_class_injected():void
+		{
+			var config:EntitySetConfig = factory.getClassConfiguration(MockRenderNode);
+			assertSame(MockRenderNode, config.nodeClass);
+		}
+		
+		[Test]
+		public function set_config_properly_configures_nodes():void
 		{
 			var render:MockRenderComponent = new MockRenderComponent();
 			var spatial:MockSpatialComponent = new MockSpatialComponent();
@@ -42,10 +70,9 @@ package ember
 			entity.addComponent(spatial);
 			entity.addComponent(render);
 
-			var configuration:EntitySetConfiguration = factory.getClassConfiguration(MockRenderNode);
+			var config:EntitySetConfig = factory.getClassConfiguration(MockRenderNode);
 
-			var node:MockRenderNode = new MockRenderNode();
-			configuration.configureNode(node, entity);
+			var node:MockRenderNode = config.generateNode(entity);
 			
 			assertSame(render, node.render);
 			assertSame(spatial, node.spatial);

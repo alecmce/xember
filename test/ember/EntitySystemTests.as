@@ -1,16 +1,15 @@
 package ember
 {
 	import asunit.asserts.assertFalse;
+	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertTrue;
 
-	import ember.mocks.MockSystem;
 	import ember.mocks.MockRenderNode;
 	import ember.mocks.MockRenderSystem;
+	import ember.mocks.MockSystem;
 
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
-
-
 	
 	public class EntitySystemTests
 	{
@@ -21,7 +20,8 @@ package ember
 		[Before]
 		public function before():void
 		{
-			entitySystem = new EntitySystem(new SwiftSuspendersInjector());
+			var injector:SwiftSuspendersInjector = new SwiftSuspendersInjector();
+			entitySystem = new EntitySystem(injector);
 		}
 		
 		[After]
@@ -48,7 +48,7 @@ package ember
 		[Test]
 		public function can_add_a_system():void
 		{
-			entitySystem.addSystem(MockRenderSystem, MockRenderNode);
+			entitySystem.addSystem(MockRenderSystem);
 		}
 		
 		[Test]
@@ -71,6 +71,21 @@ package ember
 			var referenced:Entity = entitySystem.getEntity(BRIAN);
 			
 			assertSame(entity, referenced);
+		}
+		
+		[Test]
+		public function can_get_entity_set_on_demand():void
+		{
+			var entitySet:EntitySet = entitySystem.getSet(MockRenderNode);
+			assertNotNull(entitySet);
+		}
+		
+		[Test]
+		public function entity_sets_are_not_duplicated():void
+		{
+			var a:EntitySet = entitySystem.getSet(MockRenderNode);
+			var b:EntitySet = entitySystem.getSet(MockRenderNode);
+			assertSame(a, b);
 		}
 		
 	}

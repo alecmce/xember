@@ -1,5 +1,8 @@
 package ember.mocks
 {
+	import ember.EntitySet;
+	import ember.EntitySystem;
+
 	import flash.display.BitmapData;
 	
 	public class MockRenderSystem
@@ -7,25 +10,30 @@ package ember.mocks
 		
 		private var data:BitmapData;
 		
-		private var _head:MockRenderNode;
+		public var render:EntitySet;
 
-		public function MockRenderSystem()
+		public function MockRenderSystem(system:EntitySystem)
+		{
+			render = system.getSet(MockRenderNode);
+		}
+
+		public function onRegister():void
 		{
 			
 		}
 
-		public function onRegister():void
+		public function onRemove():void
 		{
 			// dummy
 		}
 
 		public function iterate():void
 		{
-			var node:MockRenderNode = _head;
+			var node:MockRenderNode = render.head as MockRenderNode;
 			while (node)
 			{
 				data.copyPixels(node.render.data, node.render.rect, node.spatial.position);
-				node = node.next as MockRenderNode;
+				node = node.next;
 			}
 		}
 

@@ -1,6 +1,8 @@
 package tomsbunnies.systems
 {
 	import ember.EntitySet;
+	import ember.EntitySystem;
+
 	import tomsbunnies.components.SpatialComponent;
 	import tomsbunnies.events.Tick;
 	import tomsbunnies.systems.nodes.SpatialNode;
@@ -10,7 +12,7 @@ package tomsbunnies.systems
 	{
 
 		[Inject]
-		public var entities:EntitySet;
+		public var system:EntitySystem;
 		
 		[Inject]
 		public var tick:Tick;
@@ -20,16 +22,20 @@ package tomsbunnies.systems
 		private const _maxY:int = 480;
 		private const _minY:int = 0;
 		private const _gravity:int = 3;
+		
+		private var _entities:EntitySet;
 
 		public function onRegister():void
 		{
+			_entities = system.getSet(SpatialNode);
+			
 			tick.add(onTick);
 		}
 		
 		public function onTick(t:Number):void
 		{
 			var node:SpatialNode;
-			for (node = entities.head as SpatialNode; node; node = node.next as SpatialNode)
+			for (node = _entities.head as SpatialNode; node; node = node.next)
 			{
 				var spatial:SpatialComponent = node.spatial;
 				

@@ -5,6 +5,7 @@ package pong.game.sys.render
 	import alecmce.time.Time;
 
 	import ember.EntitySet;
+	import ember.EntitySystem;
 
 	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
@@ -18,8 +19,8 @@ package pong.game.sys.render
 	{
 		
 		[Inject]
-		public var nodes:EntitySet;
-
+		public var system:EntitySystem;
+		
 		[Inject]
 		public var time:Time;
 		
@@ -34,6 +35,8 @@ package pong.game.sys.render
 		private var dest:Point;
 		private var toPixels:Number;
 		
+		private var _nodes:EntitySet;
+
 		public function onRegister():void
 		{
 			data = new BitmapData(800, 600, true, 0xFFFFFFFF);
@@ -42,6 +45,8 @@ package pong.game.sys.render
 			
 			time.tick.add(iterate);
 			toPixels = config.toPixels;
+			
+			_nodes = system.getSet(RenderNode);
 		}
 		
 		public function onRemove():void
@@ -54,8 +59,7 @@ package pong.game.sys.render
 			data.lock();
 			data.fillRect(data.rect, 0);
 			
-			var node:RenderNode = nodes.head as RenderNode;
-			while (node)
+			for (var node:RenderNode = _nodes.head; node; node = node.next)
 			{
 				var render:RenderComponent = node.render;
 				var position:b2Vec2 = node.physical.body.GetPosition();
@@ -64,8 +68,6 @@ package pong.game.sys.render
 				dest.y = (position.y * toPixels) + render.offsetY;
 				
 				data.copyPixels(render.data, render.rect, dest);
-				
-				node = node.next as RenderNode;
 			}
 			
 			data.unlock();

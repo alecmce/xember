@@ -1,13 +1,16 @@
 package tomsbunnies.systems
 {
 	import ember.EntitySet;
+	import ember.EntitySystem;
+
+	import tomsbunnies.components.GraphicComponent;
+	import tomsbunnies.events.Render;
+	import tomsbunnies.systems.nodes.RendererNode;
+
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Rectangle;
-	import tomsbunnies.components.GraphicComponent;
-	import tomsbunnies.events.Render;
-	import tomsbunnies.systems.nodes.RendererNode;
 
 
 
@@ -16,7 +19,7 @@ package tomsbunnies.systems
 		private const BLANK_RECT:Rectangle = new Rectangle(_minX, _minY, _maxX, _maxY);
 
 		[Inject]
-		public var entities:EntitySet;
+		public var system:EntitySystem;
 
 		[Inject]
 		public var contextView:DisplayObjectContainer;
@@ -31,6 +34,8 @@ package tomsbunnies.systems
 
 		private var _bitmap:Bitmap;
 		private var _buffer:BitmapData;
+		
+		private var _nodes:EntitySet;
 
 		public function onRegister():void
 		{
@@ -38,6 +43,8 @@ package tomsbunnies.systems
 			_bitmap = new Bitmap(_buffer);
 			contextView.addChild(_bitmap);
 			render.add(onRender);
+			
+			_nodes = system.getSet(RendererNode);
 		}
 
 		public function onRender():void
@@ -46,7 +53,7 @@ package tomsbunnies.systems
 			_buffer.fillRect(BLANK_RECT, 0xFFFFCC);
 			
 			var node:RendererNode;
-			for (node = entities.head as RendererNode; node; node = node.next as RendererNode)
+			for (node = _nodes.head; node; node = node.next)
 			{
 				var graphic:GraphicComponent = node.graphic;
 				_buffer.copyPixels(graphic.asset, graphic.rect, node.spatial.position, null, null, true);

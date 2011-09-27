@@ -5,8 +5,8 @@ package ember
 	public interface EntitySet
 	{
 		
-		function get head():Node;
-		function get tail():Node;
+		function get head():*;
+		function get tail():*;
 		
 		function get nodeAdded():Signal;
 		function get nodeRemoved():Signal;

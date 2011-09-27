@@ -1,12 +1,17 @@
 package pong.game.sys.player
 {
 	import Box2D.Common.Math.b2Vec2;
+
 	import alecmce.time.Time;
+
 	import ember.EntitySet;
+	import ember.EntitySystem;
+
+	import pong.game.attr.PlayerComponent;
+
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
-	import pong.game.attr.PlayerComponent;
 
 	public class PlayerSystem
 	{
@@ -14,7 +19,7 @@ package pong.game.sys.player
 		public var view:DisplayObjectContainer;
 		
 		[Inject]
-		public var entitySet:EntitySet;
+		public var system:EntitySystem;
 		
 		[Inject]
 		public var time:Time;
@@ -28,6 +33,8 @@ package pong.game.sys.player
 		
 		private var velocity:b2Vec2;
 		
+		private var _nodes:EntitySet;
+		
 		public function onRegister():void
 		{
 			time.tick.add(iterate);
@@ -38,6 +45,8 @@ package pong.game.sys.player
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			
 			velocity = new b2Vec2();
+			
+			_nodes = system.getSet(PlayerNode);
 		}
 
 		public function onRemove():void
@@ -78,8 +87,7 @@ package pong.game.sys.player
 		
 		private function iterate(time:uint):void
 		{
-			var node:PlayerNode = entitySet.head as PlayerNode;
-			while (node)
+			for (var node:PlayerNode = _nodes.head; node; node = node.next)
 			{
 				var player:PlayerComponent = node.player;
 				
@@ -99,8 +107,6 @@ package pong.game.sys.player
 					velocity.y += player.dy;
 				
 				node.physical.body.SetLinearVelocity(velocity);
-				
-				node = node.next as PlayerNode;
 			}
 		}
 		

@@ -1,13 +1,16 @@
 package ember
 {
-	internal class EntitySetConfiguration
+	final internal class EntitySetConfig
 	{
 		
 		private var _nodeNames:Vector.<String>;
 		private var _components:Vector.<Class>;
 		private var _count:uint;
+		
+		public var nodeClass:Class;
+		public var entityField:String;
 
-		public function EntitySetConfiguration()
+		public function EntitySetConfig()
 		{
 			_nodeNames = new Vector.<String>();
 			_components = new Vector.<Class>();
@@ -33,9 +36,12 @@ package ember
 			return true;
 		}
 		
-		public function configureNode(node:Node, entity:Entity):void
+		public function generateNode(entity:Entity):*
 		{
-			node.entity = entity;
+			var node:* = new nodeClass();
+			
+			if (entityField)
+				node[entityField] = entity;
 			
 			var i:int = _count;
 			while (i--)
@@ -45,6 +51,8 @@ package ember
 				var value:Object = entity.getComponent(component);
 				node[nodeName] = value;
 			}
+			
+			return node;
 		}
 
 		public function contains(component:Class):Boolean
