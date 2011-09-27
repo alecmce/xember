@@ -28,6 +28,11 @@ package ember
 			return _entities.get(name);
 		}
 
+		public function getEntities():Vector.<Entity>
+		{
+			return _entities.getAll();
+		}
+
 		public function containsEntity(entity:Entity):Boolean
 		{
 			return _entities.contains(entity as Entity);

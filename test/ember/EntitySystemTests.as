@@ -52,6 +52,23 @@ package ember
 		}
 		
 		[Test]
+		public function can_get_a_vector_of_all_entities():void
+		{
+			assertNotNull(entitySystem.getEntities());
+		}
+		
+		[Test]
+		public function getEntities_returns_all_generated_entities():void
+		{
+			var a:Entity = entitySystem.createEntity();
+			var b:Entity = entitySystem.createEntity();
+
+			var entities:Vector.<Entity> = entitySystem.getEntities();
+			assertSame(a, entities[0]);
+			assertSame(b, entities[1]);
+		}
+		
+		[Test]
 		public function can_add_a_nodeless_system():void
 		{
 			entitySystem.addSystem(MockSystem);

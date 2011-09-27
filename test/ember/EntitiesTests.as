@@ -1,6 +1,7 @@
 package ember
 {
 	import asunit.asserts.assertFalse;
+	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertNotSame;
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertThrows;
@@ -73,5 +74,36 @@ package ember
 			var other:Entity = entities.create(BRIAN);
 			assertNotSame(entity, other);
 		}
+		
+		[Test]
+		public function can_get_a_vector_of_all_entities():void
+		{
+			assertNotNull(entities.getAll());
+		}
+		
+		[Test]
+		public function getEntities_returns_all_generated_entities():void
+		{
+			var a:Entity = entities.create();
+			var b:Entity = entities.create();
+
+			var list:Vector.<Entity> = entities.getAll();
+			assertSame(a, list[0]);
+			assertSame(b, list[1]);
+		}
+		
+		[Test]
+		public function getEntities_does_not_expose_inner_list():void
+		{
+			var a:Entity = entities.create();
+			
+			var list:Vector.<Entity>;
+			list = entities.getAll();
+			list.shift();
+			list = entities.getAll();
+			
+			assertSame(a, list[0]);
+		}
+		
 	}
 }

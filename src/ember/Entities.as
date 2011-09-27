@@ -46,6 +46,11 @@ package ember
 			return _nameMap[name];
 		}
 
+		public function getAll():Vector.<Entity>
+		{
+			return _list.concat();
+		}
+
 		public function contains(entity:Entity):Boolean
 		{
 			return _list.indexOf(entity) != -1;
