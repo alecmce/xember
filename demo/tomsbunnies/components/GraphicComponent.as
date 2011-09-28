@@ -5,9 +5,7 @@ package tomsbunnies.components
 
 	public class GraphicComponent
 	{
-		
 		public var asset:BitmapData;
 		public var rect:Rectangle;
-		
 	}
 }

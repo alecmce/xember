@@ -3,13 +3,12 @@ package pong.game.sys.ai
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 
-	import alecmce.time.Time;
-
 	import ember.Entity;
-	import ember.Nodes;
 	import ember.EntitySystem;
+	import ember.Nodes;
 
 	import pong.game.Names;
+	import pong.game.Tick;
 	import pong.game.attr.AIComponent;
 	import pong.game.attr.PhysicalComponent;
 	
@@ -19,7 +18,7 @@ package pong.game.sys.ai
 		public var system:EntitySystem;
 		
 		[Inject]
-		public var time:Time;
+		public var tick:Tick;
 		
 		private var physicalBall:PhysicalComponent;
 		private var velocity:b2Vec2;
@@ -34,7 +33,7 @@ package pong.game.sys.ai
 			
 			physicalBall = ball.getComponent(PhysicalComponent) as PhysicalComponent;
 			
-			time.tick.add(iterate);
+			tick.add(iterate);
 			
 			velocity = new b2Vec2();
 			
@@ -43,10 +42,10 @@ package pong.game.sys.ai
 
 		public function onRemove():void
 		{
-			time.tick.remove(iterate);
+			tick.remove(iterate);
 		}
 
-		private function iterate(time:uint):void
+		private function iterate():void
 		{
 			for (var node:AINode = _nodes.head as AINode; node; node = node.next)
 			{

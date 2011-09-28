@@ -12,11 +12,14 @@ package tomsbunnies.systems
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Rectangle;
 
-
-
 	public class RenderSystem
 	{
-		private const BLANK_RECT:Rectangle = new Rectangle(_minX, _minY, _maxX, _maxY);
+		private const MIN_X:int = 0;
+		private const MAX_X:int = 640;
+		private const MIN_Y:int = 0;
+		private const MAX_Y:int = 480;
+		
+		private const BLANK_RECT:Rectangle = new Rectangle(MIN_X, MIN_Y, MAX_X, MAX_Y);
 
 		[Inject]
 		public var system:EntitySystem;
@@ -27,11 +30,6 @@ package tomsbunnies.systems
 		[Inject]
 		public var render:Render;
 
-		private const _maxX:int = 640;
-		private const _minX:int = 0;
-		private const _maxY:int = 480;
-		private const _minY:int = 0;
-
 		private var _bitmap:Bitmap;
 		private var _buffer:BitmapData;
 		
@@ -39,7 +37,7 @@ package tomsbunnies.systems
 
 		public function onRegister():void
 		{
-			_buffer = new BitmapData(_maxX, _maxY, false, 0xFFFFFF);
+			_buffer = new BitmapData(MAX_X, MAX_Y, false, 0xFFFFFF);
 			_bitmap = new Bitmap(_buffer);
 			contextView.addChild(_bitmap);
 			render.add(onRender);

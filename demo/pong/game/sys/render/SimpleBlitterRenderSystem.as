@@ -2,11 +2,10 @@ package pong.game.sys.render
 {
 	import Box2D.Common.Math.b2Vec2;
 
-	import alecmce.time.Time;
-
-	import ember.Nodes;
 	import ember.EntitySystem;
+	import ember.Nodes;
 
+	import pong.game.Tick;
 	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
@@ -22,7 +21,7 @@ package pong.game.sys.render
 		public var system:EntitySystem;
 		
 		[Inject]
-		public var time:Time;
+		public var tick:Tick;
 		
 		[Inject]
 		public var config:PhysicsConfig;
@@ -30,20 +29,22 @@ package pong.game.sys.render
 		[Inject]
 		public var view:DisplayObjectContainer;
 		
-		private var data:BitmapData;
+		private var _data:BitmapData;
 		
-		private var dest:Point;
+		private var _dest:Point;
 		private var toPixels:Number;
 		
 		private var _nodes:Nodes;
+		private var _bitmap:Bitmap;
 
 		public function onRegister():void
 		{
-			data = new BitmapData(800, 600, true, 0xFFFFFFFF);
-			dest = new Point();
-			view.addChild(new Bitmap(data));
+			_data = new BitmapData(800, 600, true, 0xFFFFFFFF);
+			_dest = new Point();
+			_bitmap = new Bitmap(_data);
+			view.addChild(_bitmap);
 			
-			time.tick.add(iterate);
+			tick.add(iterate);
 			toPixels = config.toPixels;
 			
 			_nodes = system.getNodes(RenderNode);
@@ -51,26 +52,33 @@ package pong.game.sys.render
 		
 		public function onRemove():void
 		{
-			time.tick.remove(iterate);
+			tick.remove(iterate);
+			
+			view.removeChild(_bitmap);
+			_bitmap = null;
+			_dest = null;
+			
+			_data.dispose();
+			_data = null;
 		}
 		
-		private function iterate(time:uint):void
+		private function iterate():void
 		{
-			data.lock();
-			data.fillRect(data.rect, 0);
+			_data.lock();
+			_data.fillRect(_data.rect, 0);
 			
 			for (var node:RenderNode = _nodes.head; node; node = node.next)
 			{
 				var render:RenderComponent = node.render;
 				var position:b2Vec2 = node.physical.body.GetPosition();
 				
-				dest.x = (position.x * toPixels) + render.offsetX;
-				dest.y = (position.y * toPixels) + render.offsetY;
+				_dest.x = (position.x * toPixels) + render.offsetX;
+				_dest.y = (position.y * toPixels) + render.offsetY;
 				
-				data.copyPixels(render.data, render.rect, dest);
+				_data.copyPixels(render.data, render.rect, _dest);
 			}
 			
-			data.unlock();
+			_data.unlock();
 		}
 		
 	}

@@ -3,7 +3,7 @@ package pong.game.sys.physics
 	import Box2D.Dynamics.b2DebugDraw;
 	import Box2D.Dynamics.b2World;
 
-	import alecmce.time.Time;
+	import pong.game.Tick;
 
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
@@ -12,7 +12,7 @@ package pong.game.sys.physics
 	{
 		
 		[Inject]
-		public var time:Time;
+		public var tick:Tick;
 		
 		[Inject]
 		public var config:PhysicsConfig;
@@ -32,17 +32,17 @@ package pong.game.sys.physics
 			
 			view.addChild(debugDraw.GetSprite());
 			
-			time.tick.add(iterate);
+			tick.add(iterate);
 		}
 		
 		public function onRemove():void
 		{
-			time.tick.remove(iterate);
+			tick.remove(iterate);
 			
 			view.removeChild(debugDraw.GetSprite());
 		}
 		
-		private function iterate(time:uint):void
+		private function iterate():void
 		{
 			world.DrawDebugData();
 		}

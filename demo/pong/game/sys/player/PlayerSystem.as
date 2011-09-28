@@ -2,11 +2,10 @@ package pong.game.sys.player
 {
 	import Box2D.Common.Math.b2Vec2;
 
-	import alecmce.time.Time;
-
-	import ember.Nodes;
 	import ember.EntitySystem;
+	import ember.Nodes;
 
+	import pong.game.Tick;
 	import pong.game.attr.PlayerComponent;
 
 	import flash.display.DisplayObjectContainer;
@@ -22,7 +21,7 @@ package pong.game.sys.player
 		public var system:EntitySystem;
 		
 		[Inject]
-		public var time:Time;
+		public var tick:Tick;
 		
 		private var stage:Stage;
 		
@@ -37,7 +36,7 @@ package pong.game.sys.player
 		
 		public function onRegister():void
 		{
-			time.tick.add(iterate);
+			tick.add(iterate);
 			
 			stage = view.stage;
 			stage.focus = stage;
@@ -51,7 +50,7 @@ package pong.game.sys.player
 
 		public function onRemove():void
 		{
-			time.tick.remove(iterate);
+			tick.remove(iterate);
 
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -85,7 +84,7 @@ package pong.game.sys.player
 				isDown = false;
 		}
 		
-		private function iterate(time:uint):void
+		private function iterate():void
 		{
 			for (var node:PlayerNode = _nodes.head; node; node = node.next)
 			{

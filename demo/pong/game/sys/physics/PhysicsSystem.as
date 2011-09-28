@@ -2,11 +2,10 @@ package pong.game.sys.physics
 {
 	import Box2D.Dynamics.b2World;
 
-	import alecmce.time.Time;
-
-	import ember.Nodes;
 	import ember.EntitySystem;
+	import ember.Nodes;
 
+	import pong.game.Tick;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.actions.PhysicsActions;
 
@@ -18,7 +17,7 @@ package pong.game.sys.physics
 		public var system:EntitySystem;
 
 		[Inject]
-		public var time:Time;
+		public var tick:Tick;
 		
 		[Inject]
 		public var config:PhysicsConfig;
@@ -34,7 +33,7 @@ package pong.game.sys.physics
 		{
 			world = config.world;
 			
-			time.tick.add(iterate);
+			tick.add(iterate);
 			
 			_nodes = system.getNodes(PhysicsNode);
 			_nodes.nodeAdded.add(onNodeAdded);
@@ -48,7 +47,7 @@ package pong.game.sys.physics
 
 		public function onRemove():void
 		{
-			time.tick.remove(iterate);
+			tick.remove(iterate);
 			
 			_nodes.nodeAdded.remove(onNodeAdded);
 			_nodes.nodeRemoved.remove(onNodeRemoved);
@@ -68,7 +67,7 @@ package pong.game.sys.physics
 			physical.body = null;
 		}
 		
-		private function iterate(time:uint):void
+		private function iterate():void
 		{
 			world.Step(INV_FPS, 4, 2);
 			world.ClearForces();

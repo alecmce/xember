@@ -1,8 +1,6 @@
 package pong
 {
-	import alecmce.time.SimpleTime;
-	import alecmce.time.Time;
-
+	import pong.game.Tick;
 	import pong.game.ctrl.BootstrapGameCommand;
 	import pong.game.ctrl.SetupGameCommand;
 	import pong.score.ctrl.BootstrapScoreCommand;
@@ -21,7 +19,7 @@ package pong
 		
 		override public function startup():void
 		{
-			injector.mapSingletonOf(Time, SimpleTime);
+			injector.mapSingleton(Tick);
 			
 			commandMap.execute(BootstrapGameCommand);
 			commandMap.execute(BootstrapScoreCommand);
