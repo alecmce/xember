@@ -1,13 +1,13 @@
 package pong.game.ctrl
 {
-	import ember.EntitySystem;
-
+	import ember.core.EntitySystem;
+	import org.robotlegs.mvcs.Command;
 	import pong.game.events.BallEvent;
 	import pong.game.events.GoalEvent;
 	import pong.game.sys.physics.PhysicsConfig;
 	import pong.game.sys.physics.actions.PhysicsActions;
 
-	import org.robotlegs.mvcs.Command;
+
 
 	public class BootstrapGameCommand extends Command
 	{

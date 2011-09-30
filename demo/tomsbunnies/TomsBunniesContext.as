@@ -1,6 +1,6 @@
 package tomsbunnies
 {
-	import ember.EntitySystem;
+	import ember.core.EntitySystem;
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.mvcs.Context;
 	import tomsbunnies.ctrl.CreateBunniesCommand;

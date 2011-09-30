@@ -4,16 +4,16 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
-
-	import ember.Entity;
-	import ember.EntitySystem;
-
+	import ember.core.Entity;
+	import ember.core.EntitySystem;
+	import flash.display.BitmapData;
 	import pong.game.attr.AIComponent;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
-	import flash.display.BitmapData;
+
+
 	
 	public class CreateRightPaddleCommand
 	{

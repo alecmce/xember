@@ -1,16 +1,16 @@
 package pong.game.sys.player
 {
 	import Box2D.Common.Math.b2Vec2;
-
-	import ember.EntitySystem;
-	import ember.Nodes;
-
-	import pong.game.Tick;
-	import pong.game.attr.PlayerComponent;
-
+	import ember.core.EntitySystem;
+	import ember.core.Nodes;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
+	import pong.game.Tick;
+	import pong.game.attr.PlayerComponent;
+
+
+
 
 	public class PlayerSystem
 	{

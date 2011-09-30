@@ -1,18 +1,18 @@
 package pong.game.sys.render
 {
 	import Box2D.Common.Math.b2Vec2;
-
-	import ember.EntitySystem;
-	import ember.Nodes;
-
-	import pong.game.Tick;
-	import pong.game.attr.RenderComponent;
-	import pong.game.sys.physics.PhysicsConfig;
-
+	import ember.core.EntitySystem;
+	import ember.core.Nodes;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
+	import pong.game.Tick;
+	import pong.game.attr.RenderComponent;
+	import pong.game.sys.physics.PhysicsConfig;
+
+
+
 
 	public class SimpleBlitterRenderSystem
 	{

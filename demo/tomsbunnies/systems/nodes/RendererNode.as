@@ -1,9 +1,9 @@
 package tomsbunnies.systems.nodes
 {
-	import ember.Entity;
-
+	import ember.core.Entity;
 	import tomsbunnies.components.GraphicComponent;
 	import tomsbunnies.components.SpatialComponent;
+
 
 	public class RendererNode
 	{
