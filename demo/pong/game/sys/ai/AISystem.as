@@ -2,15 +2,15 @@ package pong.game.sys.ai
 {
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
-
-	import ember.Entity;
-	import ember.EntitySystem;
-	import ember.Nodes;
-
+	import ember.core.Entity;
+	import ember.core.EntitySystem;
+	import ember.core.Nodes;
 	import pong.game.Names;
 	import pong.game.Tick;
 	import pong.game.attr.AIComponent;
 	import pong.game.attr.PhysicalComponent;
+
+
 	
 	public class AISystem
 	{

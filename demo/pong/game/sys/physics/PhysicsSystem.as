@@ -1,10 +1,8 @@
 package pong.game.sys.physics
 {
 	import Box2D.Dynamics.b2World;
-
-	import ember.EntitySystem;
-	import ember.Nodes;
-
+	import ember.core.EntitySystem;
+	import ember.core.Nodes;
 	import pong.game.Tick;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.actions.PhysicsActions;

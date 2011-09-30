@@ -1,12 +1,12 @@
 package tomsbunnies.ctrl
 {
-	import ember.EntitySystem;
-
+	import ember.core.EntitySystem;
+	import org.robotlegs.mvcs.Command;
 	import tomsbunnies.systems.BounceSystem;
 	import tomsbunnies.systems.ProcessManager;
 	import tomsbunnies.systems.RenderSystem;
 
-	import org.robotlegs.mvcs.Command;
+
 	
 	public class RegisterSystemsCommand extends Command
 	{

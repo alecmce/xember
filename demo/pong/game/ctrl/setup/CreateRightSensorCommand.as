@@ -4,13 +4,13 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
-
-	import ember.Entity;
-	import ember.EntitySystem;
-
+	import ember.core.Entity;
+	import ember.core.EntitySystem;
 	import pong.game.Names;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.PhysicsConfig;
+
+
 
 	public class CreateRightSensorCommand
 	{

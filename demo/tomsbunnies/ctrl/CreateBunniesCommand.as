@@ -1,7 +1,7 @@
 package tomsbunnies.ctrl
 {
-	import ember.Entity;
-	import ember.EntitySystem;
+	import ember.core.Entity;
+	import ember.core.EntitySystem;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import mx.core.BitmapAsset;

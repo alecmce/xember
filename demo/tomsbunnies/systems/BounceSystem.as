@@ -1,11 +1,11 @@
 package tomsbunnies.systems
 {
-	import ember.Nodes;
-	import ember.EntitySystem;
-
+	import ember.core.EntitySystem;
+	import ember.core.Nodes;
 	import tomsbunnies.components.SpatialComponent;
 	import tomsbunnies.events.Tick;
 	import tomsbunnies.systems.nodes.SpatialNode;
+
 
 	
 	public class BounceSystem

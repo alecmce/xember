@@ -1,13 +1,13 @@
 package  
 {
-
-	import ember.AllEntitySystemTests;
+	
+	import ember.AllXemberTests;
 	
 	[Suite]
 	public class AllTests 
 	{
 		
-		public var entities:AllEntitySystemTests;
+		public var xember:AllXemberTests;
 
 	}
 }
