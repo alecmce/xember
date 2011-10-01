@@ -5,18 +5,24 @@ package ember.io
 		
 		public static function objectsAreEquivalent(a:Object, b:Object):Boolean
 		{
-			var value:Boolean = false;
-			if (!a || !b)
+			if (a == null || b == null)
 				return false;
+			
+			if (isValue(a) && isValue(b))
+				return a == b;
 			
 			for (var key:String in a)
 			{
-				value = true;
 				if (a[key] != b[key] && !objectsAreEquivalent(a[key], b[key]))
 					return false;
 			}
 			
-			return value;
+			return true;
+		}
+		
+		private static function isValue(object:Object):Boolean
+		{
+			return object is String || object is Number || object is Boolean;
 		}
 		
 	}

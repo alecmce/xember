@@ -1,5 +1,6 @@
 package ember.io
 {
+	import asunit.asserts.assertEquals;
 	import asunit.asserts.assertFalse;
 	import asunit.asserts.assertTrue;
 
@@ -12,7 +13,8 @@ package ember.io
 		[Before]
 		public function before():void
 		{
-			encoder = new ComponentEncoder();
+			var factory:ComponentConfigFactory = new ComponentConfigFactory();
+			encoder = new ComponentEncoder(factory);
 		}
 		
 		[After]
@@ -51,6 +53,24 @@ package ember.io
 			var a:Object = encoder.encode(componentA);
 			var b:Object = encoder.encode(componentB);
 			assertFalse(CompareVOs.objectsAreEquivalent(a, b));
+		}
+		
+		[Test]
+		public function decode_reverses_encode():void
+		{
+			var component:MockSpatialComponent;
+			
+			component = new MockSpatialComponent();
+			component.x = Math.random() * 100;
+			component.y = Math.random() * 100;
+
+			var object:Object = encoder.encode(component);
+
+			var roundtrip:MockSpatialComponent;
+			roundtrip = encoder.decode(object) as MockSpatialComponent;
+		
+			assertEquals(roundtrip.x, component.x);
+			assertEquals(roundtrip.y, component.y);
 		}
 		
 	}

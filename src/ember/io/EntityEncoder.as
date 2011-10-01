@@ -1,14 +1,15 @@
 package ember.io
 {
 	import ember.core.Entity;
+	import ember.core.EntitySystem;
 	
-	public class EntityEncoder
+	final internal class EntityEncoder
 	{
 		private var _componentEncoder:ComponentEncoder;
 		
-		public function EntityEncoder()
+		public function EntityEncoder(componentEncoder:ComponentEncoder)
 		{
-			_componentEncoder = new ComponentEncoder();
+			_componentEncoder = componentEncoder;
 		}
 		
 		public function encode(entity:Entity):Object
@@ -24,6 +25,18 @@ package ember.io
 				output.name = entity.name;
 			
 			return output;
+		}
+
+		public function decode(system:EntitySystem, object:Object):Entity
+		{
+			var name:String = object["name"] || "";
+			var entity:Entity = system.createEntity(name);
+
+			var list:Object = object.components;
+			for each (var component:Object in list)
+				entity.addComponent(_componentEncoder.decode(component));
+			
+			return entity;
 		}
 		
 	}

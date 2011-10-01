@@ -1,13 +1,14 @@
 package ember.io
 {
+	import flash.utils.getDefinitionByName;
 	
-	public class ComponentEncoder
+	final internal class ComponentEncoder
 	{
 		private var _configFactory:ComponentConfigFactory;
 		
-		public function ComponentEncoder()
+		public function ComponentEncoder(configFactory:ComponentConfigFactory)
 		{
-			_configFactory = new ComponentConfigFactory();
+			_configFactory = configFactory;
 		}
 		
 		public function encode(component:Object):Object
@@ -24,6 +25,21 @@ package ember.io
 			output[config.type] = list;
 			
 			return output;
+		}
+		
+		public function decode(object:Object):Object
+		{
+			for (var type:String in object)
+			{
+				var componentClass:Class = getDefinitionByName(type) as Class;
+				var component:* = new componentClass();
+				
+				var values:Object = object[type];
+				for (var property:String in values)
+					component[property] = values[property];
+			}
+			
+			return component;
 		}
 	}
 }
