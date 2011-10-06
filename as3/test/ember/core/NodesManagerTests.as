@@ -1,5 +1,6 @@
 package ember.core
 {
+	import asunit.asserts.assertEquals;
 	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertNull;
 	import asunit.asserts.assertSame;
@@ -7,6 +8,7 @@ package ember.core
 	import mocks.MockRenderComponent;
 	import mocks.MockRenderNode;
 	import mocks.MockSpatialComponent;
+	import mocks.MockSpatialNode;
 
 
 	public class NodesManagerTests
@@ -190,6 +192,76 @@ package ember.core
 			
 			entity.removeComponent(MockRenderComponent);
 			assertNull(nodes.head.render);
+		}
+		
+		[Test]
+		public function an_empty_nodes_reports_0_count():void
+		{
+			var nodes:Nodes = _manager.get(MockSpatialNode);
+			assertEquals(0, nodes.count)
+		}
+		
+		
+		[Test]
+		public function nodes_reports_accurate_count_after_construction():void
+		{
+			var count:uint = 5;
+			
+			for (var i:int = 0; i < count; i++)
+			{
+				var entity:Entity = _entities.create();
+				entity.addComponent(new MockSpatialComponent());
+			}
+
+			var nodes:Nodes = _manager.get(MockSpatialNode);
+			assertEquals(count, nodes.count);
+		}
+		
+		[Test]
+		public function nodes_count_is_maintained_as_entities_are_added():void
+		{
+			var entity:Entity, i:int;
+
+			var count:uint = 5;
+			for (i = 0; i < count; i++)
+			{
+				entity = _entities.create();
+				entity.addComponent(new MockSpatialComponent());
+			}
+
+			var nodes:Nodes = _manager.get(MockSpatialNode);
+			
+			for (i = 0; i < count; i++)
+			{
+				entity = _entities.create();
+				entity.addComponent(new MockSpatialComponent());
+			}
+			
+			assertEquals(count * 2, nodes.count);
+		}
+		
+		[Test]
+		public function nodes_count_is_maintained_as_entities_are_removed():void
+		{
+			var entity:Entity, i:int;
+
+			var count:uint = 10;
+			for (i = 0; i < count; i++)
+			{
+				entity = _entities.create("id" + i);
+				entity.addComponent(new MockSpatialComponent());
+			}
+
+			var nodes:Nodes = _manager.get(MockSpatialNode);
+			
+			var removed:uint = 3;
+			for (i = 0; i < removed; i++)
+			{
+				entity = _entities.get("id" + i);
+				entity.removeComponent(MockSpatialComponent);
+			}
+			
+			assertEquals(count - removed, nodes.count);
 		}
 		
 	}

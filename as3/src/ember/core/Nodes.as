@@ -17,6 +17,8 @@ package ember.core
 		private var _head:*;
 		private var _tail:*;
 		
+		private var _count:uint;
+		
 		public function Nodes(node:Class, config:NodesConfig)
 		{
 			_node = node;
@@ -48,6 +50,7 @@ package ember.core
 			var node:* = _config.generateNode(entity);
 			addToLinkedList(node);
 			
+			++_count;
 			_entityMap[entity] = node;
 			
 			if (_nodeAdded)
@@ -68,6 +71,7 @@ package ember.core
 			removeFromLinkedList(node);
 			
 			delete _entityMap[entity];
+			--_count;
 			
 			if (_nodeRemoved)
 				_nodeRemoved.dispatch(node);
@@ -120,6 +124,11 @@ package ember.core
 		public function get nodeRemoved():Signal
 		{
 			return _nodeRemoved ||= new Signal();
+		}
+
+		public function get count():uint
+		{
+			return _count;
 		}
 		
 	}
