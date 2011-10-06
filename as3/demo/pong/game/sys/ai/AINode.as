@@ -7,8 +7,11 @@ package pong.game.sys.ai
 	{
 		public var prev:AINode;
 		public var next:AINode;
-		
+
+        [Ember(required)]
 		public var ai:AIComponent;
+        
+        [Ember(required)]
 		public var physical:PhysicalComponent;
 	}
 }

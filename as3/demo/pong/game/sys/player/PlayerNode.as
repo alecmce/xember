@@ -8,8 +8,11 @@ package pong.game.sys.player
 	{
 		public var prev:PlayerNode;
 		public var next:PlayerNode;
-		
+
+        [Ember(required)]
 		public var player:PlayerComponent;
+        
+        [Ember(required)]
 		public var physical:PhysicalComponent;
 	}
 }
