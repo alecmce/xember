@@ -8,15 +8,17 @@ package ember.core
 	{
 		private var _name:String;
 		
-		private var _list:Vector.<Object>;
-		private var _components:Dictionary;
+		private var _listOfComponents:Vector.<Object>;
+		private var _listOfClasses:Vector.<Class>;
+		private var _components:Dictionary; // TODO do I need this?
 		private var _componentAdded:Signal;
 		private var _componentRemoved:Signal;
 		
 		public function Entity(name:String, componentAdded:Signal, componentRemoved:Signal)
 		{
 			_name = name;
-			_list = new Vector.<Object>();
+			_listOfComponents = new Vector.<Object>();
+			_listOfClasses = new Vector.<Class>();
 			_components = new Dictionary();
 			_componentAdded = componentAdded;
 			_componentRemoved = componentRemoved;
@@ -26,13 +28,19 @@ package ember.core
 		{
 			componentClass ||= component["constructor"];
 			_components[componentClass] = component;
-			_list.push(component);
+			_listOfComponents.push(component);
+			_listOfClasses.push(componentClass);
 			_componentAdded.dispatch(this, componentClass);
 		}
 
 		public function getComponents():Vector.<Object>
 		{
-			return _list;
+			return _listOfComponents;
+		}
+		
+		public function getClasses():Vector.<Class>
+		{
+			return _listOfClasses;
 		}
 
 		public function getComponent(component:Class):Object
@@ -46,7 +54,7 @@ package ember.core
 				return;
 			
 			delete _components[component];
-			_list.splice(_list.indexOf(component), 1);
+			_listOfComponents.splice(_listOfComponents.indexOf(component), 1);
 			_componentRemoved.dispatch(this, component);
 		}
 
