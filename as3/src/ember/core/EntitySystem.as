@@ -35,12 +35,13 @@ package ember.core
 
 		public function containsEntity(entity:Entity):Boolean
 		{
-			return _entities.contains(entity as Entity);
+			return _entities.contains(entity);
 		}
 
 		public function removeEntity(entity:Entity):void
 		{
-			_entities.remove(entity as Entity);
+			_nodes.removeEntity(entity);
+			_entities.remove(entity);
 		}
 
 		public function removeAllEntities():void

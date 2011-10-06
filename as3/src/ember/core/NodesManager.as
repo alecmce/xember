@@ -76,6 +76,13 @@ package ember.core
 			}
 		}
 
+		public function removeEntity(entity:Entity):void
+		{
+			var components:Vector.<Class> = entity.getClasses();
+			for each (var component:Class in components)
+				onEntityComponentRemoved(entity, component);
+		}
+
 		public function clear():void
 		{
 			for each (var nodes:Nodes in _nodesMap)
