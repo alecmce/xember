@@ -1,13 +1,13 @@
 package ember.core
 {
-	final internal class NodesConfigList
+	final internal class NodeConfigComponentsList
 	{
 		
 		private var _names:Vector.<String>;
 		private var _components:Vector.<Class>;
 		private var _count:uint;
 		
-		public function NodesConfigList()
+		public function NodeConfigComponentsList()
 		{
 			_names = new Vector.<String>();
 			_components = new Vector.<Class>();
@@ -26,7 +26,7 @@ package ember.core
 			return _components.indexOf(component) != -1;
 		}
 
-		public function hasConfigList(entity:Entity):Boolean
+		public function areComponentsIn(entity:Entity):Boolean
 		{
 			var i:int = _components.length;
 			while (i--)

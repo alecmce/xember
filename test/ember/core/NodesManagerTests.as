@@ -3,6 +3,7 @@ package ember.core
 	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertNull;
 	import asunit.asserts.assertSame;
+
 	import mocks.MockRenderComponent;
 	import mocks.MockRenderNode;
 	import mocks.MockSpatialComponent;
@@ -160,6 +161,35 @@ package ember.core
 			_manager.clear();
 			
 			assertNull(nodes.head);
+		}
+		
+		[Test]
+		public function optional_component_is_added_to_existing_node_when_added_to_component():void
+		{
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockSpatialComponent());
+
+			var nodes:Nodes = _manager.get(MockOptionalNode);
+			
+			var render:MockRenderComponent = new MockRenderComponent();
+			entity.addComponent(render);
+			
+			assertSame(render, nodes.head.render);
+		}
+		
+		[Test]
+		public function optional_component_is_removed_from_existing_node_when_removed_from_component():void
+		{
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockSpatialComponent());
+			
+			var render:MockRenderComponent = new MockRenderComponent();
+			entity.addComponent(render);
+
+			var nodes:Nodes = _manager.get(MockOptionalNode);
+			
+			entity.removeComponent(MockRenderComponent);
+			assertNull(nodes.head.render);
 		}
 		
 	}

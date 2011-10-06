@@ -3,41 +3,26 @@ package ember.core
 	final internal class NodesConfig
 	{
 		
-		private var _required:NodesConfigList;
-		private var _optional:NodesConfigList;
+		private var _required:NodeConfigComponentsList;
+		private var _optional:NodeConfigComponentsList;
 		
 		public var nodeClass:Class;
 		public var entityField:String;
 
 		public function NodesConfig()
 		{
-			_required = new NodesConfigList();
-			_optional = new NodesConfigList();
+			_required = new NodeConfigComponentsList();
+			_optional = new NodeConfigComponentsList();
 		}
 		
-		public function required(name:String, component:Class):void
+		public function get requiredComponents():NodeConfigComponentsList
 		{
-			_required.add(name, component);
+			return _required;
 		}
-		
-		public function isRequired(component:Class):Boolean
+
+		public function get optionalComponents():NodeConfigComponentsList
 		{
-			return _required.contains(component);
-		}
-		
-		public function optional(name:String, component:Class):void
-		{
-			_optional.add(name, component);
-		}
-		
-		public function isOptional(component:Class):Boolean
-		{	
-			return _optional.contains(component);
-		}
-		
-		public function matchesConfiguration(entity:Entity):Boolean
-		{
-			return _required.hasConfigList(entity);
+			return _optional;
 		}
 		
 		public function generateNode(entity:Entity):*

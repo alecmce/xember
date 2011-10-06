@@ -15,8 +15,6 @@ package ember.core
 
 	import flash.display.Sprite;
 
-
-	
 	public class NodesFactoryTests
 	{
 		private var factory:NodesFactory;
@@ -41,12 +39,18 @@ package ember.core
 		}
 		
 		[Test]
+		public function a_metadata_flagged_variable_is_part_of_config_definition():void
+		{
+			var config:NodesConfig = factory.getClassConfiguration(MockRenderNode);
+			assertTrue(config.requiredComponents.contains(MockSpatialComponent));
+			assertTrue(config.requiredComponents.contains(MockRenderComponent));
+		}
+		
+		[Test]
 		public function only_metadata_flagged_variables_are_part_of_config_definition():void
 		{
 			var config:NodesConfig = factory.getClassConfiguration(MockRenderNode);
-			assertTrue(config.isRequired(MockSpatialComponent));
-			assertTrue(config.isRequired(MockRenderComponent));
-			assertFalse(config.isRequired(MockPropertyComponent));
+			assertFalse(config.requiredComponents.contains(MockPropertyComponent));
 		}
 		
 		[Test]

@@ -15,20 +15,19 @@ package ember.core
 		
 		public function generateSet(nodeClass:Class, list:Vector.<Entity>):Nodes
 		{
-			var configuration:NodesConfig = getClassConfiguration(nodeClass);
-			
-			var entitySet:Nodes = new Nodes(nodeClass, configuration);
+			var config:NodesConfig = getClassConfiguration(nodeClass);
+			var nodes:Nodes = new Nodes(nodeClass, config);
 			
 			var len:int = list.length;
 			for (var i:int = 0; i < len; i++)
 			{
 				var entity:Entity = list[i];
 				
-				if (configuration.matchesConfiguration(entity))
-					entitySet.add(entity);
+				if (config.requiredComponents.areComponentsIn(entity))
+					nodes.add(entity);
 			}
 			
-			return entitySet;
+			return nodes;
 		}
 		
 		public function getClassConfiguration(nodeClass:Class):NodesConfig
@@ -60,7 +59,7 @@ package ember.core
 							
 				var metadata:XMLList = atom.metadata.(@name == "Ember");
 				if (metadata.length() && metadata.arg.(@value=="required").length())
-					config.required(atom.@name, component);
+					config.requiredComponents.add(atom.@name, component);
 			}
 			
 			return config;

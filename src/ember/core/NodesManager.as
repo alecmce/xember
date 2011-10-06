@@ -8,11 +8,17 @@ package ember.core
 		private var _nodesMap:Dictionary;
 		private var _factory:NodesFactory;
 		
+		private var _required:NodesComponentMap;
+		private var _optional:NodesComponentMap;
+		
 		public function NodesManager(entities:Entities)
 		{
 			_entities = entities;
 			_entities.entityComponentAdded.add(onEntityComponentAdded);
 			_entities.entityComponentRemoved.add(onEntityComponentRemoved);
+			
+			_required = new NodesComponentMap();
+			_optional = new NodesComponentMap();
 			
 			_nodesMap = new Dictionary();
 			_factory = new NodesFactory();
@@ -20,14 +26,20 @@ package ember.core
 
 		public function get(nodeClass:Class):Nodes
 		{
-			return _nodesMap[nodeClass] ||= _factory.generateSet(nodeClass, _entities.list);
+			var nodes:Nodes = _nodesMap[nodeClass] ||= _factory.generateSet(nodeClass, _entities.list);
+
+			var config:NodesConfig = nodes.config;
+			_required.add(nodes, config.requiredComponents);
+			_optional.add(nodes, config.optionalComponents);
+			
+			return nodes;
 		}
 		
 		private function onEntityComponentAdded(entity:Entity, component:Class):void
 		{
 			for each (var nodes:Nodes in _nodesMap)
 			{
-				if (nodes.config.matchesConfiguration(entity))
+				if (nodes.config.requiredComponents.areComponentsIn(entity))
 					nodes.add(entity);
 			}
 		}
@@ -36,7 +48,7 @@ package ember.core
 		{
 			for each (var nodes:Nodes in _nodesMap)
 			{
-				if (nodes.config.isRequired(component))
+				if (nodes.config.requiredComponents.contains(component))
 					nodes.remove(entity);
 			}
 		}

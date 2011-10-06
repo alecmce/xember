@@ -22,10 +22,10 @@ package ember.core
 			entity.addComponent(new MockRenderComponent());
 
 			var config:NodesConfig = new NodesConfig();
-			config.required("spatial", MockSpatialComponent);
-			config.required("render", MockRenderComponent);
+			config.requiredComponents.add("spatial", MockSpatialComponent);
+			config.requiredComponents.add("render", MockRenderComponent);
 			
-			assertTrue(config.matchesConfiguration(entity));
+			assertTrue(config.requiredComponents.areComponentsIn(entity));
 		}
 		
 		[Test]
@@ -36,10 +36,25 @@ package ember.core
 			entity.addComponent(new MockSpatialComponent());
 
 			var config:NodesConfig = new NodesConfig();
-			config.required("spatial", MockSpatialComponent);
-			config.required("render", MockRenderComponent);
+			config.requiredComponents.add("spatial", MockSpatialComponent);
+			config.requiredComponents.add("render", MockRenderComponent);
 			
-			assertFalse(config.matchesConfiguration(entity));
+			assertFalse(config.requiredComponents.areComponentsIn(entity));
+		}
+		
+		[Test]
+		public function optional_component_isnt_required_for_match():void
+		{
+			var entities:Entities = new Entities();
+			var entity:Entity = entities.create();
+			entity.addComponent(new MockSpatialComponent());
+			
+			var config:NodesConfig = new NodesConfig();
+			config.nodeClass = MockOptionalNode;
+			config.requiredComponents.add("spatial", MockSpatialComponent);
+			config.optionalComponents.add("render", MockRenderComponent);
+			
+			assertTrue(config.requiredComponents.areComponentsIn(entity));
 		}
 		
 		[Test]
@@ -55,13 +70,33 @@ package ember.core
 
 			var config:NodesConfig = new NodesConfig();
 			config.nodeClass = MockRenderNode;
-			config.required("spatial", MockSpatialComponent);
-			config.required("render", MockRenderComponent);
+			config.requiredComponents.add("spatial", MockSpatialComponent);
+			config.requiredComponents.add("render", MockRenderComponent);
 
 			var node:MockRenderNode = config.generateNode(entity);
 			
 			assertNotNull(node);
 			assertSame(render, node.render);
+			assertSame(spatial, node.spatial);
+		}
+		
+		[Test]
+		public function generated_node_includes_optional_components():void
+		{
+			var render:MockRenderComponent = new MockRenderComponent();
+			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			
+			var entities:Entities = new Entities();
+			var entity:Entity = entities.create();
+			entity.addComponent(spatial);
+			entity.addComponent(render);
+
+			var config:NodesConfig = new NodesConfig();
+			config.nodeClass = MockOptionalNode;
+			config.requiredComponents.add("spatial", MockSpatialComponent);
+			config.optionalComponents.add("render", MockRenderComponent);
+
+			var node:MockOptionalNode = config.generateNode(entity);
 			assertSame(spatial, node.spatial);
 		}
 		
