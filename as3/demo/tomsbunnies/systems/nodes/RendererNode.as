@@ -10,8 +10,11 @@ package tomsbunnies.systems.nodes
 		
 		public var prev:RendererNode;
 		public var next:RendererNode;
-		
+
+        [Ember(required)]
 		public var spatial:SpatialComponent;
+        
+        [Ember(required)]
 		public var graphic:GraphicComponent;
 	}
 }
