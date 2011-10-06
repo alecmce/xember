@@ -8,14 +8,10 @@ package tomsbunnies.ctrl
 	import org.robotlegs.mvcs.Command;
 	import tomsbunnies.components.GraphicComponent;
 	import tomsbunnies.components.SpatialComponent;
-
-
-
-
-
+	
 	public class CreateBunniesCommand extends Command
 	{
-		[Embed(source = "../assets/wabbit_alpha.png")]
+		[Embed(source = "../../../assets/wabbit_alpha.png")]
 		public const BunnyAsset:Class;
 		
 		private var _system:EntitySystem;

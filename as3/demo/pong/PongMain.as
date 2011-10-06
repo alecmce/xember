@@ -10,7 +10,6 @@ package pong
 		public function PongMain()
 {
 			context = new PongContext(this);
-			
 //			addChild(new Stats());
 		}
 		

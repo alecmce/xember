@@ -6,8 +6,6 @@ package tomsbunnies.ctrl
 	import tomsbunnies.systems.ProcessManager;
 	import tomsbunnies.systems.RenderSystem;
 
-
-	
 	public class RegisterSystemsCommand extends Command
 	{
 
