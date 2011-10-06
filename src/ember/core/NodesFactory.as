@@ -58,8 +58,13 @@ package ember.core
 				}
 							
 				var metadata:XMLList = atom.metadata.(@name == "Ember");
-				if (metadata.length() && metadata.arg.(@value=="required").length())
-					config.requiredComponents.add(atom.@name, component);
+				if (metadata.length())
+				{
+					if (metadata.arg.(@value=="required").length())
+						config.requiredComponents.add(atom.@name, component);
+					else if (metadata.arg.(@value=="optional").length())
+						config.optionalComponents.add(atom.@name, component);
+				}
 			}
 			
 			return config;

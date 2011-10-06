@@ -54,6 +54,11 @@ package ember.core
 				_nodeAdded.dispatch(node);
 		}
 		
+		public function get(entity:Entity):Object
+		{
+			return _entityMap[entity];
+		}
+		
 		public function remove(entity:Entity):void
 		{
 			if (_entityMap[entity] == null)

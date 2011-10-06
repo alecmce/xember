@@ -29,27 +29,50 @@ package ember.core
 			var nodes:Nodes = _nodesMap[nodeClass] ||= _factory.generateSet(nodeClass, _entities.list);
 
 			var config:NodesConfig = nodes.config;
-			_required.add(nodes, config.requiredComponents);
-			_optional.add(nodes, config.optionalComponents);
+			_required.add(config.requiredComponents, nodes);
+			_optional.add(config.optionalComponents, nodes);
 			
 			return nodes;
 		}
 		
 		private function onEntityComponentAdded(entity:Entity, component:Class):void
 		{
-			for each (var nodes:Nodes in _nodesMap)
+			var list:Vector.<Nodes>, nodes:Nodes;
+			
+			list = _required.getNodesFor(component);
+			for each (nodes in list)
 			{
 				if (nodes.config.requiredComponents.areComponentsIn(entity))
 					nodes.add(entity);
+			}
+			
+			list = _optional.getNodesFor(component);
+			for each (nodes in list)
+			{
+				var node:* = nodes.get(entity);
+				if (node)
+					nodes.config.optionalComponents.setComponent(node, entity, component);
 			}
 		}
 		
 		private function onEntityComponentRemoved(entity:Entity, component:Class):void
 		{
-			for each (var nodes:Nodes in _nodesMap)
+			var list:Vector.<Nodes>, nodes:Nodes, node:Object;
+			
+			list = _required.getNodesFor(component);
+			for each (nodes in list)
 			{
-				if (nodes.config.requiredComponents.contains(component))
+				node = nodes.get(entity);
+				if (node)
 					nodes.remove(entity);
+			}
+			
+			list = _optional.getNodesFor(component);
+			for each (nodes in list)
+			{
+				node = nodes.get(entity);
+				if (node)
+					nodes.config.optionalComponents.clearComponent(node, component);
 			}
 		}
 
