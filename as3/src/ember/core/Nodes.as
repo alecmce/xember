@@ -67,7 +67,7 @@ package ember.core
 			if (_entityMap[entity] == null)
 				return;
 
-			var node:* = _entityMap[entity];
+			var node:Object = _entityMap[entity];
 			removeFromLinkedList(node);
 			
 			delete _entityMap[entity];
