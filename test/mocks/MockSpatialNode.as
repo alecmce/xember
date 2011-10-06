@@ -9,6 +9,7 @@ package mocks
 		
 		public var entity:Entity;
 		
+		[Ember(required)]
 		public var spatial:MockSpatialComponent;
 	}
 }

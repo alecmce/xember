@@ -2,7 +2,7 @@ package ember.core
 {
 	import org.robotlegs.core.IInjector;
 	
-	public class EntitySystem
+	final public class EntitySystem
 	{
 		
 		private var _entities:Entities;

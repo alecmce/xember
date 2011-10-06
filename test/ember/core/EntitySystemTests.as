@@ -5,11 +5,13 @@ package ember.core
 	import asunit.asserts.assertNull;
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertTrue;
+
 	import mocks.MockRenderNode;
 	import mocks.MockRenderSystem;
 	import mocks.MockSpatialComponent;
 	import mocks.MockSpatialNode;
 	import mocks.MockSystem;
+
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
 
 
@@ -129,8 +131,6 @@ package ember.core
 			b.addComponent(new MockSpatialComponent());
 
 			var nodes:Nodes = system.getNodes(MockSpatialNode);
-			assertSame(a, (nodes.head as MockSpatialNode).entity);
-			
 			system.removeAllEntities();
 			assertNull(nodes.head);
 		}

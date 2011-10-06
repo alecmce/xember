@@ -36,7 +36,7 @@ package ember.core
 		{
 			for each (var nodes:Nodes in _nodesMap)
 			{
-				if (nodes.config.contains(component))
+				if (nodes.config.isRequired(component))
 					nodes.remove(entity);
 			}
 		}

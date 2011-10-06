@@ -2,7 +2,7 @@ package ember.io
 {
 	import flash.utils.getDefinitionByName;
 	
-	final internal class ComponentEncoder
+	final public class ComponentEncoder
 	{
 		private var _configFactory:ComponentConfigFactory;
 		

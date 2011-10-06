@@ -51,15 +51,16 @@ package ember.core
 			config.nodeClass = nodeClass;
 			for each (var atom:XML in variables)
 			{
-				var nodeName:String = atom.@name;
-				if (nodeName == "next" || nodeName == "prev")
-					continue;
-
 				var component:Class = getDefinitionByName(atom.@type) as Class;
 				if (component == Entity)
+				{
 					config.entityField = atom.@name;
-				else
-					config.add(nodeName, component);
+					continue;
+				}
+							
+				var metadata:XMLList = atom.metadata.(@name == "Ember");
+				if (metadata.length() && metadata.arg.(@value=="required").length())
+					config.required(atom.@name, component);
 			}
 			
 			return config;

@@ -3,8 +3,7 @@ package tomsbunnies.systems.nodes
 	import ember.core.Entity;
 	import tomsbunnies.components.GraphicComponent;
 	import tomsbunnies.components.SpatialComponent;
-
-
+	
 	public class RendererNode
 	{
 		public var entity:Entity;

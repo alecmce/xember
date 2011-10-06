@@ -86,9 +86,9 @@ package ember.core
 
 			var entity:Entity = _entities.create();
 			entity.addComponent(spatial);
-			entity.addComponent(render);
 			
 			var nodes:Nodes = _manager.get(MockRenderNode);
+			entity.addComponent(render);
 			
 			assertSame(entity, nodes.head.entity);
 		}

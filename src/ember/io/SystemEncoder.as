@@ -3,7 +3,7 @@ package ember.io
 	import ember.core.Entity;
 	import ember.core.EntitySystem;
 	
-	public class SystemEncoder
+	final public class SystemEncoder
 	{
 
 		private var _entityEncoder:EntityEncoder;

@@ -1,14 +1,19 @@
 package ember.core
 {
+	import asunit.asserts.assertFalse;
 	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertNull;
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertThrows;
-	import flash.display.Sprite;
+	import asunit.asserts.assertTrue;
+
 	import mocks.MockEntityLessNode;
+	import mocks.MockPropertyComponent;
 	import mocks.MockRenderComponent;
 	import mocks.MockRenderNode;
 	import mocks.MockSpatialComponent;
+
+	import flash.display.Sprite;
 
 
 	
@@ -33,6 +38,15 @@ package ember.core
 		{
 			var config:NodesConfig = factory.getClassConfiguration(MockRenderNode);
 			assertNotNull(config);
+		}
+		
+		[Test]
+		public function only_metadata_flagged_variables_are_part_of_config_definition():void
+		{
+			var config:NodesConfig = factory.getClassConfiguration(MockRenderNode);
+			assertTrue(config.isRequired(MockSpatialComponent));
+			assertTrue(config.isRequired(MockRenderComponent));
+			assertFalse(config.isRequired(MockPropertyComponent));
 		}
 		
 		[Test]
@@ -84,7 +98,7 @@ package ember.core
 			var spatial:MockSpatialComponent = new MockSpatialComponent();
 			var render:MockRenderComponent = new MockRenderComponent();
 			var entities:Entities = new Entities();
-
+			
 			var entity:Entity = entities.create();
 			entity.addComponent(spatial);
 			entity.addComponent(render);

@@ -7,6 +7,7 @@ package pong.game.sys.physics
 		public var prev:PhysicsNode;
 		public var next:PhysicsNode;
 		
+		[Ember(required)]
 		public var physical:PhysicalComponent;
 	}
 }

@@ -7,8 +7,6 @@ package pong.game.sys.physics
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.actions.PhysicsActions;
 
-
-
 	public class PhysicsSystem
 	{
 		private static const INV_FPS:Number = 1 / 60;

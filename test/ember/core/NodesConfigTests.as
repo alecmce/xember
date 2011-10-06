@@ -4,6 +4,7 @@ package ember.core
 	import asunit.asserts.assertNotNull;
 	import asunit.asserts.assertSame;
 	import asunit.asserts.assertTrue;
+
 	import mocks.MockRenderComponent;
 	import mocks.MockRenderNode;
 	import mocks.MockSpatialComponent;
@@ -21,8 +22,8 @@ package ember.core
 			entity.addComponent(new MockRenderComponent());
 
 			var config:NodesConfig = new NodesConfig();
-			config.add("spatial", MockSpatialComponent);
-			config.add("render", MockRenderComponent);
+			config.required("spatial", MockSpatialComponent);
+			config.required("render", MockRenderComponent);
 			
 			assertTrue(config.matchesConfiguration(entity));
 		}
@@ -35,8 +36,8 @@ package ember.core
 			entity.addComponent(new MockSpatialComponent());
 
 			var config:NodesConfig = new NodesConfig();
-			config.add("spatial", MockSpatialComponent);
-			config.add("render", MockRenderComponent);
+			config.required("spatial", MockSpatialComponent);
+			config.required("render", MockRenderComponent);
 			
 			assertFalse(config.matchesConfiguration(entity));
 		}
@@ -54,8 +55,8 @@ package ember.core
 
 			var config:NodesConfig = new NodesConfig();
 			config.nodeClass = MockRenderNode;
-			config.add("spatial", MockSpatialComponent);
-			config.add("render", MockRenderComponent);
+			config.required("spatial", MockSpatialComponent);
+			config.required("render", MockRenderComponent);
 
 			var node:MockRenderNode = config.generateNode(entity);
 			

@@ -3,37 +3,41 @@ package ember.core
 	final internal class NodesConfig
 	{
 		
-		private var _nodeNames:Vector.<String>;
-		private var _components:Vector.<Class>;
-		private var _count:uint;
+		private var _required:NodesConfigList;
+		private var _optional:NodesConfigList;
 		
 		public var nodeClass:Class;
 		public var entityField:String;
 
 		public function NodesConfig()
 		{
-			_nodeNames = new Vector.<String>();
-			_components = new Vector.<Class>();
-			_count = 0;
+			_required = new NodesConfigList();
+			_optional = new NodesConfigList();
 		}
 		
-		public function add(nodeName:String, component:Class):void
+		public function required(name:String, component:Class):void
 		{
-			_nodeNames.push(nodeName);
-			_components.push(component);
-			++_count;
+			_required.add(name, component);
+		}
+		
+		public function isRequired(component:Class):Boolean
+		{
+			return _required.contains(component);
+		}
+		
+		public function optional(name:String, component:Class):void
+		{
+			_optional.add(name, component);
+		}
+		
+		public function isOptional(component:Class):Boolean
+		{	
+			return _optional.contains(component);
 		}
 		
 		public function matchesConfiguration(entity:Entity):Boolean
 		{
-			var i:int = _components.length;
-			while (i--)
-			{
-				if (!entity.hasComponent(_components[i]))
-					return false;
-			}
-			
-			return true;
+			return _required.hasConfigList(entity);
 		}
 		
 		public function generateNode(entity:Entity):*
@@ -43,21 +47,10 @@ package ember.core
 			if (entityField)
 				node[entityField] = entity;
 			
-			var i:int = _count;
-			while (i--)
-			{
-				var nodeName:String = _nodeNames[i];
-				var component:Class = _components[i];
-				var value:Object = entity.getComponent(component);
-				node[nodeName] = value;
-			}
+			_required.populateNode(node, entity);
+			_optional.populateNode(node, entity);
 			
 			return node;
-		}
-
-		public function contains(component:Class):Boolean
-		{
-			return _components.indexOf(component) != -1;
 		}
 		
 	}

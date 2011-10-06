@@ -9,8 +9,14 @@ package mocks
 		public var prev:MockRenderNode;
 		public var next:MockRenderNode;
 		
+		[Ember(required)]
 		public var spatial:MockSpatialComponent;
+		
+		[Ember(required)]
 		public var render:MockRenderComponent;
+
+		[Ember(optional)]
+		public var other:MockPropertyComponent;
 
 	}
 }
