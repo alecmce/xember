@@ -1,9 +1,14 @@
 package ember.core
 {
+	import asunit.asserts.assertFalse;
 	import asunit.asserts.assertThrows;
+	import asunit.asserts.assertTrue;
+
 	import mocks.MockMissingOnRegisterSystem;
 	import mocks.MockMissingOnRemoveSystem;
 	import mocks.MockRenderSystem;
+	import mocks.MockSystem;
+
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
 	import org.robotlegs.core.IInjector;
 
@@ -29,7 +34,7 @@ package ember.core
 		[Test]
 		public function can_add_anything_that_ducktypes_as_a_system():void
 		{
-			system.addSystem(MockRenderSystem);
+			system.add(MockRenderSystem);
 		}
 		
 		[Test]
@@ -39,7 +44,7 @@ package ember.core
 		}
 		private function missing_onRegister_fails():void
 		{
-			system.addSystem(MockMissingOnRegisterSystem);
+			system.add(MockMissingOnRegisterSystem);
 		}
 		
 		[Test]
@@ -49,7 +54,47 @@ package ember.core
 		}
 		private function missing_onRemove_fails():void
 		{
-			system.addSystem(MockMissingOnRemoveSystem);
+			system.add(MockMissingOnRemoveSystem);
+		}
+		
+		[Test]
+		public function can_add_a_system():void
+		{
+			system.add(MockRenderSystem);
+			assertTrue(system.has(MockRenderSystem));
+		}
+		
+		[Test]
+		public function can_get_an_added_system():void
+		{
+			system.add(MockRenderSystem);
+			var render:Object = system.get(MockRenderSystem);
+			assertTrue(render is MockRenderSystem);
+		}
+		
+		[Test]
+		public function can_remove_a_system():void
+		{
+			system.add(MockRenderSystem);
+			system.remove(MockRenderSystem);
+			assertFalse(system.has(MockRenderSystem));
+		}
+		
+		[Test]
+		public function when_a_system_is_added_onRegister_is_called():void
+		{
+			system.add(MockSystem);
+			var mock:MockSystem = system.get(MockSystem) as MockSystem;
+			assertTrue(mock.wasRegistered);
+		}
+		
+		[Test]
+		public function when_a_system_is_removed_onRemove_is_called():void
+		{
+			system.add(MockSystem);
+			var mock:MockSystem = system.get(MockSystem) as MockSystem;
+			system.remove(MockSystem);
+			assertTrue(mock.wasRemoved);
 		}
 		
 	}

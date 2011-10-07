@@ -50,15 +50,31 @@ package ember.core
 			_nodes.clear();
 		}
 		
-		public function addSystem(systemClass:Class):void
-		{
-			_systems.addSystem(systemClass);
-		}
-
 		public function getNodes(nodeClass:Class):Nodes
 		{
 			return _nodes.get(nodeClass);
 		}
+
+		public function addSystem(systemClass:Class):void
+		{
+			_systems.add(systemClass);
+		}
+
+		public function hasSystem(system:Class):Boolean
+		{
+			return _systems.has(system);
+		}
+
+		public function getSystem(system:Class):Object
+		{
+			return _systems.get(system);
+		}
+
+		public function removeSystem(system:Class):Boolean
+		{
+			return _systems.remove(system);
+		}
+		
 
 	}
 }
