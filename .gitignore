@@ -1,3 +1,4 @@
 .project
 .settings
+bin/*.swf
 as3/bin/*.swf
