@@ -17,7 +17,7 @@ package mocks
 			wasRegistered = true;
 		}
 
-		public function onRemoved():void
+		public function onRemove():void
 		{
 			wasRemoved = true;
 		}

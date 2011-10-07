@@ -14,8 +14,6 @@ package ember.core
 
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
 
-
-	
 	public class EntitySystemTests
 	{
 		private static const BRIAN:String = "brian";
@@ -54,6 +52,40 @@ package ember.core
 		public function can_add_a_system():void
 		{
 			system.addSystem(MockRenderSystem);
+			assertTrue(system.hasSystem(MockRenderSystem));
+		}
+		
+		[Test]
+		public function can_get_an_added_system():void
+		{
+			system.addSystem(MockRenderSystem);
+			var render:Object = system.getSystem(MockRenderSystem);
+			assertTrue(render is MockRenderSystem);
+		}
+		
+		[Test]
+		public function can_remove_a_system():void
+		{
+			system.addSystem(MockRenderSystem);
+			system.removeSystem(MockRenderSystem);
+			assertFalse(system.hasSystem(MockRenderSystem));
+		}
+		
+		[Test]
+		public function when_a_system_is_added_onRegister_is_called():void
+		{
+			system.addSystem(MockSystem);
+			var mock:MockSystem = system.getSystem(MockSystem) as MockSystem;
+			assertTrue(mock.wasRegistered);
+		}
+		
+		[Test]
+		public function when_a_system_is_removed_onRemove_is_called():void
+		{
+			system.addSystem(MockSystem);
+			var mock:MockSystem = system.getSystem(MockSystem) as MockSystem;
+			system.removeSystem(MockSystem);
+			assertTrue(mock.wasRemoved);
 		}
 		
 		[Test]
