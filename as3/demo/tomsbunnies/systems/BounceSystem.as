@@ -1,6 +1,6 @@
 package tomsbunnies.systems
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 	import tomsbunnies.components.SpatialComponent;
 	import tomsbunnies.events.Tick;
@@ -12,7 +12,7 @@ package tomsbunnies.systems
 	{
 
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 		
 		[Inject]
 		public var tick:Tick;

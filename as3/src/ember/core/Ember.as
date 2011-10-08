@@ -2,20 +2,20 @@ package ember.core
 {
 	import org.robotlegs.core.IInjector;
 	
-	final public class EntitySystem
+	final public class Ember
 	{
 		
 		private var _entities:Entities;
 		private var _nodes:NodesManager;
 		private var _systems:Systems;
 
-		public function EntitySystem(injector:IInjector)
+		public function Ember(injector:IInjector)
 		{
 			_entities = new Entities();
 			_nodes = new NodesManager(_entities);
 			_systems = new Systems(injector);
 			
-			injector.mapValue(EntitySystem, this);
+			injector.mapValue(Ember, this);
 		}
 		
 		public function createEntity(name:String = ""):Entity

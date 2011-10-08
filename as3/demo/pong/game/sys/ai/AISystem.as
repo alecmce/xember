@@ -3,7 +3,7 @@ package pong.game.sys.ai
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 	import pong.game.Names;
 	import pong.game.Tick;
@@ -15,7 +15,7 @@ package pong.game.sys.ai
 	public class AISystem
 	{
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 		
 		[Inject]
 		public var tick:Tick;

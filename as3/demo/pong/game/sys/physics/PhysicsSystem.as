@@ -1,7 +1,7 @@
 package pong.game.sys.physics
 {
 	import Box2D.Dynamics.b2World;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 	import pong.game.Tick;
 	import pong.game.attr.PhysicalComponent;
@@ -12,7 +12,7 @@ package pong.game.sys.physics
 		private static const INV_FPS:Number = 1 / 60;
 		
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 
 		[Inject]
 		public var tick:Tick;

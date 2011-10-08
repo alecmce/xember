@@ -1,7 +1,7 @@
 package ember.io
 {
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	
 	final public class SystemEncoder
 	{
@@ -13,7 +13,7 @@ package ember.io
 			_entityEncoder = entityEncoder;
 		}
 
-		public function encode(system:EntitySystem):Object
+		public function encode(system:Ember):Object
 		{
 			var entities:Vector.<Entity> = system.getEntities();
 			var count:uint = entities.length;
@@ -29,7 +29,7 @@ package ember.io
 			return {entities:output};
 		}
 
-		public function decode(system:EntitySystem, encoded:Object):void
+		public function decode(system:Ember, encoded:Object):void
 		{
 			var entities:Array = encoded.entities;
 			

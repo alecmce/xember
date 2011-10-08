@@ -5,7 +5,7 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import flash.display.BitmapData;
 	import pong.game.attr.AIComponent;
 	import pong.game.attr.PhysicalComponent;
@@ -19,7 +19,7 @@ package pong.game.ctrl.setup
 	{
 		
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 		
 		[Inject]
 		public var config:PhysicsConfig;

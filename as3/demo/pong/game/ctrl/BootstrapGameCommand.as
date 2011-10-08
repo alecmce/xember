@@ -1,6 +1,6 @@
 package pong.game.ctrl
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import org.robotlegs.mvcs.Command;
 	import pong.game.events.BallEvent;
 	import pong.game.events.GoalEvent;
@@ -16,7 +16,7 @@ package pong.game.ctrl
 		{
 			injector.mapSingleton(PhysicsConfig);
 			injector.mapSingleton(PhysicsActions);
-			injector.mapValue(EntitySystem, new EntitySystem(injector));
+			injector.mapValue(Ember, new Ember(injector));
 			
 			commandMap.mapEvent(GoalEvent.LEFT_SCORES, LeftScoresGoalCommand);
 			commandMap.mapEvent(GoalEvent.RIGHT_SCORES, RightScoresGoalCommand);

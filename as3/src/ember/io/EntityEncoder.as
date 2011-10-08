@@ -1,7 +1,7 @@
 package ember.io
 {
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	
 	final public class EntityEncoder
 	{
@@ -27,7 +27,7 @@ package ember.io
 			return output;
 		}
 
-		public function decode(system:EntitySystem, object:Object):Entity
+		public function decode(system:Ember, object:Object):Entity
 		{
 			var name:String = object["name"] || "";
 			var entity:Entity = system.createEntity(name);

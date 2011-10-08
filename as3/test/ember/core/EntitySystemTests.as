@@ -21,13 +21,13 @@ package ember.core
 	{
 		private static const BRIAN:String = "brian";
 		
-		private var system:EntitySystem;
+		private var system:Ember;
 		
 		[Before]
 		public function before():void
 		{
 			var injector:SwiftSuspendersInjector = new SwiftSuspendersInjector();
-			system = new EntitySystem(injector);
+			system = new Ember(injector);
 		}
 		
 		[After]

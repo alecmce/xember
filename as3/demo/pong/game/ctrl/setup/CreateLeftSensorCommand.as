@@ -5,7 +5,7 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import pong.game.Names;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.PhysicsConfig;
@@ -14,10 +14,10 @@ package pong.game.ctrl.setup
 
 	public class CreateLeftSensorCommand
 	{
-		private var _system:EntitySystem;
+		private var _system:Ember;
 		private var _config:PhysicsConfig;
 		
-		public function CreateLeftSensorCommand(system:EntitySystem, config:PhysicsConfig)
+		public function CreateLeftSensorCommand(system:Ember, config:PhysicsConfig)
 		{
 			_system = system;
 			_config = config;

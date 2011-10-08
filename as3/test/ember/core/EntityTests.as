@@ -12,12 +12,12 @@ package ember.core
 	public class EntityTests
 	{
 		
-		private var _entitySystem:EntitySystem;
+		private var _entitySystem:Ember;
 		
 		[Before]
 		public function before():void
 		{
-			_entitySystem = new EntitySystem(new SwiftSuspendersInjector());
+			_entitySystem = new Ember(new SwiftSuspendersInjector());
 		}
 		
 		[After]

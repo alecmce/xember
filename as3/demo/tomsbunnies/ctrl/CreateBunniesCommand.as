@@ -1,7 +1,7 @@
 package tomsbunnies.ctrl
 {
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import mx.core.BitmapAsset;
@@ -14,11 +14,11 @@ package tomsbunnies.ctrl
 		[Embed(source = "../../../assets/wabbit_alpha.png")]
 		public const BunnyAsset:Class;
 		
-		private var _system:EntitySystem;
+		private var _system:Ember;
 		
 		private var _bunnyAsset:BitmapAsset;
 		
-		public function CreateBunniesCommand(system:EntitySystem)
+		public function CreateBunniesCommand(system:Ember)
 		{
 			_system = system;
 		}

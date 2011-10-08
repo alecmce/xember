@@ -1,7 +1,7 @@
 package pong.game.sys.player
 {
 	import Box2D.Common.Math.b2Vec2;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
@@ -18,7 +18,7 @@ package pong.game.sys.player
 		public var view:DisplayObjectContainer;
 		
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 		
 		[Inject]
 		public var tick:Tick;

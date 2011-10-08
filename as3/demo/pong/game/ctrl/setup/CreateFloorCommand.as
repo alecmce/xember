@@ -5,7 +5,7 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
@@ -14,7 +14,7 @@ package pong.game.ctrl.setup
 	public class CreateFloorCommand
 	{
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 		
 		[Inject]
 		public var config:PhysicsConfig;

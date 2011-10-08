@@ -1,7 +1,7 @@
 package ember.io
 {
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 
 	import mocks.MockComponent;
 	import mocks.MockTextComponent;
@@ -68,7 +68,7 @@ package ember.io
 			addMockTextComponent(entity).str = "test";
 			
 			var encoded:Object = encoder.encode(entity);
-			var system:EntitySystem = createSystem();
+			var system:Ember = createSystem();
 			var roundtrip:Entity = encoder.decode(system, encoded);
 			
 			var value:int = (roundtrip.getComponent(MockComponent) as MockComponent).n;
@@ -84,20 +84,20 @@ package ember.io
 			var entity:Entity = createEntity("name");
 			var object:Object = encoder.encode(entity);
 
-			var system:EntitySystem = createSystem();
+			var system:Ember = createSystem();
 			var roundtrip:Entity = encoder.decode(system, object);
 			
 			assertThat(roundtrip.name, equalTo("name"));
 		}
 		
-		private function createSystem():EntitySystem
+		private function createSystem():Ember
 		{
-			return new EntitySystem(new SwiftSuspendersInjector());
+			return new Ember(new SwiftSuspendersInjector());
 		}
 		
 		private function createEntity(name:String = ""):Entity
 		{
-			var system:EntitySystem = createSystem();
+			var system:Ember = createSystem();
 			return system.createEntity(name);
 		}
 		

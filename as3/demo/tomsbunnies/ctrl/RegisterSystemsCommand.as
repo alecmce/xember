@@ -1,6 +1,6 @@
 package tomsbunnies.ctrl
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import org.robotlegs.mvcs.Command;
 	import tomsbunnies.systems.BounceSystem;
 	import tomsbunnies.systems.ProcessManager;
@@ -9,9 +9,9 @@ package tomsbunnies.ctrl
 	public class RegisterSystemsCommand extends Command
 	{
 
-		private var _system:EntitySystem;
+		private var _system:Ember;
 
-		public function RegisterSystemsCommand(sytem:EntitySystem)
+		public function RegisterSystemsCommand(sytem:Ember)
 		{
 			_system = sytem;
 		}

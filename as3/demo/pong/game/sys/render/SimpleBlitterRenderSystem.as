@@ -1,7 +1,7 @@
 package pong.game.sys.render
 {
 	import Box2D.Common.Math.b2Vec2;
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -18,7 +18,7 @@ package pong.game.sys.render
 	{
 		
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 		
 		[Inject]
 		public var tick:Tick;

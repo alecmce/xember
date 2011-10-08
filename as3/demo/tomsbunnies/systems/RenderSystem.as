@@ -1,6 +1,6 @@
 package tomsbunnies.systems
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -22,7 +22,7 @@ package tomsbunnies.systems
 		private const BLANK_RECT:Rectangle = new Rectangle(MIN_X, MIN_Y, MAX_X, MAX_Y);
 
 		[Inject]
-		public var system:EntitySystem;
+		public var system:Ember;
 
 		[Inject]
 		public var contextView:DisplayObjectContainer;
