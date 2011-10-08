@@ -5,30 +5,33 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
-	import ember.core.Entity;
+
 	import ember.core.Ember;
-	import flash.display.BitmapData;
-	import flash.display.Shape;
+	import ember.core.Entity;
+
 	import pong.game.Names;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
-
-
-
+	import flash.display.BitmapData;
+	import flash.display.Shape;
+	
 	public class CreateBallCommand
 	{
 		
-		[Inject]
-		public var system:Ember;
+		private var _ember:Ember;
+		private var _config:PhysicsConfig;
 		
-		[Inject]
-		public var config:PhysicsConfig;
+		public function CreateBallCommand(ember:Ember, config:PhysicsConfig)
+		{
+			_ember = ember;
+			_config=  config;
+		}
 		
 		public function execute():void
 		{
-			var entity:Entity = system.createEntity(Names.BALL);
+			var entity:Entity = _ember.createEntity(Names.BALL);
 			
 			entity.addComponent(createPhysics());
 			entity.addComponent(createRender());
@@ -36,7 +39,7 @@ package pong.game.ctrl.setup
 
 		private function createPhysics():PhysicalComponent
 		{
-			var toMeters:Number = config.toMeters;
+			var toMeters:Number = _config.toMeters;
 			
 			var x:Number = 200 + Math.random() * 400;
 			var y:Number = 200 + Math.random() * 200;

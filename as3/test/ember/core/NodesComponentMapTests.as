@@ -4,7 +4,7 @@ package ember.core
 	import org.hamcrest.assertThat;
 	import org.hamcrest.collection.hasItem;
 	
-	public class NodesComponentMapTest
+	public class NodesComponentMapTests
 	{
 		private var _map:NodesComponentMap;
 		

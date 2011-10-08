@@ -19,7 +19,7 @@ package ember.core
 		{
 			var system:Object = _systems[systemClass];
 			if (system)
-				throw new Error("");
+				throw new Error("System already exists - Unable to add multiple instances of the same system");
 			
 			system = _injector.instantiate(systemClass);
 			_systems[systemClass] = system;

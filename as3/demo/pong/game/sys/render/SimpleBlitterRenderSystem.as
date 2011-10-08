@@ -1,33 +1,26 @@
 package pong.game.sys.render
 {
 	import Box2D.Common.Math.b2Vec2;
+
 	import ember.core.Ember;
 	import ember.core.Nodes;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.DisplayObjectContainer;
-	import flash.geom.Point;
+
 	import pong.game.Tick;
 	import pong.game.attr.RenderComponent;
 	import pong.game.sys.physics.PhysicsConfig;
 
-
-
-
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
+	
 	public class SimpleBlitterRenderSystem
 	{
 		
-		[Inject]
-		public var system:Ember;
-		
-		[Inject]
-		public var tick:Tick;
-		
-		[Inject]
-		public var config:PhysicsConfig;
-		
-		[Inject]
-		public var view:DisplayObjectContainer;
+		private var _ember:Ember;
+		private var _tick:Tick;
+		private var _config:PhysicsConfig;
+		private var _root:DisplayObjectContainer;
 		
 		private var _data:BitmapData;
 		
@@ -37,24 +30,32 @@ package pong.game.sys.render
 		private var _nodes:Nodes;
 		private var _bitmap:Bitmap;
 
+		public function SimpleBlitterRenderSystem(ember:Ember, tick:Tick, config:PhysicsConfig, root:DisplayObjectContainer)
+		{
+			_ember = ember;
+			_tick = tick;
+			_config = config;
+			_root = root;
+		}
+		
 		public function onRegister():void
 		{
 			_data = new BitmapData(800, 600, true, 0xFFFFFFFF);
 			_dest = new Point();
 			_bitmap = new Bitmap(_data);
-			view.addChild(_bitmap);
+			_root.addChild(_bitmap);
 			
-			tick.add(iterate);
-			toPixels = config.toPixels;
+			_tick.add(iterate);
+			toPixels = _config.toPixels;
 			
-			_nodes = system.getNodes(RenderNode);
+			_nodes = _ember.getNodes(RenderNode);
 		}
 		
 		public function onRemove():void
 		{
-			tick.remove(iterate);
+			_tick.remove(iterate);
 			
-			view.removeChild(_bitmap);
+			_root.removeChild(_bitmap);
 			_bitmap = null;
 			_dest = null;
 			

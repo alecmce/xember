@@ -4,7 +4,6 @@ package ember.core
 	
 	final public class Ember
 	{
-		
 		private var _entities:Entities;
 		private var _nodes:NodesManager;
 		private var _systems:Systems;

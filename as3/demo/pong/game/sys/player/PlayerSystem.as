@@ -1,27 +1,22 @@
 package pong.game.sys.player
 {
 	import Box2D.Common.Math.b2Vec2;
+
 	import ember.core.Ember;
 	import ember.core.Nodes;
-	import flash.display.DisplayObjectContainer;
-	import flash.display.Stage;
-	import flash.events.KeyboardEvent;
+
 	import pong.game.Tick;
 	import pong.game.attr.PlayerComponent;
 
-
-
-
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Stage;
+	import flash.events.KeyboardEvent;
+	
 	public class PlayerSystem
 	{
-		[Inject]
-		public var view:DisplayObjectContainer;
-		
-		[Inject]
-		public var system:Ember;
-		
-		[Inject]
-		public var tick:Tick;
+		private var _ember:Ember;
+		private var _root:DisplayObjectContainer;
+		private var _tick:Tick;
 		
 		private var stage:Stage;
 		
@@ -33,24 +28,32 @@ package pong.game.sys.player
 		private var velocity:b2Vec2;
 		
 		private var _nodes:Nodes;
+
+		public function PlayerSystem(ember:Ember, root:DisplayObjectContainer, tick:Tick)
+		{
+			_ember = ember;
+			_root = root;
+			_tick = tick;
+		}
+
 		
 		public function onRegister():void
 		{
-			tick.add(iterate);
+			_tick.add(iterate);
 			
-			stage = view.stage;
+			stage = _root.stage;
 			stage.focus = stage;
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			
 			velocity = new b2Vec2();
 			
-			_nodes = system.getNodes(PlayerNode);
+			_nodes = _ember.getNodes(PlayerNode);
 		}
 
 		public function onRemove():void
 		{
-			tick.remove(iterate);
+			_tick.remove(iterate);
 
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);

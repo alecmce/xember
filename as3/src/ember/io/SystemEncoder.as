@@ -13,9 +13,9 @@ package ember.io
 			_entityEncoder = entityEncoder;
 		}
 
-		public function encode(system:Ember):Object
+		public function encode(ember:Ember):Object
 		{
-			var entities:Vector.<Entity> = system.getEntities();
+			var entities:Vector.<Entity> = ember.getEntities();
 			var count:uint = entities.length;
 			
 			var output:Array = [];
@@ -29,12 +29,12 @@ package ember.io
 			return {entities:output};
 		}
 
-		public function decode(system:Ember, encoded:Object):void
+		public function decode(ember:Ember, encoded:Object):void
 		{
 			var entities:Array = encoded.entities;
 			
 			for each (var object:Object in entities)
-				_entityEncoder.decode(system, object);
+				_entityEncoder.decode(ember, object);
 		}
 		
 		

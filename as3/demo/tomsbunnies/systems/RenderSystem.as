@@ -2,16 +2,16 @@ package tomsbunnies.systems
 {
 	import ember.core.Ember;
 	import ember.core.Nodes;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.DisplayObjectContainer;
-	import flash.geom.Rectangle;
+
 	import tomsbunnies.components.GraphicComponent;
 	import tomsbunnies.events.Render;
 	import tomsbunnies.systems.nodes.RendererNode;
 
-
-
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObjectContainer;
+	import flash.geom.Rectangle;
+	
 	public class RenderSystem
 	{
 		private const MIN_X:int = 0;
@@ -21,28 +21,30 @@ package tomsbunnies.systems
 		
 		private const BLANK_RECT:Rectangle = new Rectangle(MIN_X, MIN_Y, MAX_X, MAX_Y);
 
-		[Inject]
-		public var system:Ember;
-
-		[Inject]
-		public var contextView:DisplayObjectContainer;
-
-		[Inject]
-		public var render:Render;
+		private var _ember:Ember;
+		private var _root:DisplayObjectContainer;
+		private var _render:Render;
 
 		private var _bitmap:Bitmap;
 		private var _buffer:BitmapData;
 		
 		private var _nodes:Nodes;
 
+		public function RenderSystem(ember:Ember, root:DisplayObjectContainer, render:Render)
+		{
+			_ember = ember;
+			_root = root;
+			_render = render;
+		}
+		
 		public function onRegister():void
 		{
 			_buffer = new BitmapData(MAX_X, MAX_Y, false, 0xFFFFFF);
 			_bitmap = new Bitmap(_buffer);
-			contextView.addChild(_bitmap);
-			render.add(onRender);
+			_root.addChild(_bitmap);
+			_render.add(onRender);
 			
-			_nodes = system.getNodes(RendererNode);
+			_nodes = _ember.getNodes(RendererNode);
 		}
 
 		public function onRender():void
@@ -62,7 +64,7 @@ package tomsbunnies.systems
 
 		public function onRemove():void
 		{
-			contextView.removeChild(_bitmap);
+			_root.removeChild(_bitmap);
 			_buffer.dispose();
 			_buffer = null;
 			_bitmap = null;

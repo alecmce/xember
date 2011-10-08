@@ -9,8 +9,7 @@ package ember.io
 	import org.hamcrest.object.isTrue;
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
 
-	
-	public class SystemEncoderTests
+	public class EmberEncoderTests
 	{
 		private var encoder:SystemEncoder;
 		
@@ -34,11 +33,11 @@ package ember.io
 		{
 			var component:MockComponent;
 			
-			var a:Ember = createSystem();
+			var a:Ember = createEmber();
 			component = createEntityWithComponent(a);
 			component.n = 5;
 			
-			var b:Ember = createSystem();
+			var b:Ember = createEmber();
 			component = createEntityWithComponent(b);
 			component.n = 5;
 			
@@ -50,11 +49,11 @@ package ember.io
 		{
 			var component:MockComponent;
 			
-			var a:Ember = createSystem();
+			var a:Ember = createEmber();
 			component = createEntityWithComponent(a);
 			component.n = 5;
 			
-			var b:Ember = createSystem();
+			var b:Ember = createEmber();
 			component = createEntityWithComponent(b);
 			component.n = 6;
 			
@@ -64,7 +63,7 @@ package ember.io
 		[Test]
 		public function encode_and_decode_roundtrips():void
 		{
-			var a:Ember = createSystem();
+			var a:Ember = createEmber();
 			a.createEntity();
 			a.createEntity();
 			a.createEntity();
@@ -72,20 +71,20 @@ package ember.io
 
 			var encoded:Object = encoder.encode(a);
 
-			var b:Ember = createSystem();
+			var b:Ember = createEmber();
 			encoder.decode(b, encoded);
 			
 			assertThat(b.getEntities().length, equalTo(4));
 		}
 		
-		private function createSystem():Ember
+		private function createEmber():Ember
 		{
 			return new Ember(new SwiftSuspendersInjector());
 		}
 		
-		private function createEntityWithComponent(system:Ember):MockComponent
+		private function createEntityWithComponent(ember:Ember):MockComponent
 		{
-			var entity:Entity = system.createEntity();
+			var entity:Entity = ember.createEntity();
 			var component:MockComponent = new MockComponent();
 			entity.addComponent(component);
 			

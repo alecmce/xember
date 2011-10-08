@@ -27,10 +27,10 @@ package ember.io
 			return output;
 		}
 
-		public function decode(system:Ember, object:Object):Entity
+		public function decode(ember:Ember, object:Object):Entity
 		{
 			var name:String = object["name"] || "";
-			var entity:Entity = system.createEntity(name);
+			var entity:Entity = ember.createEntity(name);
 
 			var list:Object = object.components;
 			for each (var component:Object in list)

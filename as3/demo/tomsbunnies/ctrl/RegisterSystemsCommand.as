@@ -9,18 +9,18 @@ package tomsbunnies.ctrl
 	public class RegisterSystemsCommand extends Command
 	{
 
-		private var _system:Ember;
+		private var _ember:Ember;
 
-		public function RegisterSystemsCommand(sytem:Ember)
+		public function RegisterSystemsCommand(ember:Ember)
 		{
-			_system = sytem;
+			_ember = ember;
 		}
 		
 		override public function execute():void
 		{
-			_system.addSystem(RenderSystem);			
-			_system.addSystem(BounceSystem);
-			_system.addSystem(ProcessManager);
+			_ember.addSystem(RenderSystem);			
+			_ember.addSystem(BounceSystem);
+			_ember.addSystem(ProcessManager);
 		}
 		
 	}

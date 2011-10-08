@@ -7,29 +7,27 @@ package ember.core
 	import org.hamcrest.object.sameInstance;
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
 
-
-
 	public class EntityTests
 	{
 		
-		private var _entitySystem:Ember;
+		private var _ember:Ember;
 		
 		[Before]
 		public function before():void
 		{
-			_entitySystem = new Ember(new SwiftSuspendersInjector());
+			_ember = new Ember(new SwiftSuspendersInjector());
 		}
 		
 		[After]
 		public function after():void
 		{
-			_entitySystem = null;
+			_ember = null;
 		}
 		
 		[Test]
 		public function can_add_component_to_entity():void
 		{
-			var entity:Entity = _entitySystem.createEntity();
+			var entity:Entity = _ember.createEntity();
 			entity.addComponent(new MockComponent());
 			assertThat(entity.hasComponent(MockComponent), isTrue());
 		}
@@ -37,7 +35,7 @@ package ember.core
 		[Test]
 		public function can_reference_component_instance_by_class():void
 		{
-			var entity:Entity = _entitySystem.createEntity();
+			var entity:Entity = _ember.createEntity();
 			var component:MockComponent = new MockComponent();
 			
 			entity.addComponent(component);
@@ -47,7 +45,7 @@ package ember.core
 		[Test]
 		public function can_remove_component_from_entity():void
 		{
-			var entity:Entity = _entitySystem.createEntity();
+			var entity:Entity = _ember.createEntity();
 			entity.addComponent(new MockComponent());
 			entity.removeComponent(MockComponent);
 			assertThat(entity.hasComponent(MockComponent), isFalse());

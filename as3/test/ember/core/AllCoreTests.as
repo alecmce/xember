@@ -5,12 +5,14 @@ package ember.core
 	public class AllCoreTests
 	{
 		
+		public var emberTests:EmberTests;
 		public var entitiesTests:EntitiesTests;
+		public var entityTests:EntityTests;
+		public var nodesComponentMapTests:NodesComponentMapTests;
 		public var nodesConfigTests:NodesConfigTests;
 		public var nodesFactoryTests:NodesFactoryTests;
 		public var nodesManagerTests:NodesManagerTests;
-		public var entitySystemTests:EntitySystemTests;
-		public var entityTests:EntityTests;
+		public var systemTests:SystemsTests;
 		
 	}
 }

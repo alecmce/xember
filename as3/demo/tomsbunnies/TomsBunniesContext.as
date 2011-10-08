@@ -9,9 +9,6 @@ package tomsbunnies
 	import tomsbunnies.events.Render;
 	import tomsbunnies.events.Tick;
 
-
-
-	
 	public class TomsBunniesContext extends Context
 	{
 		

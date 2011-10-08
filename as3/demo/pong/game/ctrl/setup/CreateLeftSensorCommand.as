@@ -9,24 +9,21 @@ package pong.game.ctrl.setup
 	import pong.game.Names;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.PhysicsConfig;
-
-
-
+	
 	public class CreateLeftSensorCommand
 	{
-		private var _system:Ember;
+		private var _ember:Ember;
 		private var _config:PhysicsConfig;
 		
-		public function CreateLeftSensorCommand(system:Ember, config:PhysicsConfig)
+		public function CreateLeftSensorCommand(ember:Ember, config:PhysicsConfig)
 		{
-			_system = system;
+			_ember = ember;
 			_config = config;
 		}
 		
 		public function execute():void
 		{
-			var entity:Entity = _system.createEntity();
-			
+			var entity:Entity = _ember.createEntity();
 			entity.addComponent(generatePhysical());
 		}
 

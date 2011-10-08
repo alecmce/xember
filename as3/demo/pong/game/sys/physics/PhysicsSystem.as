@@ -1,8 +1,10 @@
 package pong.game.sys.physics
 {
 	import Box2D.Dynamics.b2World;
+
 	import ember.core.Ember;
 	import ember.core.Nodes;
+
 	import pong.game.Tick;
 	import pong.game.attr.PhysicalComponent;
 	import pong.game.sys.physics.actions.PhysicsActions;
@@ -11,29 +13,30 @@ package pong.game.sys.physics
 	{
 		private static const INV_FPS:Number = 1 / 60;
 		
-		[Inject]
-		public var system:Ember;
-
-		[Inject]
-		public var tick:Tick;
-		
-		[Inject]
-		public var config:PhysicsConfig;
-		
-		[Inject]
-		public var actions:PhysicsActions;
+		private var _ember:Ember;
+		private var _tick:Tick;
+		private var _config:PhysicsConfig;
+		private var _actions:PhysicsActions;
 		
 		private var world:b2World;
 		
 		private var _nodes:Nodes;
+
+		public function PhysicsSystem(ember:Ember, tick:Tick, config:PhysicsConfig, actions:PhysicsActions)
+		{
+			_ember = ember;
+			_tick = tick;
+			_config = config;
+			_actions = actions;
+		}
 		
 		public function onRegister():void
 		{
-			world = config.world;
+			world = _config.world;
 			
-			tick.add(iterate);
+			_tick.add(iterate);
 			
-			_nodes = system.getNodes(PhysicsNode);
+			_nodes = _ember.getNodes(PhysicsNode);
 			_nodes.nodeAdded.add(onNodeAdded);
 			_nodes.nodeRemoved.add(onNodeRemoved);
 
@@ -45,7 +48,7 @@ package pong.game.sys.physics
 
 		public function onRemove():void
 		{
-			tick.remove(iterate);
+			_tick.remove(iterate);
 			
 			_nodes.nodeAdded.remove(onNodeAdded);
 			_nodes.nodeRemoved.remove(onNodeRemoved);
@@ -69,7 +72,7 @@ package pong.game.sys.physics
 		{
 			world.Step(INV_FPS, 4, 2);
 			world.ClearForces();
-			actions.resolve();
+			_actions.resolve();
 		}
 		
 	}

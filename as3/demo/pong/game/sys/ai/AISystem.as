@@ -2,47 +2,50 @@ package pong.game.sys.ai
 {
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
-	import ember.core.Entity;
+
 	import ember.core.Ember;
+	import ember.core.Entity;
 	import ember.core.Nodes;
+
 	import pong.game.Names;
 	import pong.game.Tick;
 	import pong.game.attr.AIComponent;
 	import pong.game.attr.PhysicalComponent;
-
-
 	
 	public class AISystem
 	{
-		[Inject]
-		public var system:Ember;
-		
-		[Inject]
-		public var tick:Tick;
+		private var _ember:Ember;
+		private var _tick:Tick;
 		
 		private var physicalBall:PhysicalComponent;
 		private var velocity:b2Vec2;
 		
 		private var _nodes:Nodes;
+
+		public function AISystem(ember:Ember, tick:Tick)
+		{
+			_ember = ember;
+			_tick = tick;
+		}
 		
 		public function onRegister():void
 		{
-			var ball:Entity = system.getEntity(Names.BALL);
+			var ball:Entity = _ember.getEntity(Names.BALL);
 			if (!ball)
 				return;
 			
 			physicalBall = ball.getComponent(PhysicalComponent) as PhysicalComponent;
 			
-			tick.add(iterate);
+			_tick.add(iterate);
 			
 			velocity = new b2Vec2();
 			
-			_nodes = system.getNodes(AINode);
+			_nodes = _ember.getNodes(AINode);
 		}
 
 		public function onRemove():void
 		{
-			tick.remove(iterate);
+			_tick.remove(iterate);
 		}
 
 		private function iterate():void

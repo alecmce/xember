@@ -14,13 +14,13 @@ package tomsbunnies.ctrl
 		[Embed(source = "../../../assets/wabbit_alpha.png")]
 		public const BunnyAsset:Class;
 		
-		private var _system:Ember;
+		private var _ember:Ember;
 		
 		private var _bunnyAsset:BitmapAsset;
 		
-		public function CreateBunniesCommand(system:Ember)
+		public function CreateBunniesCommand(ember:Ember)
 		{
-			_system = system;
+			_ember = ember;
 		}
 
 		override public function execute():void
@@ -34,7 +34,7 @@ package tomsbunnies.ctrl
 
 		private function createBunny():void
 		{
-			var entity:Entity = _system.createEntity();
+			var entity:Entity = _ember.createEntity();
 
 			var graphics:GraphicComponent = new GraphicComponent();
 			graphics.asset = _bunnyAsset.bitmapData;
