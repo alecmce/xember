@@ -1,10 +1,11 @@
 package ember.io
 {
-	import asunit.asserts.assertEquals;
-	import asunit.asserts.assertFalse;
-	import asunit.asserts.assertTrue;
+	import mocks.MockComponent;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.object.equalTo;
+	import org.hamcrest.object.isFalse;
+	import org.hamcrest.object.isTrue;
 
-	import mocks.MockSpatialComponent;
 	
 	public class ComponentEncoderTests
 	{
@@ -26,51 +27,37 @@ package ember.io
 		[Test]
 		public function encodes_equivalent_components_equivalently():void
 		{
-			var componentA:MockSpatialComponent = new MockSpatialComponent();
-			componentA.x = 5;
-			componentA.y = 10;
+			var a:MockComponent = new MockComponent();
+			a.n = 5;
 			
-			var componentB:MockSpatialComponent = new MockSpatialComponent();
-			componentB.x = 5;
-			componentB.y = 10;
+			var b:MockComponent = new MockComponent();
+			b.n = 5;
 			
-			var a:Object = encoder.encode(componentA);
-			var b:Object = encoder.encode(componentB);
-			assertTrue(CompareVOs.objectsAreEquivalent(a, b));
+			assertThat(CompareVOs.objectsAreEquivalent(encoder.encode(a), encoder.encode(b)), isTrue());
 		}
 		
 		[Test]
 		public function encodes_differentiable_components_unequivalently():void
 		{
-			var componentA:MockSpatialComponent = new MockSpatialComponent();
-			componentA.x = 5;
-			componentA.y = 10;
+			var a:MockComponent = new MockComponent();
+			a.n = 5;
 			
-			var componentB:MockSpatialComponent = new MockSpatialComponent();
-			componentB.x = 6;
-			componentB.y = 10;
+			var b:MockComponent = new MockComponent();
+			b.n = 6;
 			
-			var a:Object = encoder.encode(componentA);
-			var b:Object = encoder.encode(componentB);
-			assertFalse(CompareVOs.objectsAreEquivalent(a, b));
+			assertThat(CompareVOs.objectsAreEquivalent(encoder.encode(a), encoder.encode(b)), isFalse());
 		}
 		
 		[Test]
 		public function decode_reverses_encode():void
 		{
-			var component:MockSpatialComponent;
+			var component:MockComponent = new MockComponent();
+			component.n = 7;
 			
-			component = new MockSpatialComponent();
-			component.x = Math.random() * 100;
-			component.y = Math.random() * 100;
-
 			var object:Object = encoder.encode(component);
-
-			var roundtrip:MockSpatialComponent;
-			roundtrip = encoder.decode(object) as MockSpatialComponent;
+			var roundtrip:MockComponent = encoder.decode(object) as MockComponent;
 		
-			assertEquals(roundtrip.x, component.x);
-			assertEquals(roundtrip.y, component.y);
+			assertThat(roundtrip.n, equalTo(7));
 		}
 		
 	}

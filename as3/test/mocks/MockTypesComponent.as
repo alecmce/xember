@@ -2,7 +2,7 @@ package mocks
 {
 	import flash.geom.Point;
 	
-	public class MockMixedTypeComponent
+	public class MockTypesComponent
 	{
 		
 		[Ember]

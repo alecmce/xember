@@ -1,63 +1,56 @@
 package ember.core
 {
-	import asunit.asserts.assertFalse;
-	import asunit.asserts.assertSame;
-	import asunit.asserts.assertTrue;
+	import mocks.MockComponent;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.object.isFalse;
+	import org.hamcrest.object.isTrue;
+	import org.hamcrest.object.sameInstance;
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
-	import tomsbunnies.components.SpatialComponent;
 
 
 
 	public class EntityTests
 	{
 		
-		private var entitySystem:EntitySystem;
+		private var _entitySystem:EntitySystem;
 		
 		[Before]
 		public function before():void
 		{
-			entitySystem = new EntitySystem(new SwiftSuspendersInjector());
+			_entitySystem = new EntitySystem(new SwiftSuspendersInjector());
 		}
 		
 		[After]
 		public function after():void
 		{
-			entitySystem = null;
+			_entitySystem = null;
 		}
 		
 		[Test]
 		public function can_add_component_to_entity():void
 		{
-			var entity:Entity = entitySystem.createEntity();
-			entity.addComponent(new SpatialComponent());
-			assertTrue(entity.hasComponent(SpatialComponent));
+			var entity:Entity = _entitySystem.createEntity();
+			entity.addComponent(new MockComponent());
+			assertThat(entity.hasComponent(MockComponent), isTrue());
 		}
-		
-//		[Test]
-//		public function can_add_component_to_entity_fluently():void
-//		{
-//			var entity:Entity = entitySystem.createEntity();
-//			var fluent:Entity = entity.addComponent(new SpatialComponent());
-//			assertSame(entity, fluent);
-//		}
 		
 		[Test]
 		public function can_reference_component_instance_by_class():void
 		{
-			var entity:Entity = entitySystem.createEntity();
-			var component:SpatialComponent = new SpatialComponent();
+			var entity:Entity = _entitySystem.createEntity();
+			var component:MockComponent = new MockComponent();
 			
 			entity.addComponent(component);
-			assertSame(component, entity.getComponent(SpatialComponent));
+			assertThat(entity.getComponent(MockComponent), sameInstance(component));
 		}
 		
 		[Test]
 		public function can_remove_component_from_entity():void
 		{
-			var entity:Entity = entitySystem.createEntity();
-			entity.addComponent(new SpatialComponent());
-			entity.removeComponent(SpatialComponent);
-			assertFalse(entity.hasComponent(SpatialComponent));
+			var entity:Entity = _entitySystem.createEntity();
+			entity.addComponent(new MockComponent());
+			entity.removeComponent(MockComponent);
+			assertThat(entity.hasComponent(MockComponent), isFalse());
 		}
 		
 	}

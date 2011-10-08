@@ -1,120 +1,108 @@
 package ember.core
 {
-	import asunit.asserts.assertFalse;
-	import asunit.asserts.assertNotNull;
-	import asunit.asserts.assertNotSame;
-	import asunit.asserts.assertSame;
-	import asunit.asserts.assertThrows;
-	import asunit.asserts.assertTrue;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.collection.hasItem;
+	import org.hamcrest.collection.hasItems;
+	import org.hamcrest.core.not;
+	import org.hamcrest.core.throws;
+	import org.hamcrest.object.isFalse;
+	import org.hamcrest.object.isTrue;
+	import org.hamcrest.object.sameInstance;
 	
 	public class EntitiesTests
 	{
 		private static const BRIAN:String = "brian";
 		
-		private var entities:Entities;
+		private var _entities:Entities;
 		
 		[Before]
 		public function before():void
 		{
-			entities = new Entities();
+			_entities = new Entities();
 		}
 		
 		[After]
 		public function after():void
 		{
-			entities = null;
+			_entities = null;
 		}
 		
 		[Test]
 		public function can_create_entity():void
 		{
-			var entity:Entity = entities.create();
-			assertTrue(entities.contains(entity));
+			var entity:Entity = _entities.create();
+			assertThat(_entities.contains(entity), isTrue());
 		}
 		
 		[Test]
 		public function can_remove_entity():void
 		{
-			var entity:Entity = entities.create();
-			entities.remove(entity);
-			assertFalse(entities.contains(entity));
+			var entity:Entity = _entities.create();
+			_entities.remove(entity);
+			assertThat(_entities.contains(entity), isFalse());
 		}
 		
 		[Test]
 		public function can_create_named_entity():void
 		{
-			var entity:Entity = entities.create(BRIAN);
-			assertTrue(entities.contains(entity));
+			var entity:Entity = _entities.create(BRIAN);
+			assertThat(_entities.contains(entity), isTrue());
 		}
 		
 		[Test]
 		public function can_reference_named_entity():void
 		{
-			var entity:Entity = entities.create(BRIAN);
-			var referenced:Entity = entities.get(BRIAN);
-			assertSame(entity, referenced);
+			var entity:Entity = _entities.create(BRIAN);
+			assertThat(entity, sameInstance(_entities.get(BRIAN)));
 		}
 		
 		[Test]
 		public function cannot_duplicate_entity_names():void
 		{
-			entities.create(BRIAN);
-			assertThrows(Error, duplicates_entity_name);
+			_entities.create(BRIAN);
+			assertThat(duplicates_entity_name, throws(Error));
 		}
 		private function duplicates_entity_name():void
 		{
-			entities.create(BRIAN);
+			_entities.create(BRIAN);
 		}
 		
 		[Test]
 		public function can_reuse_name_after_named_entity_is_deleted():void
 		{
-			var entity:Entity = entities.create(BRIAN);
-			entities.remove(entity);
-			var other:Entity = entities.create(BRIAN);
-			assertNotSame(entity, other);
+			var entity:Entity = _entities.create(BRIAN);
+			_entities.remove(entity);
+			assertThat(entity, not(_entities.create(BRIAN)));
 		}
 		
 		[Test]
 		public function can_get_a_vector_of_all_entities():void
 		{
-			assertNotNull(entities.getAll());
-		}
-		
-		[Test]
-		public function getEntities_returns_all_generated_entities():void
-		{
-			var a:Entity = entities.create();
-			var b:Entity = entities.create();
-
-			var list:Vector.<Entity> = entities.getAll();
-			assertSame(a, list[0]);
-			assertSame(b, list[1]);
+			var a:Entity = _entities.create();
+			var b:Entity = _entities.create();
+			assertThat(_entities.getAll(), hasItems(a, b));
 		}
 		
 		[Test]
 		public function getEntities_does_not_expose_inner_list():void
 		{
-			var a:Entity = entities.create();
+			var a:Entity = _entities.create();
 			
-			var list:Vector.<Entity>;
-			list = entities.getAll();
+			var list:Vector.<Entity> = _entities.getAll();
 			list.shift();
-			list = entities.getAll();
+			list = _entities.getAll();
 			
-			assertSame(a, list[0]);
+			assertThat(_entities.getAll(), hasItem(a));
 		}
 		
 		[Test]
 		public function all_entities_can_be_removed_easily():void
 		{
-			var a:Entity = entities.create();
-			var b:Entity = entities.create();
+			var a:Entity = _entities.create();
 			
-			entities.removeAll();
+			_entities.removeAll();
 			
-			assertFalse(entities.contains(a));
-			assertFalse(entities.contains(b));
+			assertThat(_entities.contains(a), isFalse());
 		}
 		
 	}

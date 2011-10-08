@@ -1,8 +1,8 @@
 package ember.core
 {
-	import asunit.asserts.assertSame;
-
-	import mocks.MockRenderComponent;
+	import mocks.MockComponent;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.collection.hasItem;
 	
 	public class NodesComponentMapTest
 	{
@@ -26,10 +26,11 @@ package ember.core
 			var nodes:Nodes = new Nodes(null, null);
 			
 			var components:NodeConfigComponentsList = new NodeConfigComponentsList();
-			components.add("render", MockRenderComponent);
+			components.add("render", MockComponent);
 			
 			_map.add(components, nodes);
-			assertSame(nodes, _map.getNodesFor(MockRenderComponent)[0]);
+			
+			assertThat(_map.getNodesFor(MockComponent), hasItem(nodes));
 		}
 		
 	}

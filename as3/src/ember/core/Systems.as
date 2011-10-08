@@ -15,12 +15,16 @@ package ember.core
 			_systems = new Dictionary();
 		}
 		
-		public function add(systemClass:Class):void
+		public function add(systemClass:Class):Object
 		{
-			var system:Object = _injector.instantiate(systemClass);
-			_systems[systemClass] = system;
+			var system:Object = _systems[systemClass];
+			if (system)
+				throw new Error("");
 			
+			system = _injector.instantiate(systemClass);
+			_systems[systemClass] = system;
 			system.onRegister();
+			return system;
 		}
 
 		public function has(systemClass:Class):Boolean

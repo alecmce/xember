@@ -1,103 +1,104 @@
 package ember.core
 {
-	import asunit.asserts.assertFalse;
-	import asunit.asserts.assertNotNull;
-	import asunit.asserts.assertSame;
-	import asunit.asserts.assertTrue;
-
-	import mocks.MockRenderComponent;
-	import mocks.MockRenderNode;
-	import mocks.MockSpatialComponent;
+	import mocks.MockComponent;
+	import mocks.MockNode;
+	import mocks.MockOptionalComponent;
+	import mocks.MockOptionalNode;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.object.isFalse;
+	import org.hamcrest.object.isTrue;
+	import org.hamcrest.object.sameInstance;
 
 
 	public class NodesConfigTests
 	{
+		private var _entities:Entities;
+		
+		[Before]
+		public function before():void
+		{
+			_entities = new Entities();
+		}
+		
+		[After]
+		public function after():void
+		{
+			_entities = null;
+		}
 		
 		[Test]
 		public function config_matches_matching_entity():void
 		{
-			var entities:Entities = new Entities();
-			var entity:Entity = entities.create();
-			entity.addComponent(new MockSpatialComponent());
-			entity.addComponent(new MockRenderComponent());
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockComponent());
 
 			var config:NodesConfig = new NodesConfig();
-			config.requiredComponents.add("spatial", MockSpatialComponent);
-			config.requiredComponents.add("render", MockRenderComponent);
+			config.requiredComponents.add("required", MockComponent);
 			
-			assertTrue(config.requiredComponents.areComponentsIn(entity));
+			assertThat(config.requiredComponents.areComponentsIn(entity), isTrue());
 		}
 		
 		[Test]
 		public function config_doesnt_match_non_matching_entity():void
 		{
-			var entities:Entities = new Entities();
-			var entity:Entity = entities.create();
-			entity.addComponent(new MockSpatialComponent());
+			var entity:Entity = _entities.create();
 
 			var config:NodesConfig = new NodesConfig();
-			config.requiredComponents.add("spatial", MockSpatialComponent);
-			config.requiredComponents.add("render", MockRenderComponent);
+			config.requiredComponents.add("required", MockComponent);
 			
-			assertFalse(config.requiredComponents.areComponentsIn(entity));
+			assertThat(config.requiredComponents.areComponentsIn(entity), isFalse());
 		}
 		
 		[Test]
 		public function optional_component_isnt_required_for_match():void
 		{
-			var entities:Entities = new Entities();
-			var entity:Entity = entities.create();
-			entity.addComponent(new MockSpatialComponent());
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockComponent());
 			
 			var config:NodesConfig = new NodesConfig();
 			config.nodeClass = MockOptionalNode;
-			config.requiredComponents.add("spatial", MockSpatialComponent);
-			config.optionalComponents.add("render", MockRenderComponent);
+			config.requiredComponents.add("required", MockComponent);
+			config.optionalComponents.add("optional", MockOptionalComponent);
 			
-			assertTrue(config.requiredComponents.areComponentsIn(entity));
+			assertThat(config.requiredComponents.areComponentsIn(entity), isTrue());
 		}
+		
 		
 		[Test]
 		public function config_will_generate_node_from_entity():void
 		{
-			var render:MockRenderComponent = new MockRenderComponent();
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var required:MockComponent = new MockComponent();
 			
-			var entities:Entities = new Entities();
-			var entity:Entity = entities.create();
-			entity.addComponent(spatial);
-			entity.addComponent(render);
+			var entity:Entity = _entities.create();
+			entity.addComponent(required);
 
 			var config:NodesConfig = new NodesConfig();
-			config.nodeClass = MockRenderNode;
-			config.requiredComponents.add("spatial", MockSpatialComponent);
-			config.requiredComponents.add("render", MockRenderComponent);
+			config.nodeClass = MockNode;
+			config.requiredComponents.add("required", MockComponent);
 
-			var node:MockRenderNode = config.generateNode(entity);
+			var node:MockNode = config.generateNode(entity);
 			
-			assertNotNull(node);
-			assertSame(render, node.render);
-			assertSame(spatial, node.spatial);
+			assertThat(node.required, sameInstance(required));
 		}
 		
 		[Test]
 		public function generated_node_includes_optional_components():void
 		{
-			var render:MockRenderComponent = new MockRenderComponent();
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
+			var required:MockComponent = new MockComponent();
+			var optional:MockOptionalComponent = new MockOptionalComponent();
 			
 			var entities:Entities = new Entities();
 			var entity:Entity = entities.create();
-			entity.addComponent(spatial);
-			entity.addComponent(render);
+			entity.addComponent(required);
+			entity.addComponent(optional);
 
 			var config:NodesConfig = new NodesConfig();
 			config.nodeClass = MockOptionalNode;
-			config.requiredComponents.add("spatial", MockSpatialComponent);
-			config.optionalComponents.add("render", MockRenderComponent);
+			config.requiredComponents.add("required", MockComponent);
+			config.optionalComponents.add("optional", MockOptionalComponent);
 
 			var node:MockOptionalNode = config.generateNode(entity);
-			assertSame(spatial, node.spatial);
+			assertThat(node.optional, sameInstance(optional));
 		}
 		
 	}

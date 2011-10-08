@@ -81,6 +81,7 @@ package ember.core
 		{
 			_head = null;
 			_tail = null;
+			_count = 0;
 			
 			_entityMap = new Dictionary();
 		}

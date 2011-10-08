@@ -1,51 +1,51 @@
 package ember.io
 {
-	import asunit.asserts.assertEquals;
-	import asunit.asserts.assertEqualsArraysIgnoringOrder;
+	import mocks.MockComponent;
+	import mocks.MockEncodeAllComponent;
+	import mocks.MockMetadataComponent;
+	import mocks.MockTypesComponent;
 
-	import mocks.MetadataComponent;
-	import mocks.MockMixedTypeComponent;
-	import mocks.MockSpatialComponent;
-	
+	import org.hamcrest.assertThat;
+	import org.hamcrest.collection.array;
+	import org.hamcrest.collection.hasItem;
+	import org.hamcrest.object.equalTo;
+
 	public class ComponentConfigTests
 	{
 		
 		[Test]
 		public function config_generates_list_of_properties():void
 		{
-			var config:ComponentConfig = new ComponentConfig("Mock", new MockSpatialComponent());
-			var properties:Array = convertToArray(config.properties);
-			
-			assertEqualsArraysIgnoringOrder(["x","y"], properties);
+			var config:ComponentConfig = new ComponentConfig("Mock", new MockComponent());
+			assertThat(config.properties, hasItem("n"));
 		}
 		
 		[Test]
-		public function can_reference_type_through_config():void
+		public function can_reference_base_types_via_config():void
 		{
-			var config:ComponentConfig = new ComponentConfig("Mock", new MockMixedTypeComponent());
-			
-			assertEquals("int", config.getType("n"));
-			assertEquals("Array", config.getType("arr"));
-			assertEquals("flash.geom.Point", config.getType("point"));
+			var config:ComponentConfig = new ComponentConfig("Mock", new MockTypesComponent());
+			assertThat(config.getType("arr"), equalTo("Array"));
+		}
+		
+		[Test]
+		public function can_reference_packaged_types_via_config():void
+		{
+			var config:ComponentConfig = new ComponentConfig("Mock", new MockTypesComponent());
+			assertThat(config.getType("point"), equalTo("flash.geom::Point"));
 		}
 		
 		[Test]
 		public function config_ignores_properties_without_Ember_metadata():void
 		{
-			var config:ComponentConfig = new ComponentConfig("Mock", new MetadataComponent());
-			var properties:Array = convertToArray(config.properties);
-			
-			assertEqualsArraysIgnoringOrder(["a"], properties);
+			var config:ComponentConfig = new ComponentConfig("Mock", new MockMetadataComponent());
+			assertThat(config.properties, array("a"));
 		}
 		
-		private function convertToArray(properties:Vector.<String>):Array
+		[Test]
+		public function marking_a_class_with_encode_all_overrides_metadata():void
 		{
-			var i:uint = properties.length;
-			var array:Array = [];
-			while (i--)
-				array[i] = properties[i];
-			
-			return array;
+			var config:ComponentConfig = new ComponentConfig("Mock", new MockEncodeAllComponent());
+			assertThat(config.properties, array("a", "str"));
 		}
 		
 	}

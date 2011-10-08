@@ -55,9 +55,9 @@ package ember.core
 			return _nodes.get(nodeClass);
 		}
 
-		public function addSystem(systemClass:Class):void
+		public function addSystem(systemClass:Class):Object
 		{
-			_systems.add(systemClass);
+			return _systems.add(systemClass);
 		}
 
 		public function hasSystem(system:Class):Boolean

@@ -1,14 +1,15 @@
 package ember.core
 {
-	import asunit.asserts.assertEquals;
-	import asunit.asserts.assertNotNull;
-	import asunit.asserts.assertNull;
-	import asunit.asserts.assertSame;
-
-	import mocks.MockRenderComponent;
-	import mocks.MockRenderNode;
-	import mocks.MockSpatialComponent;
-	import mocks.MockSpatialNode;
+	import mocks.MockComponent;
+	import mocks.MockNode;
+	import mocks.MockOptionalComponent;
+	import mocks.MockOptionalNode;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.object.equalTo;
+	import org.hamcrest.object.isTrue;
+	import org.hamcrest.object.notNullValue;
+	import org.hamcrest.object.nullValue;
+	import org.hamcrest.object.sameInstance;
 
 
 	public class NodesManagerTests
@@ -33,188 +34,152 @@ package ember.core
 		[Test]
 		public function you_create_a_set_by_node_class():void
 		{
-			var nodes:Nodes = _manager.get(MockRenderNode);
-			assertNotNull(nodes);
+			assertThat(_manager.get(MockNode), notNullValue());
 		}
 		
 		[Test]
 		public function nodes_contains_a_node_that_represents_each_member_entity():void
 		{
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
-			var render:MockRenderComponent = new MockRenderComponent();
-
-			var entity:Entity = _entities.create();
-			entity.addComponent(spatial);
-			entity.addComponent(render);
+			var list:Array = [];
+			for (var i:int = 0; i < 7; i++)
+			{
+				var entity:Entity = _entities.create();
+				entity.addComponent(new MockComponent());
+				list[i] = entity;
+			}
 			
-			var nodes:Nodes = _manager.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockNode);
+			var foundCount:uint = 0;
+			for (var node:MockNode = nodes.head; node; node = node.next)
+				list.indexOf(node.entity) != -1 && ++foundCount;
 			
-			assertSame(entity, nodes.head.entity);
+			assertThat(foundCount, equalTo(7));
 		}
 		
 		[Test]
 		public function nodes_does_not_contain_a_node_that_misses_component():void
 		{
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
-
-			var entity:Entity = _entities.create();
-			entity.addComponent(spatial);
+			for (var i:int = 0; i < 8; i++)
+				_entities.create();
 			
-			var nodes:Nodes = _manager.get(MockRenderNode);
-			
-			assertNull(nodes.head);
+			var nodes:Nodes = _manager.get(MockNode);
+			assertThat(nodes.count, equalTo(0));
 		}
 		
 		[Test]
 		public function if_an_enititys_components_no_longer_satisfy_requirements_it_is_removed():void
 		{
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
-			var render:MockRenderComponent = new MockRenderComponent();
-
 			var entity:Entity = _entities.create();
-			entity.addComponent(spatial);
-			entity.addComponent(render);
+			entity.addComponent(new MockComponent());
 			
-			var nodes:Nodes = _manager.get(MockRenderNode);
-			entity.removeComponent(MockSpatialComponent);
+			var nodes:Nodes = _manager.get(MockNode);
+			var wasAdded:Boolean = nodes.count == 1;
 			
-			assertNull(nodes.head);
+			entity.removeComponent(MockComponent);
+			var wasRemoved:Boolean = nodes.count == 0;
+			
+			assertThat(wasAdded && wasRemoved, isTrue());
 		}
 		
 		[Test]
 		public function once_nodes_is_defined_if_an_entity_later_satisfies_requirements_it_is_added():void
 		{
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
-			var render:MockRenderComponent = new MockRenderComponent();
-
 			var entity:Entity = _entities.create();
-			entity.addComponent(spatial);
 			
-			var nodes:Nodes = _manager.get(MockRenderNode);
-			entity.addComponent(render);
+			var nodes:Nodes = _manager.get(MockNode);
+			var noNodes:Boolean = nodes.count == 0;
 			
-			assertSame(entity, nodes.head.entity);
+			entity.addComponent(new MockComponent());
+			var nodeAdded:Boolean = nodes.count == 1;
+			
+			assertThat(noNodes && nodeAdded, isTrue());
 		}
 		
 		[Test]
-		public function more_than_one_entity_can_be_added_to_nodes():void
+		public function nodes_are_not_duplicated_per_request():void
 		{
-			var aSpatial:MockSpatialComponent = new MockSpatialComponent();
-			var aRender:MockRenderComponent = new MockRenderComponent();
-			var a:Entity = _entities.create();
-			a.addComponent(aSpatial);
-			a.addComponent(aRender);
-			
-			var bSpatial:MockSpatialComponent = new MockSpatialComponent();
-			var bRender:MockRenderComponent = new MockRenderComponent();
-			var b:Entity = _entities.create();
-			b.addComponent(bSpatial);
-			b.addComponent(bRender);
-			
-			var nodes:Nodes = _manager.get(MockRenderNode);
-			
-			var node:MockRenderNode = nodes.head as MockRenderNode;
-			assertSame(aRender, node.render);
-			assertSame(aSpatial, node.spatial);
-			
-			node = node.next;
-			assertNotNull(node);
-			assertSame(bRender, node.render);
-			assertSame(bSpatial, node.spatial);
+			var nodes:Nodes = _manager.get(MockNode);
+			assertThat(_manager.get(MockNode), sameInstance(nodes));
 		}
 		
 		[Test]
-		public function when_a_node_is_created_components_are_copied_into_the_node():void
+		public function count_is_0_when_clear_is_called():void
 		{
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
-			var render:MockRenderComponent = new MockRenderComponent();
-
-			var entity:Entity = _entities.create();
-			entity.addComponent(spatial);
-			entity.addComponent(render);
+			for (var i:int = 0; i < 11; i++)
+			{
+				var entity:Entity = _entities.create();
+				entity.addComponent(new MockComponent());
+			}
 			
-			var nodes:Nodes = _manager.get(MockRenderNode);
-
-			var node:MockRenderNode = nodes.head as MockRenderNode;
-			assertSame(spatial, node.spatial);
-			assertSame(render, node.render);
-		}
-		
-		[Test]
-		public function nodes_are_not_duplicated():void
-		{
-			var a:Nodes = _manager.get(MockRenderNode);
-			var b:Nodes = _manager.get(MockRenderNode);
-			assertSame(a, b);
+			var nodes:Nodes = _manager.get(MockNode);
+			
+			_manager.clear();
+			assertThat(nodes.count, equalTo(0));
 		}
 		
 		[Test]
 		public function all_nodes_are_removed_when_clear_is_called():void
 		{
-			var spatial:MockSpatialComponent = new MockSpatialComponent();
-			var render:MockRenderComponent = new MockRenderComponent();
-
-			var entity:Entity = _entities.create();
-			entity.addComponent(spatial);
-			entity.addComponent(render);
+			for (var i:int = 0; i < 11; i++)
+			{
+				var entity:Entity = _entities.create();
+				entity.addComponent(new MockComponent());
+			}
 			
-			var nodes:Nodes = _manager.get(MockRenderNode);
+			var nodes:Nodes = _manager.get(MockNode);
 			
 			_manager.clear();
-			
-			assertNull(nodes.head);
+			assertThat(nodes.head, nullValue());
 		}
 		
 		[Test]
 		public function optional_component_is_added_to_existing_node_when_added_to_component():void
 		{
+			var component:MockOptionalComponent = new MockOptionalComponent();
+			
 			var entity:Entity = _entities.create();
-			entity.addComponent(new MockSpatialComponent());
+			entity.addComponent(new MockComponent());
+			entity.addComponent(component);
 
 			var nodes:Nodes = _manager.get(MockOptionalNode);
 			
-			var render:MockRenderComponent = new MockRenderComponent();
-			entity.addComponent(render);
-			
-			assertSame(render, nodes.head.render);
+			assertThat(nodes.head.optional, sameInstance(component));
 		}
 		
 		[Test]
 		public function optional_component_is_removed_from_existing_node_when_removed_from_component():void
 		{
-			var entity:Entity = _entities.create();
-			entity.addComponent(new MockSpatialComponent());
+			var component:MockOptionalComponent = new MockOptionalComponent();
 			
-			var render:MockRenderComponent = new MockRenderComponent();
-			entity.addComponent(render);
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockComponent());
+			entity.addComponent(component);
 
 			var nodes:Nodes = _manager.get(MockOptionalNode);
 			
-			entity.removeComponent(MockRenderComponent);
-			assertNull(nodes.head.render);
+			entity.removeComponent(MockOptionalComponent);
+			assertThat(nodes.head.optional, nullValue());
 		}
 		
 		[Test]
 		public function an_empty_nodes_reports_0_count():void
 		{
-			var nodes:Nodes = _manager.get(MockSpatialNode);
-			assertEquals(0, nodes.count)
+			var nodes:Nodes = _manager.get(MockNode);
+			assertThat(nodes.count, equalTo(0));
 		}
 		
 		
 		[Test]
 		public function nodes_reports_accurate_count_after_construction():void
 		{
-			var count:uint = 5;
-			
-			for (var i:int = 0; i < count; i++)
+			for (var i:int = 0; i < 5; i++)
 			{
 				var entity:Entity = _entities.create();
-				entity.addComponent(new MockSpatialComponent());
+				entity.addComponent(new MockComponent());
 			}
 
-			var nodes:Nodes = _manager.get(MockSpatialNode);
-			assertEquals(count, nodes.count);
+			var nodes:Nodes = _manager.get(MockNode);
+			assertThat(nodes.count, equalTo(5));
 		}
 		
 		[Test]
@@ -226,18 +191,18 @@ package ember.core
 			for (i = 0; i < count; i++)
 			{
 				entity = _entities.create();
-				entity.addComponent(new MockSpatialComponent());
+				entity.addComponent(new MockComponent());
 			}
 
-			var nodes:Nodes = _manager.get(MockSpatialNode);
+			var nodes:Nodes = _manager.get(MockNode);
 			
-			for (i = 0; i < count; i++)
+			for (i = 0; i < 3; i++)
 			{
 				entity = _entities.create();
-				entity.addComponent(new MockSpatialComponent());
+				entity.addComponent(new MockComponent());
 			}
 			
-			assertEquals(count * 2, nodes.count);
+			assertThat(nodes.count, equalTo(5 + 3));
 		}
 		
 		[Test]
@@ -249,32 +214,41 @@ package ember.core
 			for (i = 0; i < count; i++)
 			{
 				entity = _entities.create("id" + i);
-				entity.addComponent(new MockSpatialComponent());
+				entity.addComponent(new MockComponent());
 			}
 
-			var nodes:Nodes = _manager.get(MockSpatialNode);
+			var nodes:Nodes = _manager.get(MockNode);
 			
 			var removed:uint = 3;
 			for (i = 0; i < removed; i++)
 			{
 				entity = _entities.get("id" + i);
-				entity.removeComponent(MockSpatialComponent);
+				entity.removeComponent(MockComponent);
 			}
 			
-			assertEquals(count - removed, nodes.count);
+			assertThat(nodes.count, equalTo(10 - 3));
+		}
+		
+		[Test]
+		public function a_node_can_be_referenced_in_nodes_by_entity():void
+		{
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockComponent());
+
+			var nodes:Nodes = _manager.get(MockNode);
+			assertThat(nodes.get(entity), notNullValue());
 		}
 		
 		[Test]
 		public function when_an_entity_is_removed_any_corresponding_nodes_are_removed():void
 		{
 			var entity:Entity = _entities.create();
-			entity.addComponent(new MockSpatialComponent());
+			entity.addComponent(new MockComponent());
 
-			var nodes:Nodes = _manager.get(MockSpatialNode);
-			assertSame(entity, nodes.head.entity);
-			
+			var nodes:Nodes = _manager.get(MockNode);
 			_manager.removeEntity(entity);
-			assertNull(nodes.head);
+			
+			assertThat(nodes.get(entity), nullValue());
 		}
 		
 	}

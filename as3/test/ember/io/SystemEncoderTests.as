@@ -1,21 +1,18 @@
 package ember.io
 {
-	import asunit.asserts.assertEquals;
-	import asunit.asserts.assertFalse;
-	import asunit.asserts.assertTrue;
-
 	import ember.core.Entity;
 	import ember.core.EntitySystem;
-
-	import mocks.MockSpatialComponent;
-
+	import mocks.MockComponent;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.object.equalTo;
+	import org.hamcrest.object.isFalse;
+	import org.hamcrest.object.isTrue;
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
+
 	
 	public class SystemEncoderTests
 	{
 		private var encoder:SystemEncoder;
-		
-		private var injector:SwiftSuspendersInjector;
 		
 		[Before]
 		public function before():void
@@ -24,8 +21,6 @@ package ember.io
 			var componentEncoder:ComponentEncoder = new ComponentEncoder(configFactory);
 			var entityEncoder:EntityEncoder = new EntityEncoder(componentEncoder);
 			encoder = new SystemEncoder(entityEncoder);
-			
-			injector = new SwiftSuspendersInjector();
 		}
 		
 		[After]
@@ -37,55 +32,39 @@ package ember.io
 		[Test]
 		public function encodes_similar_systems_identically():void
 		{
-			var a:EntitySystem = new EntitySystem(injector);
-			var ae:Entity = a.createEntity();
-
-			var ac:MockSpatialComponent = new MockSpatialComponent();
-			ac.x = 5;
-			ac.y = 10;
-			ae.addComponent(ac);
+			var component:MockComponent;
 			
-			var b:EntitySystem = new EntitySystem(injector);
-			var be:Entity = b.createEntity();
-
-			var bc:MockSpatialComponent = new MockSpatialComponent();
-			bc.x = 5;
-			bc.y = 10;
-			be.addComponent(bc);
-
-			var ao:Object = encoder.encode(a);
-			var bo:Object = encoder.encode(b);
-			assertTrue(CompareVOs.objectsAreEquivalent(ao, bo));
+			var a:EntitySystem = createSystem();
+			component = createEntityWithComponent(a);
+			component.n = 5;
+			
+			var b:EntitySystem = createSystem();
+			component = createEntityWithComponent(b);
+			component.n = 5;
+			
+			assertThat(CompareVOs.objectsAreEquivalent(encoder.encode(a), encoder.encode(b)), isTrue());
 		}
 		
 		[Test]
 		public function encodes_different_systems_differently():void
 		{
-			var a:EntitySystem = new EntitySystem(injector);
-			var ae:Entity = a.createEntity();
-
-			var ac:MockSpatialComponent = new MockSpatialComponent();
-			ac.x = 5;
-			ac.y = 10;
-			ae.addComponent(ac);
+			var component:MockComponent;
 			
-			var b:EntitySystem = new EntitySystem(injector);
-			var be:Entity = b.createEntity();
-
-			var bc:MockSpatialComponent = new MockSpatialComponent();
-			bc.x = 6;
-			bc.y = 10;
-			be.addComponent(bc);
-
-			var ao:Object = encoder.encode(a);
-			var bo:Object = encoder.encode(b);
-			assertFalse(CompareVOs.objectsAreEquivalent(ao, bo));
+			var a:EntitySystem = createSystem();
+			component = createEntityWithComponent(a);
+			component.n = 5;
+			
+			var b:EntitySystem = createSystem();
+			component = createEntityWithComponent(b);
+			component.n = 6;
+			
+			assertThat(CompareVOs.objectsAreEquivalent(encoder.encode(a), encoder.encode(b)), isFalse());
 		}
 		
 		[Test]
 		public function encode_and_decode_roundtrips():void
 		{
-			var a:EntitySystem = new EntitySystem(injector);
+			var a:EntitySystem = createSystem();
 			a.createEntity();
 			a.createEntity();
 			a.createEntity();
@@ -93,10 +72,24 @@ package ember.io
 
 			var encoded:Object = encoder.encode(a);
 
-			var b:EntitySystem = new EntitySystem(injector);
+			var b:EntitySystem = createSystem();
 			encoder.decode(b, encoded);
 			
-			assertEquals(4, b.getEntities().length);
+			assertThat(b.getEntities().length, equalTo(4));
+		}
+		
+		private function createSystem():EntitySystem
+		{
+			return new EntitySystem(new SwiftSuspendersInjector());
+		}
+		
+		private function createEntityWithComponent(system:EntitySystem):MockComponent
+		{
+			var entity:Entity = system.createEntity();
+			var component:MockComponent = new MockComponent();
+			entity.addComponent(component);
+			
+			return component;
 		}
 		
 	}

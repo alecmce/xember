@@ -10,22 +10,22 @@ package ember.io
 		
 		public function ComponentConfig(type:String, component:Object)
 		{
-			_type = type.replace("::", ".");
+			_type = type;
 			_properties = new Vector.<String>();
 			_typeMap = {};
 			
 			var description:XML = describeType(component);
-			for each (var xml:XML in description.variable)
+			var list:XMLList = description.variable;
+			
+			var encodeSeparately:Boolean = !markedEncodeAll(description);
+			for each (var xml:XML in list)
 			{
-				var ember:XML = xml.metadata.(@name == "Ember")[0];
-				if (!ember)
+				if (encodeSeparately ? !markedEncode(xml) : markedIgnore(xml))
 					continue;
 				
 				var property:String = xml.@name;
-				var type:String = xml.@type;
-				
 				_properties.push(property);
-				_typeMap[property] = type.replace("::", ".");
+				_typeMap[property] = xml.@type.toString();
 			}
 		}
 		
@@ -42,6 +42,24 @@ package ember.io
 		public function getType(property:String):String
 		{
 			return _typeMap[property];
+		}
+		
+		private function markedEncodeAll(xml:XML):Boolean
+		{
+			var ember:XML = xml.metadata.(@name == "Ember")[0];
+			return ember && ember.arg.(@value == "encodeAll")[0];
+		}
+		
+		private function markedEncode(xml:XML):Boolean
+		{
+			var ember:XML = xml.metadata.(@name == "Ember")[0];
+			return ember != null;
+		}
+		
+		private function markedIgnore(xml:XML):Boolean
+		{
+			var ember:XML = xml.metadata.(@name == "Ember")[0];
+			return ember && ember.arg.(@value == "ignore")[0];
 		}
 		
 	}

@@ -1,9 +1,10 @@
 package ember.io
 {
-	import asunit.asserts.assertNotNull;
-	import asunit.asserts.assertSame;
+	import mocks.MockComponent;
 
-	import mocks.MockRenderComponent;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.object.notNullValue;
+	import org.hamcrest.object.sameInstance;
 	
 	public class ComponentConfigFactoryTests
 	{
@@ -24,20 +25,15 @@ package ember.io
 		[Test]
 		public function can_generate_config_for_component():void
 		{
-			var a:ComponentConfig = configFactory.get(new MockRenderComponent());
-			
-			assertNotNull(a);
+			assertThat(configFactory.get(new MockComponent()), notNullValue());
 		}
 		
 		[Test]
 		public function does_not_duplicate_configs_for_components_of_same_type():void
 		{
-			var a:ComponentConfig = configFactory.get(new MockRenderComponent());
-			var b:ComponentConfig = configFactory.get(new MockRenderComponent());
-			
-			assertSame(a, b);
+			var first:ComponentConfig = configFactory.get(new MockComponent());
+			assertThat(configFactory.get(new MockComponent()), sameInstance(first));
 		}
-		
 		
 	}
 }
