@@ -1,10 +1,14 @@
 package ember.io
 {
 	import mocks.MockComponent;
+	import mocks.MockPointComponent;
+
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.equalTo;
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
+
+	import flash.geom.Point;
 
 	
 	public class ComponentEncoderTests
@@ -58,6 +62,42 @@ package ember.io
 			var roundtrip:MockComponent = encoder.decode(object) as MockComponent;
 		
 			assertThat(roundtrip.n, equalTo(7));
+		}
+		
+		[Test]
+		public function encodes_similar_points_similarly():void
+		{
+			var a:MockPointComponent = new MockPointComponent();
+			a.point = new Point(4, 5);
+			
+			var b:MockPointComponent = new MockPointComponent();
+			b.point = new Point(4, 5);
+			
+			assertThat(CompareVOs.objectsAreEquivalent(encoder.encode(a), encoder.encode(b)), isTrue());
+		}
+		
+		[Test]
+		public function encodes_different_points_differently():void
+		{
+			var a:MockPointComponent = new MockPointComponent();
+			a.point = new Point(3, 5);
+			
+			var b:MockPointComponent = new MockPointComponent();
+			b.point = new Point(4, 5);
+			
+			assertThat(CompareVOs.objectsAreEquivalent(encoder.encode(a), encoder.encode(b)), isFalse());
+		}
+		
+		[Test]
+		public function roundtrips_point_encoding_correctly():void
+		{
+			var component:MockPointComponent = new MockPointComponent();
+			component.point = new Point(3, 5);
+			
+			var object:Object = encoder.encode(component);
+			var roundtrip:MockPointComponent = encoder.decode(object) as MockPointComponent;
+		
+			assertThat(component.point.equals(roundtrip.point), isTrue());
 		}
 		
 	}

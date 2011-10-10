@@ -1,5 +1,7 @@
 package ember.io
 {
+	import ember.io.encoders.PointEncoder;
+
 	import flash.utils.getDefinitionByName;
 	
 	final public class ComponentEncoder
@@ -10,6 +12,9 @@ package ember.io
 		public function ComponentEncoder(configFactory:ComponentConfigFactory)
 		{
 			_configFactory = configFactory;
+			
+			_customEncoders = new CustomEncoders();
+			_customEncoders.addEncoder(PointEncoder);
 		}
 		
 		public function addCustomEncoder(encoder:Class):void
@@ -30,7 +35,19 @@ package ember.io
 			
 			var properties:Vector.<String> = config.properties;
 			for each (var property:String in properties)
-				list[property] = component[property];
+			{
+				var type:String = config.getType(property);
+				if (isNativeType(type))
+				{
+					list[property] = component[property];
+				}
+				else
+				{
+					var encoder:Object = _customEncoders.getEncoderForType(type);
+					if (encoder)
+						list[property] = {type:type, value:encoder.encode(component[property])};
+				}
+			}
 
 			var output:Object = {};
 			output[config.type] = list;
@@ -47,10 +64,32 @@ package ember.io
 				
 				var values:Object = object[type];
 				for (var property:String in values)
-					component[property] = values[property];
+				{
+					var value:Object = values[property];
+					if (isNative(value))
+					{
+						component[property] = value;
+					}
+					else
+					{
+						var encoder:Object = _customEncoders.getEncoderForType(value.type);
+						if (encoder)
+							component[property] = encoder.decode(value.value);
+					}
+				}
 			}
 			
 			return component;
+		}
+		
+		private function isNativeType(type:String):Boolean
+		{
+			return type == "int" || type == "uint" || type == "Number" || type == "String" || type == "Boolean";
+		}
+		
+		private function isNative(object:*):Boolean
+		{
+			return object is Number || object is int || object is uint || object is String || object is Boolean;
 		}
 
 	}

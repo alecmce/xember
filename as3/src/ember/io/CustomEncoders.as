@@ -1,7 +1,6 @@
 package ember.io
 {
 	import flash.utils.Dictionary;
-	import flash.utils.getDefinitionByName;
 	
 	internal class CustomEncoders
 	{
@@ -21,14 +20,14 @@ package ember.io
 			if (description.isError)
 				throw new Error(description.errorDescription);
 
-			var typeClass:Class = getDefinitionByName(description.type) as Class;
-			if (_typeMap[typeClass] != null)
-				throw new Error("Custom encoder collision - you cannot define two custom encoders for " + description.type);
+			var type:String = description.type;
+			if (_typeMap[type] != null)
+				throw new Error("Custom encoder collision - you cannot define two custom encoders for " + type);
 			
 			var instance:Object = new encoder();
 			
-			_encoderMap[encoder] = new EncoderReference(typeClass, instance);
-			_typeMap[typeClass] = instance;
+			_encoderMap[encoder] = new EncoderReference(type, instance);
+			_typeMap[type] = instance;
 			
 			return !description.isError;
 		}
@@ -44,7 +43,7 @@ package ember.io
 			return true;
 		}
 
-		public function getEncoderForType(type:Class):Object
+		public function getEncoderForType(type:String):Object
 		{
 			return _typeMap[type];
 		}
@@ -56,10 +55,10 @@ import flash.utils.describeType;
 
 class EncoderReference
 {
-	public var type:Class;
+	public var type:String;
 	public var instance:Object;
 	
-	public function EncoderReference(type:Class, instance:Object)
+	public function EncoderReference(type:String, instance:Object)
 	{
 		this.type = type;
 		this.instance = instance;
