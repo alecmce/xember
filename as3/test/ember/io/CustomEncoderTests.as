@@ -1,9 +1,11 @@
 package ember.io
 {
 	import mocks.MockCustomEncoder;
+	import mocks.MockCustomEncoderComponent;
 	import mocks.MockCustomVO;
 
 	import org.hamcrest.assertThat;
+	import org.hamcrest.object.isTrue;
 	
 	public class CustomEncoderTests
 	{
@@ -33,28 +35,19 @@ package ember.io
 		[Test]
 		public function component_encoder_will_invoke_and_use_custom_encoder_as_required():void
 		{
-			var component:MockComponent = new MockComponent();
+			encoder.addCustomEncoder(MockCustomEncoder);
+			
+			var component:MockCustomEncoderComponent = new MockCustomEncoderComponent();
 			component.normal = "hello";
 			component.custom = new MockCustomVO();
 			component.custom.id = 3;
 			component.custom.name = "world";
 			
 			var vo:Object = encoder.encode(component);
-			assertThat(CompareVOs.objectsAreEquivalent(vo, {normal:"hello",label:"3/world"}));
+			var expected:Object = {"mocks::MockCustomEncoderComponent":{normal:"hello",custom:{type:"mocks::MockCustomVO",value:"3/world"}}};
+			
+			assertThat(CompareVOs.objectsAreEquivalent(vo, expected), isTrue());
 		}
 		
 	}
-}
-
-import mocks.MockCustomVO;
-
-[Ember(encodeAll)]
-class MockComponent
-{
-	
-	public var normal:String;
-	
-	[Ember(encoder="mocks::MockCustomEncoder")]
-	public var custom:MockCustomVO;
-	
 }

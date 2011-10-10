@@ -4,12 +4,12 @@ package mocks
 	{
 		public function encode(object:MockCustomVO):Object
 		{
-			return {label:object.id + "/" + object.name};
+			return object.id + "/" + object.name;
 		}
 		
 		public function decode(object:Object):MockCustomVO
 		{
-			var data:Array = object.label.split("/");
+			var data:Array = object.split("/");
 			
 			var vo:MockCustomVO = new MockCustomVO();
 			vo.id = data.shift();

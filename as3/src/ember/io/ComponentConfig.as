@@ -53,7 +53,7 @@ package ember.io
 	}
 }
 
-import flash.net.getClassByAlias;
+import flash.utils.getDefinitionByName;
 
 class PropertyConfig
 {
@@ -74,7 +74,7 @@ class PropertyConfig
 		{
 			metadata = metadata.arg.(@key == "encoder")[0];
 			if (metadata)
-				encoder = getClassByAlias(metadata.@value);
+				encoder = getDefinitionByName(metadata.@value) as Class;
 		}
 	}
 	

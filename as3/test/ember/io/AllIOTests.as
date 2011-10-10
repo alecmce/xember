@@ -12,7 +12,7 @@ package ember.io
 		public var systemEncoder:EmberEncoderTests;
 		
 		public var customEncoders:CustomEncodersTests;
-//		public var customEncoder:CustomEncoderTests;
+		public var customEncoder:CustomEncoderTests;
 		
 	}
 }

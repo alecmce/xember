@@ -37,15 +37,16 @@ package ember.io
 			for each (var property:String in properties)
 			{
 				var type:String = config.getType(property);
+				var value:Object = component[property];
 				if (isNativeType(type))
 				{
-					list[property] = component[property];
+					list[property] = value;
 				}
 				else
 				{
 					var encoder:Object = _customEncoders.getEncoderForType(type);
 					if (encoder)
-						list[property] = {type:type, value:encoder.encode(component[property])};
+						list[property] = {type:type, value:encoder.encode(value)};
 				}
 			}
 
