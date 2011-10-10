@@ -1,6 +1,7 @@
 package ember.io
 {
 	import ember.io.encoders.PointEncoder;
+	import ember.io.encoders.RectangleEncoder;
 
 	import flash.utils.getDefinitionByName;
 	
@@ -15,6 +16,7 @@ package ember.io
 			
 			_customEncoders = new CustomEncoders();
 			_customEncoders.addEncoder(PointEncoder);
+			_customEncoders.addEncoder(RectangleEncoder);
 		}
 		
 		public function addCustomEncoder(encoder:Class):void
