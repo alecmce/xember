@@ -27,7 +27,7 @@ package ember.io
 		[Test]
 		public function an_encoder_can_be_referenced_by_alias():void
 		{
-			encoder.addCustomEncoder("alias", MockCustomEncoder);
+			encoder.addCustomEncoder(MockCustomEncoder);
 		}
 		
 		[Test]
@@ -58,6 +58,3 @@ class MockComponent
 	public var custom:MockCustomVO;
 	
 }
-
-
-

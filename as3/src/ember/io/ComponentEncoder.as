@@ -17,6 +17,11 @@ package ember.io
 			_customEncoders.addEncoder(encoder);
 		}
 		
+		public function removeCustomEncoder(encoder:Class):void
+		{
+			_customEncoders.removeEncoder(encoder);
+		}
+		
 		public function encode(component:Object):Object
 		{
 			var config:ComponentConfig = _configFactory.get(component);
