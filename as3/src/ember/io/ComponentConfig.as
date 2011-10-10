@@ -15,14 +15,15 @@ package ember.io
 			_typeMap = {};
 			
 			var description:XML = describeType(component);
-			var list:XMLList = description.variable;
+			var encodeAll:Boolean = markedEncodeAll(description);
 			
-			var encodeSeparately:Boolean = !markedEncodeAll(description);
+			var list:XMLList = description.variable;
 			for each (var xml:XML in list)
 			{
-				if (encodeSeparately ? !markedEncode(xml) : markedIgnore(xml))
+				var config:PropertyConfig = new PropertyConfig(encodeAll, xml);
+				if (!config.encode)
 					continue;
-				
+					
 				var property:String = xml.@name;
 				_properties.push(property);
 				_typeMap[property] = xml.@type.toString();
@@ -49,18 +50,32 @@ package ember.io
 			var ember:XML = xml.metadata.(@name == "Ember")[0];
 			return ember && ember.arg.(@value == "encodeAll")[0];
 		}
-		
-		private function markedEncode(xml:XML):Boolean
-		{
-			var ember:XML = xml.metadata.(@name == "Ember")[0];
-			return ember != null;
-		}
-		
-		private function markedIgnore(xml:XML):Boolean
-		{
-			var ember:XML = xml.metadata.(@name == "Ember")[0];
-			return ember && ember.arg.(@value == "ignore")[0];
-		}
-		
 	}
+}
+
+import flash.net.getClassByAlias;
+
+class PropertyConfig
+{
+	
+	public var encode:Boolean;
+	public var encoder:Class;
+	
+	public function PropertyConfig(encodeAll:Boolean, xml:XML)
+	{
+		var metadata:XML = xml.metadata.(@name == "Ember")[0];
+		
+		if (encodeAll)
+			encode = !(metadata && metadata.arg.(@value == "ignore")[0]);
+		else
+			encode = metadata != null;
+		
+		if (encode && metadata)
+		{
+			metadata = metadata.arg.(@key == "encoder")[0];
+			if (metadata)
+				encoder = getClassByAlias(metadata.@value);
+		}
+	}
+	
 }

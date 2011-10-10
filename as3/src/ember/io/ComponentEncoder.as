@@ -5,10 +5,16 @@ package ember.io
 	final public class ComponentEncoder
 	{
 		private var _configFactory:ComponentConfigFactory;
+		private var _customEncoders:CustomEncoders;
 		
 		public function ComponentEncoder(configFactory:ComponentConfigFactory)
 		{
 			_configFactory = configFactory;
+		}
+		
+		public function addCustomEncoder(encoder:Class):void
+		{
+			_customEncoders.addEncoder(encoder);
 		}
 		
 		public function encode(component:Object):Object
@@ -41,5 +47,6 @@ package ember.io
 			
 			return component;
 		}
+
 	}
 }
