@@ -1,0 +1,15 @@
+h1. xEmber
+
+p. xEmber is a child project inspired by Tom Davies' https://github.com/tdavies/Ember entity/component system framework.
+p. xEmber is still in the early stages. It is possible to create games with the framework as it currently stands, but its core functionality is still being worked on and it doesn't yet have a fixed API. Use at your own risk!
+
+h2. Structure
+
+p. An entity is a collection of components
+p. A component is a value-object
+p. Nodes are defined as a set of components. When an entity satisfies that set of components, a Node is added to the linked list and when it stops satisfying the set, it is removed.
+p. Systems act on nodes. Each system should have a clear responsibility like "update position", "collision detect" or "render".
+p. The structure can be integrated with RobotLegs, allowing MVC to be used where appropriate (HUD, game menus, leader-boards) and xEmber to be used for the core game(s).
+p. The io package will allow simple encoding and decoding of components into untyped objects that can be serialized to JSON, XML or AMF (or anything else). A modular structure allows complex data structures to be customly encoded and decoded (for example, encoding a Bitmap as its URL).
+p. The inspector package will allow object inspection, construction and descruction at runtime for game design and level building. A modular structure allows bespoke tooling for manipulating your components.
+p. Requires -keep-as3-metadata+="Ember" to be marked in the compiler. Metadata is used to mark data structures for encoding/decoding, and for configuring Nodes at runtime.
