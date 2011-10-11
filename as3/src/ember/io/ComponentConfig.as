@@ -2,7 +2,7 @@ package ember.io
 {
 	import flash.utils.describeType;
 	
-	final public class ComponentConfig
+	final internal class ComponentConfig
 	{
 		private var _type:String;
 		private var _properties:Vector.<String>;

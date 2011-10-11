@@ -2,7 +2,7 @@ package ember.io
 {
 	import flash.utils.Dictionary;
 	
-	internal class CustomEncoders
+	final internal class CustomEncoders
 	{
 		
 		private var _encoderMap:Dictionary;

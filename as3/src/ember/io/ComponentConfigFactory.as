@@ -4,7 +4,7 @@ package ember.io
 
 	import flash.utils.Dictionary;
 	
-	public class ComponentConfigFactory
+	final internal class ComponentConfigFactory
 	{
 		private var _map:Dictionary;
 		

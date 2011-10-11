@@ -1,8 +1,10 @@
 package ember.io
 {
-	import ember.core.Entity;
 	import ember.core.Ember;
+	import ember.core.Entity;
+
 	import mocks.MockComponent;
+
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.equalTo;
 	import org.hamcrest.object.isFalse;
@@ -11,15 +13,12 @@ package ember.io
 
 	public class EmberEncoderTests
 	{
-		private var encoder:SystemEncoder;
+		private var encoder:EmberEncoder;
 		
 		[Before]
 		public function before():void
 		{
-			var configFactory:ComponentConfigFactory = new ComponentConfigFactory();
-			var componentEncoder:ComponentEncoder = new ComponentEncoder(configFactory);
-			var entityEncoder:EntityEncoder = new EntityEncoder(componentEncoder);
-			encoder = new SystemEncoder(entityEncoder);
+			encoder = new EmberEncoder();
 		}
 		
 		[After]
