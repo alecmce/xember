@@ -4,7 +4,7 @@ package ember.inspector
 	public class AllInspectorTests
 	{
 		
-		public var inspector:InspectorTests;
+		public var string:StringInspectorTests;
 		
 	}
 }
