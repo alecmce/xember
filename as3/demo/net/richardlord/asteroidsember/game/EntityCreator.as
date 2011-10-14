@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.game
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Entity;
 
 	import net.richardlord.asteroidsember.components.*;
@@ -13,7 +13,7 @@ package net.richardlord.asteroidsember.game
 	public class EntityCreator
 	{
 		[Inject]
-		public var game:Ember;
+		public var game:Game;
 
 		public function destroyEntity(entity:Entity):void
 		{

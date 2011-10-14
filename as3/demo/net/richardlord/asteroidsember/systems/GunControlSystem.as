@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.systems
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Nodes;
 
 	import net.richardlord.asteroidsember.components.Gun;
@@ -14,7 +14,7 @@ package net.richardlord.asteroidsember.systems
 	public class GunControlSystem
 	{
 		[Inject]
-		public var game:Ember;
+		public var game:Game;
 
 		[Inject]
 		public var tick:Update;

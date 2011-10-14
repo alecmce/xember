@@ -2,7 +2,7 @@ package pong.game.sys.player
 {
 	import Box2D.Common.Math.b2Vec2;
 
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Nodes;
 
 	import pong.game.Tick;
@@ -14,7 +14,7 @@ package pong.game.sys.player
 	
 	public class PlayerSystem
 	{
-		private var _ember:Ember;
+		private var _game:Game;
 		private var _root:DisplayObjectContainer;
 		private var _tick:Tick;
 		
@@ -29,9 +29,9 @@ package pong.game.sys.player
 		
 		private var _nodes:Nodes;
 
-		public function PlayerSystem(ember:Ember, root:DisplayObjectContainer, tick:Tick)
+		public function PlayerSystem(game:Game, root:DisplayObjectContainer, tick:Tick)
 		{
-			_ember = ember;
+			_game = game;
 			_root = root;
 			_tick = tick;
 		}
@@ -48,7 +48,7 @@ package pong.game.sys.player
 			
 			velocity = new b2Vec2();
 			
-			_nodes = _ember.getNodes(PlayerNode);
+			_nodes = _game.getNodes(PlayerNode);
 		}
 
 		public function onRemove():void

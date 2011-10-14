@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.systems
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Nodes;
 
 	import net.richardlord.asteroidsember.components.Motion;
@@ -11,7 +11,7 @@ package net.richardlord.asteroidsember.systems
 	public class MovementSystem
 	{
 		[Inject]
-		public var game:Ember;
+		public var game:Game;
 
 		[Inject]
 		public var tick:Move;

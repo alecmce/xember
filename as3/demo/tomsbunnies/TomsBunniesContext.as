@@ -1,6 +1,6 @@
 package tomsbunnies
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.mvcs.Context;
 	import tomsbunnies.ctrl.CreateBunniesCommand;
@@ -23,7 +23,7 @@ package tomsbunnies
 			injector.mapSingleton(Render);
 			injector.mapSingleton(Pause);
 			
-			injector.mapSingleton(Ember);
+			injector.mapSingleton(Game);
 			
 			commandMap.execute(CreateBunniesCommand);
 			commandMap.execute(RegisterSystemsCommand);

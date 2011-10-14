@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.game
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 
 	import net.richardlord.asteroidsember.components.GameState;
 	import net.richardlord.asteroidsember.signals.Move;
@@ -25,7 +25,7 @@ package net.richardlord.asteroidsember.game
 	public class AsteroidsContext extends Context
 	{
 		
-		private var game:Ember;
+		private var game:Game;
 		
 		public function AsteroidsContext(view:DisplayObjectContainer = null)
 		{
@@ -34,7 +34,7 @@ package net.richardlord.asteroidsember.game
 		
 		override public function startup():void
 		{
-			injector.mapValue(Ember, game = new Ember(injector));
+			injector.mapValue(Game, game = new Game(injector));
 			injector.mapSingleton(EntityCreator);
 			injector.mapSingleton(PreUpdate);
 			injector.mapSingleton(Update);

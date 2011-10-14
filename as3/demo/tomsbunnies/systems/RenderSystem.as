@@ -1,6 +1,6 @@
 package tomsbunnies.systems
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Nodes;
 
 	import tomsbunnies.components.GraphicComponent;
@@ -21,7 +21,7 @@ package tomsbunnies.systems
 		
 		private const BLANK_RECT:Rectangle = new Rectangle(MIN_X, MIN_Y, MAX_X, MAX_Y);
 
-		private var _ember:Ember;
+		private var _ember:Game;
 		private var _root:DisplayObjectContainer;
 		private var _render:Render;
 
@@ -30,7 +30,7 @@ package tomsbunnies.systems
 		
 		private var _nodes:Nodes;
 
-		public function RenderSystem(ember:Ember, root:DisplayObjectContainer, render:Render)
+		public function RenderSystem(ember:Game, root:DisplayObjectContainer, render:Render)
 		{
 			_ember = ember;
 			_root = root;

@@ -1,7 +1,7 @@
 package ember.io
 {
 	import ember.core.Entity;
-	import ember.core.Ember;
+	import ember.core.Game;
 
 	import mocks.MockComponent;
 	import mocks.MockTextComponent;
@@ -68,8 +68,8 @@ package ember.io
 			addMockTextComponent(entity).str = "test";
 			
 			var encoded:Object = encoder.encode(entity);
-			var ember:Ember = createEmber();
-			var roundtrip:Entity = encoder.decode(ember, encoded);
+			var game:Game = createEmber();
+			var roundtrip:Entity = encoder.decode(game, encoded);
 			
 			var value:int = (roundtrip.getComponent(MockComponent) as MockComponent).n;
 			var text:String = (roundtrip.getComponent(MockTextComponent) as MockTextComponent).str;
@@ -84,21 +84,21 @@ package ember.io
 			var entity:Entity = createEntity("name");
 			var object:Object = encoder.encode(entity);
 
-			var ember:Ember = createEmber();
-			var roundtrip:Entity = encoder.decode(ember, object);
+			var game:Game = createEmber();
+			var roundtrip:Entity = encoder.decode(game, object);
 			
 			assertThat(roundtrip.name, equalTo("name"));
 		}
 		
-		private function createEmber():Ember
+		private function createEmber():Game
 		{
-			return new Ember(new SwiftSuspendersInjector());
+			return new Game(new SwiftSuspendersInjector());
 		}
 		
 		private function createEntity(name:String = ""):Entity
 		{
-			var ember:Ember = createEmber();
-			return ember.createEntity(name);
+			var game:Game = createEmber();
+			return game.createEntity(name);
 		}
 		
 		private function addMockComponent(entity:Entity):MockComponent

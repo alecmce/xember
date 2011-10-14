@@ -1,6 +1,6 @@
 package pong.game.ctrl.setup
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 
 	import pong.game.sys.ai.AISystem;
 	import pong.game.sys.physics.PhysicsSystem;
@@ -10,20 +10,20 @@ package pong.game.ctrl.setup
 	
 	public class ConfigureSystemsCommand
 	{
-		private var _ember:Ember;
+		private var _game:Game;
 
-		public function ConfigureSystemsCommand(ember:Ember)
+		public function ConfigureSystemsCommand(game:Game)
 		{
-			_ember = ember;
+			_game = game;
 		}
 
 		public function execute():void
 		{
-			_ember.addSystem(PhysicsSystem);
+			_game.addSystem(PhysicsSystem);
 //			_ember.addSystem(RenderPhysicsSystem);
-			_ember.addSystem(SimpleBlitterRenderSystem);
-			_ember.addSystem(AISystem);
-			_ember.addSystem(PlayerSystem);
+			_game.addSystem(SimpleBlitterRenderSystem);
+			_game.addSystem(AISystem);
+			_game.addSystem(PlayerSystem);
 		}
 		
 	}

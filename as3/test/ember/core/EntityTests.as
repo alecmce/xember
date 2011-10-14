@@ -10,24 +10,24 @@ package ember.core
 	public class EntityTests
 	{
 		
-		private var _ember:Ember;
+		private var _game:Game;
 		
 		[Before]
 		public function before():void
 		{
-			_ember = new Ember(new SwiftSuspendersInjector());
+			_game = new Game(new SwiftSuspendersInjector());
 		}
 		
 		[After]
 		public function after():void
 		{
-			_ember = null;
+			_game = null;
 		}
 		
 		[Test]
 		public function can_add_component_to_entity():void
 		{
-			var entity:Entity = _ember.createEntity();
+			var entity:Entity = _game.createEntity();
 			entity.addComponent(new MockComponent());
 			assertThat(entity.hasComponent(MockComponent), isTrue());
 		}
@@ -35,7 +35,7 @@ package ember.core
 		[Test]
 		public function can_reference_component_instance_by_class():void
 		{
-			var entity:Entity = _ember.createEntity();
+			var entity:Entity = _game.createEntity();
 			var component:MockComponent = new MockComponent();
 			
 			entity.addComponent(component);
@@ -45,7 +45,7 @@ package ember.core
 		[Test]
 		public function can_remove_component_from_entity():void
 		{
-			var entity:Entity = _ember.createEntity();
+			var entity:Entity = _game.createEntity();
 			entity.addComponent(new MockComponent());
 			entity.removeComponent(MockComponent);
 			assertThat(entity.hasComponent(MockComponent), isFalse());

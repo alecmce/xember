@@ -2,7 +2,7 @@ package pong.game.sys.render
 {
 	import Box2D.Common.Math.b2Vec2;
 
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Nodes;
 
 	import pong.game.Tick;
@@ -17,7 +17,7 @@ package pong.game.sys.render
 	public class SimpleBlitterRenderSystem
 	{
 		
-		private var _ember:Ember;
+		private var _game:Game;
 		private var _tick:Tick;
 		private var _config:PhysicsConfig;
 		private var _root:DisplayObjectContainer;
@@ -30,9 +30,9 @@ package pong.game.sys.render
 		private var _nodes:Nodes;
 		private var _bitmap:Bitmap;
 
-		public function SimpleBlitterRenderSystem(ember:Ember, tick:Tick, config:PhysicsConfig, root:DisplayObjectContainer)
+		public function SimpleBlitterRenderSystem(game:Game, tick:Tick, config:PhysicsConfig, root:DisplayObjectContainer)
 		{
-			_ember = ember;
+			_game = game;
 			_tick = tick;
 			_config = config;
 			_root = root;
@@ -48,7 +48,7 @@ package pong.game.sys.render
 			_tick.add(iterate);
 			toPixels = _config.toPixels;
 			
-			_nodes = _ember.getNodes(RenderNode);
+			_nodes = _game.getNodes(RenderNode);
 		}
 		
 		public function onRemove():void

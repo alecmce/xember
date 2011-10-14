@@ -5,7 +5,7 @@ package ember.core
 	public class AllCoreTests
 	{
 		
-		public var emberTests:EmberTests;
+		public var emberTests:GameTests;
 		public var entitiesTests:EntitiesTests;
 		public var entityTests:EntityTests;
 		public var nodesComponentMapTests:NodesComponentMapTests;

@@ -5,7 +5,7 @@ package pong.game.ctrl.setup
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2FixtureDef;
 
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Entity;
 
 	import pong.game.attr.AIComponent;
@@ -18,10 +18,10 @@ package pong.game.ctrl.setup
 	public class CreateRightPaddleCommand
 	{
 		
-		private var _ember:Ember;
+		private var _ember:Game;
 		private var _config:PhysicsConfig;
 
-		public function CreateRightPaddleCommand(ember:Ember, config:PhysicsConfig)
+		public function CreateRightPaddleCommand(ember:Game, config:PhysicsConfig)
 		{
 			_ember = ember;
 			_config = config;

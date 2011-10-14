@@ -1,18 +1,16 @@
 package tomsbunnies.systems
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Nodes;
 
 	import tomsbunnies.components.SpatialComponent;
 	import tomsbunnies.events.Tick;
 	import tomsbunnies.systems.nodes.SpatialNode;
 
-
-	
 	public class BounceSystem
 	{
 
-		private var _ember:Ember;
+		private var _game:Game;
 		private var _tick:Tick;
 		
 		private const _maxX:int = 640;
@@ -23,15 +21,15 @@ package tomsbunnies.systems
 
 		private var _entities:Nodes;
 
-		public function BounceSystem(ember:Ember, tick:Tick)
+		public function BounceSystem(game:Game, tick:Tick)
 		{
-			_ember = ember;
+			_game = game;
 			_tick = tick;
 		}
 
 		public function onRegister():void
 		{
-			_entities = _ember.getNodes(SpatialNode);
+			_entities = _game.getNodes(SpatialNode);
 			_tick.add(onTick);
 		}
 		

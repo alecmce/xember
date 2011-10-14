@@ -3,7 +3,7 @@ package pong.game.sys.ai
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Entity;
 	import ember.core.Nodes;
 
@@ -14,7 +14,7 @@ package pong.game.sys.ai
 	
 	public class AISystem
 	{
-		private var _ember:Ember;
+		private var _game:Game;
 		private var _tick:Tick;
 		
 		private var physicalBall:PhysicalComponent;
@@ -22,15 +22,15 @@ package pong.game.sys.ai
 		
 		private var _nodes:Nodes;
 
-		public function AISystem(ember:Ember, tick:Tick)
+		public function AISystem(game:Game, tick:Tick)
 		{
-			_ember = ember;
+			_game = game;
 			_tick = tick;
 		}
 		
 		public function onRegister():void
 		{
-			var ball:Entity = _ember.getEntity(Names.BALL);
+			var ball:Entity = _game.getEntity(Names.BALL);
 			if (!ball)
 				return;
 			
@@ -40,7 +40,7 @@ package pong.game.sys.ai
 			
 			velocity = new b2Vec2();
 			
-			_nodes = _ember.getNodes(AINode);
+			_nodes = _game.getNodes(AINode);
 		}
 
 		public function onRemove():void

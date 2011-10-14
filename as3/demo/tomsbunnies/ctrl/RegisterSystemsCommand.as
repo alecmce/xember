@@ -1,6 +1,6 @@
 package tomsbunnies.ctrl
 {
-	import ember.core.Ember;
+	import ember.core.Game;
 	import org.robotlegs.mvcs.Command;
 	import tomsbunnies.systems.BounceSystem;
 	import tomsbunnies.systems.ProcessManager;
@@ -9,18 +9,18 @@ package tomsbunnies.ctrl
 	public class RegisterSystemsCommand extends Command
 	{
 
-		private var _ember:Ember;
+		private var _game:Game;
 
-		public function RegisterSystemsCommand(ember:Ember)
+		public function RegisterSystemsCommand(game:Game)
 		{
-			_ember = ember;
+			_game = game;
 		}
 		
 		override public function execute():void
 		{
-			_ember.addSystem(RenderSystem);			
-			_ember.addSystem(BounceSystem);
-			_ember.addSystem(ProcessManager);
+			_game.addSystem(RenderSystem);			
+			_game.addSystem(BounceSystem);
+			_game.addSystem(ProcessManager);
 		}
 		
 	}

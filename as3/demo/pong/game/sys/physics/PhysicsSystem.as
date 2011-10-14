@@ -2,7 +2,7 @@ package pong.game.sys.physics
 {
 	import Box2D.Dynamics.b2World;
 
-	import ember.core.Ember;
+	import ember.core.Game;
 	import ember.core.Nodes;
 
 	import pong.game.Tick;
@@ -13,7 +13,7 @@ package pong.game.sys.physics
 	{
 		private static const INV_FPS:Number = 1 / 60;
 		
-		private var _ember:Ember;
+		private var _game:Game;
 		private var _tick:Tick;
 		private var _config:PhysicsConfig;
 		private var _actions:PhysicsActions;
@@ -22,9 +22,9 @@ package pong.game.sys.physics
 		
 		private var _nodes:Nodes;
 
-		public function PhysicsSystem(ember:Ember, tick:Tick, config:PhysicsConfig, actions:PhysicsActions)
+		public function PhysicsSystem(game:Game, tick:Tick, config:PhysicsConfig, actions:PhysicsActions)
 		{
-			_ember = ember;
+			_game = game;
 			_tick = tick;
 			_config = config;
 			_actions = actions;
@@ -36,7 +36,7 @@ package pong.game.sys.physics
 			
 			_tick.add(iterate);
 			
-			_nodes = _ember.getNodes(PhysicsNode);
+			_nodes = _game.getNodes(PhysicsNode);
 			_nodes.nodeAdded.add(onNodeAdded);
 			_nodes.nodeRemoved.add(onNodeRemoved);
 

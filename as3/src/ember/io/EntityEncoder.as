@@ -1,7 +1,7 @@
 package ember.io
 {
 	import ember.core.Entity;
-	import ember.core.Ember;
+	import ember.core.Game;
 	
 	final public class EntityEncoder
 	{
@@ -27,10 +27,10 @@ package ember.io
 			return output;
 		}
 
-		public function decode(ember:Ember, object:Object):Entity
+		public function decode(game:Game, object:Object):Entity
 		{
 			var name:String = object["name"] || "";
-			var entity:Entity = ember.createEntity(name);
+			var entity:Entity = game.createEntity(name);
 
 			var list:Object = object.components;
 			for each (var component:Object in list)
