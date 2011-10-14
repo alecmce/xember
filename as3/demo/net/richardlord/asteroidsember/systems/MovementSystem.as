@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.systems
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 
 	import net.richardlord.asteroidsember.components.Motion;
@@ -11,7 +11,7 @@ package net.richardlord.asteroidsember.systems
 	public class MovementSystem
 	{
 		[Inject]
-		public var system:EntitySystem;
+		public var game:Ember;
 
 		[Inject]
 		public var tick:Move;
@@ -20,7 +20,7 @@ package net.richardlord.asteroidsember.systems
 
 		public function onRegister():void
 		{
-			family = system.getNodes(MovementNode);
+			family = game.getNodes(MovementNode);
 			tick.add(update);
 		}
 

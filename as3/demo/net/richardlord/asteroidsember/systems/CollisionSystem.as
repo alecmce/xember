@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.systems
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 
 	import net.richardlord.asteroidsember.game.EntityCreator;
@@ -14,7 +14,7 @@ package net.richardlord.asteroidsember.systems
 	public class CollisionSystem
 	{
 		[Inject]
-		public var system:EntitySystem;
+		public var game:Ember;
 
 		[Inject]
 		public var entityCreator:EntityCreator;
@@ -28,9 +28,9 @@ package net.richardlord.asteroidsember.systems
 
 		public function onRegister():void
 		{
-			spaceships = system.getNodes(SpaceshipCollisionNode);
-			asteroids = system.getNodes(AsteroidCollisionNode);
-			userBullets = system.getNodes(BulletCollisionNode);
+			spaceships = game.getNodes(SpaceshipCollisionNode);
+			asteroids = game.getNodes(AsteroidCollisionNode);
+			userBullets = game.getNodes(BulletCollisionNode);
 
 			tick.add(update);
 		}

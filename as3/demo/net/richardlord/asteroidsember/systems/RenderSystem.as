@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.systems
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 
 	import net.richardlord.asteroidsember.components.Display;
@@ -17,7 +17,7 @@ package net.richardlord.asteroidsember.systems
 		public var contextView:DisplayObjectContainer;
 
 		[Inject]
-		public var system:EntitySystem;
+		public var game:Ember;
 
 		[Inject]
 		public var tick:Render;
@@ -26,7 +26,7 @@ package net.richardlord.asteroidsember.systems
 
 		public function onRegister():void
 		{
-			family = system.getNodes(RenderNode);
+			family = game.getNodes(RenderNode);
 			tick.add(render);
 		}
 

@@ -1,6 +1,6 @@
 package net.richardlord.asteroidsember.systems
 {
-	import ember.core.EntitySystem;
+	import ember.core.Ember;
 	import ember.core.Nodes;
 
 	import net.richardlord.asteroidsember.components.Gun;
@@ -14,7 +14,7 @@ package net.richardlord.asteroidsember.systems
 	public class GunControlSystem
 	{
 		[Inject]
-		public var system:EntitySystem;
+		public var game:Ember;
 
 		[Inject]
 		public var tick:Update;
@@ -29,7 +29,7 @@ package net.richardlord.asteroidsember.systems
 
 		public function onRegister():void
 		{
-			family = system.getNodes(GunControlNode);
+			family = game.getNodes(GunControlNode);
 			tick.add(update);
 		}
 

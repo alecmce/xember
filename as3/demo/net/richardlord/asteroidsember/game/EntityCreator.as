@@ -1,7 +1,7 @@
 package net.richardlord.asteroidsember.game
 {
+	import ember.core.Ember;
 	import ember.core.Entity;
-	import ember.core.EntitySystem;
 
 	import net.richardlord.asteroidsember.components.*;
 	import net.richardlord.asteroidsember.graphics.AsteroidView;
@@ -13,18 +13,18 @@ package net.richardlord.asteroidsember.game
 	public class EntityCreator
 	{
 		[Inject]
-		public var system:EntitySystem;
+		public var game:Ember;
 
 		public function destroyEntity(entity:Entity):void
 		{
 			var display:Display = entity.getComponent(Display) as Display;
 			display.displayObject.parent.removeChild(display.displayObject);
-			system.removeEntity(entity);
+			game.removeEntity(entity);
 		}
 
 		public function createAsteroid(radius:Number, x:Number, y:Number):Entity
 		{
-			var asteroid:Entity = system.createEntity();
+			var asteroid:Entity = game.createEntity();
 
 			asteroid.addComponent(new Asteroid());
 
@@ -49,7 +49,7 @@ package net.richardlord.asteroidsember.game
 
 		public function createSpaceship():Entity
 		{
-			var spaceship:Entity = system.createEntity();
+			var spaceship:Entity = game.createEntity();
 
 			spaceship.addComponent(new Spaceship());
 
@@ -91,7 +91,7 @@ package net.richardlord.asteroidsember.game
   
 		public function createUserBullet(gun:Gun, parentPosition:Position):Entity
 		{
-			var bullet:Entity = system.createEntity();
+			var bullet:Entity = game.createEntity();
 
 			var userBullet:Bullet = new Bullet();
 			userBullet.lifeRemaining = gun.bulletLifetime;
