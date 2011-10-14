@@ -251,6 +251,19 @@ package ember.core
 			assertThat(nodes.get(entity), nullValue());
 		}
 		
+		[Test]
+		public function when_an_entity_is_removed_any_corresponding_nodes_are_removed():void
+		{
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockSpatialComponent());
+
+			var nodes:Nodes = _manager.get(MockSpatialNode);
+			assertSame(entity, nodes.head.entity);
+			
+			_manager.removeEntity(entity);
+			assertNull(nodes.head);
+		}
+		
 	}
 	
 }

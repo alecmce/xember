@@ -48,6 +48,28 @@ package ember.core
 			
 			return true;
 		}
+
+		public function has(systemClass:Class):Boolean
+		{
+			return _systems[systemClass] != null;
+		}
+
+		public function get(systemClass:Class):Object
+		{
+			return _systems[systemClass];
+		}
+
+		public function remove(systemClass:Class):Boolean
+		{
+			var system:Object = _systems[systemClass];
+			if (!system)
+				return false;
+			
+			delete _systems[systemClass];
+			system.hasOwnProperty("onRemove") && system.onRemove();
+			
+			return true;
+		}
 		
 	}
 }
