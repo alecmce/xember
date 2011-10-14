@@ -1,4 +1,4 @@
-package ember.inspector
+package ember.inspector.nativeType
 {
 	import mocks.MockStringComponent;
 
@@ -8,22 +8,20 @@ package ember.inspector
 	import org.hamcrest.object.equalTo;
 	import org.hamcrest.object.isTrue;
 	import org.hamcrest.object.sameInstance;
-	import org.osflash.signals.Signal;
 
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
-	
-	public class StringInspectorTests
+
+	public class NativeTypeInspectorTests
 	{
 		private static const TEST:String = "test";
 		private static const ALT:String = "alt";
 		private static const LABEL:String = "label";
 		
 		private var component:MockStringComponent;
-		private var update:Signal;
-		private var inspector:StringInspector;
+		private var inspector:NativeTypeInspector;
 		
 		[Inject]
 		public var container:Sprite;
@@ -34,8 +32,7 @@ package ember.inspector
 			component = new MockStringComponent();
 			component.label = TEST;
 			
-			update = new Signal();
-			inspector = new StringInspector(update);
+			inspector = new NativeTypeInspector();
 		}
 		
 		[After]
@@ -113,7 +110,31 @@ package ember.inspector
 			assertThat(inspector.value, equalTo(TEST));
 		}
 		
+		[Test]
+		public function hitting_return_will_push_inspector_value_to_component():void
+		{
+			inspector.bind(component, LABEL);
+			container.addChild(inspector);
+			
+			inspector.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, 5, 5));
+			new TextFieldDriver(inspector.input.textField).enterText(ALT);
+			inspector.input.textField.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.ENTER));
+			
+			assertThat(component.label, equalTo(ALT));
+		}
 		
+		[Test]
+		public function hitting_alt_will_push_inspector_value_to_component():void
+		{
+			inspector.bind(component, LABEL);
+			container.addChild(inspector);
+			
+			inspector.dispatchEvent(new MouseEvent(MouseEvent.CLICK, true, false, 5, 5));
+			new TextFieldDriver(inspector.input.textField).enterText(ALT);
+			inspector.input.textField.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.TAB));
+			
+			assertThat(component.label, equalTo(ALT));
+		}
 		
 	}
 }
