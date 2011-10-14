@@ -8,6 +8,7 @@ package ember.io
 	import org.hamcrest.assertThat;
 	import org.hamcrest.collection.array;
 	import org.hamcrest.collection.hasItem;
+	import org.hamcrest.collection.hasItems;
 	import org.hamcrest.object.equalTo;
 
 	public class ComponentConfigTests
@@ -45,7 +46,7 @@ package ember.io
 		public function marking_a_class_with_encode_all_overrides_metadata():void
 		{
 			var config:ComponentConfig = new ComponentConfig("Mock", new MockEncodeAllComponent());
-			assertThat(config.properties, array("a", "str"));
+			assertThat(config.properties, hasItems("a", "str"));
 		}
 		
 	}
