@@ -1,7 +1,6 @@
 package ember.inspector.nativeType
 {
 	import com.bit101.components.InputText;
-
 	import org.osflash.signals.Signal;
 
 	import flash.display.DisplayObject;
@@ -11,9 +10,8 @@ package ember.inspector.nativeType
 	
 	public class StringTypeInput implements NativeTypeInput
 	{
-		
 		private var _self:Sprite;
-		private var _input:InputText;
+		protected var _input:InputText;
 		
 		private var _changed:Signal;
 		

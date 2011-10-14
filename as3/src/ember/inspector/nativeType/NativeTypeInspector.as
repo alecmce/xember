@@ -1,54 +1,62 @@
 package ember.inspector.nativeType
 {
-	import mocks.MockStringComponent;
-
 	import com.bit101.components.Label;
 
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-
-
+	import flash.events.MouseEvent;
 	
-	public class NativeTypeInspector extends Sprite
+	public class NativeTypeInspector
 	{
+		private var _self:Sprite;
 		private var _label:Label;
 		private var _input:NativeTypeInput;
 		
-		private var _component:MockStringComponent;
+		private var _component:Object;
 		private var _property:String;
 		
-		private var _isEnabled:Boolean;
+		private var _isBound:Boolean;
 		private var _isFocussed:Boolean;
 		
 		public function NativeTypeInspector()
 		{
-			_label = new Label(this, 0, 0, "");
+			_self = new Sprite();
+			
+			_label = new Label(_self, 0, 0, "");
 			_label.width = 150;
+		}
+		
+		public function get self():DisplayObject
+		{
+			return _self;
 		}
 		
 		public function get input():NativeTypeInput
 		{
 			return _input;
 		}
-
+		
 		public function set input(input:NativeTypeInput):void
 		{
-			if (_input === input)
+			if (_input == input)
 				return;
 			
 			_input && removeInput(_input);
 			_input = input;
 			_input && addInput(_input);
+			_isBound && _input && onBind();
 		}
-
-		public function bind(component:MockStringComponent, property:String):void
+		
+		public function bind(component:Object, property:String):void
 		{
 			_component = component;
 			_property = property;
 			
-			if (_component && _property && _component.hasOwnProperty(_property))
-				enable();
+			_isBound = _component && _property && _component.hasOwnProperty(_property);
+			if (_isBound && _input)
+				onBind();
 			else
-				disable();
+				unbind();
 		}
 		
 		public function unbind():void
@@ -56,13 +64,19 @@ package ember.inspector.nativeType
 			_component = null;
 			_property = null;
 			
-			disable();
+			if (_input)
+			{
+				_input.value = null;
+				_input.enabled = false;
+			}
+			
+			isFocussed = false;
 		}
 
 		public function update():void
 		{
-			if (_isEnabled && !_isFocussed)
-				onUpdate();
+			if (!_isFocussed && _input)
+				_input.value = _component[_property];
 		}
 		
 		public function get isFocussed():Boolean
@@ -72,56 +86,47 @@ package ember.inspector.nativeType
 
 		public function set isFocussed(isFocussed:Boolean):void
 		{
-			if (!_isEnabled || _isFocussed == isFocussed)
+			if (!_isBound || _isFocussed == isFocussed)
 				return;
 			
 			_isFocussed = isFocussed;
 			if (_isFocussed)
-				onGainFocus();
+				_input.focus = true;
 			else
-				onLoseFocus();
-		}
-		
-		protected function onUnbind():void
-		{
-			
-		}
-		
-		protected function onUpdate():void
-		{
-			
-		}
-		
-		protected function enable():void
-		{
-			
-		}
-		
-		protected function disable():void
-		{
-			
-		}
-		
-		protected function onGainFocus():void
-		{
-			
-		}
-		
-		protected function onLoseFocus():void
-		{
-
+				_input.focus = false;
 		}
 		
 		private function addInput(input:NativeTypeInput):void
 		{
 			_input = input;
 			_input.self.x = 150;
-			addChild(_input.self);
+			_self.addChild(_input.self);
+			
+			_input.changed.add(onInputChanged);
 		}
 		
 		private function removeInput(input:NativeTypeInput):void
 		{
-			removeChild(_input.self);
+			_self.removeChild(_input.self);
+		
+			_input.changed.remove(onInputChanged);
+		}
+
+		private function onInputChanged(value:*):void
+		{
+			_component[_property] = value;
+		}
+		
+		private function onBind():void
+		{
+			_input.enabled = true;
+			_input.value = _component[_property];
+			_self.addEventListener(MouseEvent.CLICK, onClick);
+		}
+		
+		private function onClick(event:MouseEvent):void
+		{
+			isFocussed = true;
 		}
 		
 	}

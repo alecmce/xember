@@ -8,7 +8,8 @@ package ember.inspector.nativeType
 		public var nativeTypeInputFactory:NativeTypeInputFactoryTests;
 		public var stringTypeInput:StringTypeInputTests;
 		public var booleanTypeInput:BooleanTypeInputTests;
-//		public var nativeTypeInspector:NativeTypeInspectorTests;
+		public var intTypeInput:BooleanTypeInputTests;
+		public var nativeTypeInspector:NativeTypeInspectorTests;
 		
 	}
 }

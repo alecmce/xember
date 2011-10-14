@@ -1,6 +1,5 @@
 package ember.inspector.nativeType
 {
-
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.instanceOf;
 	

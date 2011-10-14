@@ -15,7 +15,6 @@ package ember.inspector.nativeType
 	
 	public class BooleanTypeInputTests extends NativeTypeTestsBase
 	{
-		
 		[Inject]
 		public var async:Async;
 		

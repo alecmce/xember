@@ -15,7 +15,7 @@ package ember.inspector.nativeType
 	import flash.events.KeyboardEvent;
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
-	
+
 	public class StringTypeInputTests extends NativeTypeTestsBase
 	{
 		private static const TEST:String = "test";

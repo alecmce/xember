@@ -1,7 +1,8 @@
 package ember.inspector
 {
-	import ember.inspector.nativeType.AllNativeTypeTests;
 
+	import ember.inspector.nativeType.AllNativeTypeTests;
+	
 	[Suite]
 	public class AllInspectorTests
 	{
