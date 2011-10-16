@@ -9,7 +9,9 @@ package ember.io
 	import org.hamcrest.collection.array;
 	import org.hamcrest.collection.hasItem;
 	import org.hamcrest.collection.hasItems;
-	import org.hamcrest.object.equalTo;
+	import org.hamcrest.object.sameInstance;
+
+	import flash.geom.Point;
 
 	public class ComponentConfigTests
 	{
@@ -25,14 +27,14 @@ package ember.io
 		public function can_reference_base_types_via_config():void
 		{
 			var config:ComponentConfig = new ComponentConfig("Mock", new MockTypesComponent());
-			assertThat(config.getType("arr"), equalTo("Array"));
+			assertThat(config.getType("arr"), sameInstance(Array));
 		}
 		
 		[Test]
 		public function can_reference_packaged_types_via_config():void
 		{
 			var config:ComponentConfig = new ComponentConfig("Mock", new MockTypesComponent());
-			assertThat(config.getType("point"), equalTo("flash.geom::Point"));
+			assertThat(config.getType("point"), sameInstance(Point));
 		}
 		
 		[Test]

@@ -7,7 +7,8 @@ package ember.inspector
 	public class AllInspectorTests
 	{
 		
-		public var nativeType:AllPropertyInspectorTests;
+		public var propertyInspector:AllPropertyInspectorTests;
+		public var componentInspector:ComponentInspectorTests;
 		
 	}
 }

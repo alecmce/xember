@@ -3,7 +3,7 @@ package mocks
 	public class MockTextComponent
 	{
 		
-		[Ember(encode)]
+		[Ember]
 		public var str:String;
 		
 	}

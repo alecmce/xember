@@ -38,7 +38,7 @@ package ember.io
 			var properties:Vector.<String> = config.properties;
 			for each (var property:String in properties)
 			{
-				var type:String = config.getType(property);
+				var type:Class = config.getType(property);
 				var value:Object = component[property];
 				if (isNativeType(type))
 				{
@@ -85,9 +85,9 @@ package ember.io
 			return component;
 		}
 		
-		private function isNativeType(type:String):Boolean
+		private function isNativeType(type:Class):Boolean
 		{
-			return type == "int" || type == "uint" || type == "Number" || type == "String" || type == "Boolean";
+			return type == int || type == uint || type == Number || type == String || type == Boolean;
 		}
 		
 		private function isNative(object:*):Boolean

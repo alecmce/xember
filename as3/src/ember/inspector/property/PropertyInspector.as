@@ -1,6 +1,7 @@
 package ember.inspector.property
 {
 	import com.bit101.components.Label;
+
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -29,6 +30,16 @@ package ember.inspector.property
 		public function get self():DisplayObject
 		{
 			return _self;
+		}
+		
+		public function get label():String
+		{
+			return _label.text;
+		}
+
+		public function set label(label:String):void
+		{
+			_label.text = label;
 		}
 		
 		public function get input():PropertyInput

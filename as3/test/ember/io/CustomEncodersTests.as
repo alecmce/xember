@@ -2,6 +2,7 @@ package ember.io
 {
 	import mocks.MockAltCustomEncoder;
 	import mocks.MockCustomEncoder;
+	import mocks.MockCustomVO;
 
 	import org.hamcrest.assertThat;
 	import org.hamcrest.core.isA;
@@ -48,7 +49,7 @@ package ember.io
 		public function an_encoder_instance_can_be_referenced_by_the_type_it_encodes_once_added():void
 		{
 			encoders.addEncoder(MockCustomEncoder);
-			assertThat(encoders.getEncoderForType("mocks::MockCustomVO"), isA(MockCustomEncoder));
+			assertThat(encoders.getEncoderForType(MockCustomVO), isA(MockCustomEncoder));
 		}
 		
 		[Test]

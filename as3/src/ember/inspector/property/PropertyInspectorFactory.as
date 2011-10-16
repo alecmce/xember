@@ -8,20 +8,29 @@ package ember.inspector.property
 	
 	public class PropertyInspectorFactory
 	{
-		public function getInputFor(type:String):PropertyInspector
+		public function getInspector(label:String, klass:Class):PropertyInspector
 		{
 			var inspector:PropertyInspector = new PropertyInspector();
+			inspector.label = label;
 			
-			if (type == "String")
-				inspector.input = new StringTypeInput();
-			else if (type == "Boolean")
-				inspector.input = new BooleanTypeInput();
-			else if (type == "int")
-				inspector.input = new IntTypeInput();
-			else if (type == "uint")
-				inspector.input = new UintTypeInput();
-			else if (type == "Number")
-				inspector.input = new NumberTypeInput();
+			switch (klass)
+			{
+				case String:
+					inspector.input = new StringTypeInput();
+					break;
+				case Boolean:
+					inspector.input = new BooleanTypeInput();
+					break;
+				case int:
+					inspector.input = new IntTypeInput();
+					break;
+				case uint:
+					inspector.input = new UintTypeInput();
+					break;
+				case Number:
+					inspector.input = new NumberTypeInput();
+					break;
+			}
 			
 			return inspector;
 		}

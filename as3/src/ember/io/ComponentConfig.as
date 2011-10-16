@@ -1,6 +1,7 @@
 package ember.io
 {
 	import flash.utils.describeType;
+	import flash.utils.getDefinitionByName;
 	
 	final public class ComponentConfig
 	{
@@ -26,7 +27,7 @@ package ember.io
 					
 				var property:String = xml.@name;
 				_properties.push(property);
-				_typeMap[property] = xml.@type.toString();
+				_typeMap[property] = getDefinitionByName(xml.@type.toString());
 			}
 		}
 		
@@ -40,7 +41,7 @@ package ember.io
 			return _properties;
 		}
 
-		public function getType(property:String):String
+		public function getType(property:String):Class
 		{
 			return _typeMap[property];
 		}
@@ -57,7 +58,6 @@ import flash.utils.getDefinitionByName;
 
 class PropertyConfig
 {
-	
 	public var encode:Boolean;
 	public var encoder:Class;
 	
@@ -77,5 +77,4 @@ class PropertyConfig
 				encoder = getDefinitionByName(metadata.@value) as Class;
 		}
 	}
-	
 }

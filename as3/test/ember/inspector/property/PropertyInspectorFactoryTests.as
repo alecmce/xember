@@ -28,35 +28,35 @@ package ember.inspector.property
 		[Test]
 		public function give_it_a_string_and_it_gives_back_a_StringInputType():void
 		{
-			var inspector:PropertyInspector = factory.getInputFor("String");
+			var inspector:PropertyInspector = factory.getInspector("label", String);
 			assertThat(inspector.input, instanceOf(StringTypeInput));
 		}
 		
 		[Test]
 		public function give_it_a_boolean_and_it_gives_back_a_BooleanInputType():void
 		{
-			var inspector:PropertyInspector = factory.getInputFor("Boolean");
+			var inspector:PropertyInspector = factory.getInspector("label", Boolean);
 			assertThat(inspector.input, instanceOf(BooleanTypeInput));
 		}
 		
 		[Test]
 		public function give_it_an_int_and_it_gives_back_an_IntInputType():void
 		{
-			var inspector:PropertyInspector = factory.getInputFor("int");
+			var inspector:PropertyInspector = factory.getInspector("label", int);
 			assertThat(inspector.input, instanceOf(IntTypeInput));
 		}
 		
 		[Test]
 		public function give_it_a_uint_and_it_gives_back_a_UintInputType():void
 		{
-			var inspector:PropertyInspector = factory.getInputFor("uint");
+			var inspector:PropertyInspector = factory.getInspector("label", uint);
 			assertThat(inspector.input, instanceOf(UintTypeInput));
 		}
 		
 		[Test]
 		public function give_it_a_Number_and_it_gives_back_a_NumberInputType():void
 		{
-			var inspector:PropertyInspector = factory.getInputFor("Number");
+			var inspector:PropertyInspector = factory.getInspector("label", Number);
 			assertThat(inspector.input, instanceOf(NumberTypeInput));
 		}
 		
