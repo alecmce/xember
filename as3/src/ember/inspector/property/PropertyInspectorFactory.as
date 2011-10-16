@@ -8,6 +8,7 @@ package ember.inspector.property
 	
 	public class PropertyInspectorFactory
 	{
+		
 		public function getInspector(label:String, klass:Class):PropertyInspector
 		{
 			var inspector:PropertyInspector = new PropertyInspector();

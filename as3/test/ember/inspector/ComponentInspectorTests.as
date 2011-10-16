@@ -1,9 +1,10 @@
 package ember.inspector
 {
-	import ember.io.ComponentConfig;
+	import ember.inspector.property.PropertyInspector;
 
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.equalTo;
+	import org.hamcrest.object.sameInstance;
 	
 	public class ComponentInspectorTests
 	{
@@ -22,25 +23,20 @@ package ember.inspector
 		}
 		
 		[Test]
-		public function inspector_title_is_reflected():void
+		public function can_set_title():void
 		{
-			var component:MockAllNativeTypesComponent = new MockAllNativeTypesComponent();
-			var config:ComponentConfig = new ComponentConfig("Mock", component);
+			inspector.title = "Test";
+			assertThat(inspector.title, equalTo("Test"));
+		}
+		
+		[Test]
+		public function can_get_properties_by_label():void
+		{
+			var property:PropertyInspector = new PropertyInspector();
+			inspector.addProperty("label", property);
 			
-			inspector.setComponent(component, config);
-			assertThat(inspector.title, equalTo("Mock"));
+			assertThat(inspector.getProperty("label"), sameInstance(property));
 		}
 		
 	}
-}
-
-class MockAllNativeTypesComponent
-{
-	
-	public var a:int;
-	public var b:uint;
-	public var c:Number;
-	public var d:String;
-	public var e:Boolean;
-	
 }

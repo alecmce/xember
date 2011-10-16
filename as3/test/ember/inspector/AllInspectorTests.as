@@ -8,7 +8,9 @@ package ember.inspector
 	{
 		
 		public var propertyInspector:AllPropertyInspectorTests;
+		
 		public var componentInspector:ComponentInspectorTests;
+		public var componentInspectorFactory:ComponentInspectorFactoryTests;
 		
 	}
 }

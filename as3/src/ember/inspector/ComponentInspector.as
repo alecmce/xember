@@ -1,6 +1,6 @@
 package ember.inspector
 {
-	import ember.io.ComponentConfig;
+	import ember.inspector.property.PropertyInspector;
 
 	import com.bit101.components.Label;
 
@@ -13,7 +13,9 @@ package ember.inspector
 		private var _title:Label;
 		private var _inner:Sprite;
 		
-		private var _config:ComponentConfig;
+		private var _properties:Vector.<PropertyInspector>;
+		private var _propertyMap:Object;
+		private var _height:uint;
 		
 		public function ComponentInspector()
 		{
@@ -24,15 +26,10 @@ package ember.inspector
 			_inner = new Sprite();
 			_inner.y = _title.height;
 			_self.addChild(_inner);
-		}
-		
-		public function setComponent(component:Object, config:ComponentConfig):void
-		{
-			_config = config;
 			
-			_title.text = config.type;
-			
-			
+			_properties = new Vector.<PropertyInspector>();
+			_propertyMap = {};
+			_height = 0;
 		}
 		
 		public function get self():DisplayObject
@@ -43,6 +40,36 @@ package ember.inspector
 		public function get title():String
 		{
 			return _title.text;
+		}
+		
+		public function set title(title:String):void
+		{
+			_title.text = title;
+		}
+		
+		public function addProperty(label:String, inspector:PropertyInspector):void
+		{
+			_properties.push(inspector);
+			_propertyMap[label] = inspector;
+			
+			inspector.self.y = _height;
+			_inner.addChild(inspector.self);
+			_height += inspector.self.height;
+		}
+		
+		public function getProperty(label:String):PropertyInspector
+		{
+			return _propertyMap[label];
+		}
+		
+		public function clearProperties():void
+		{
+			var count:int = _properties.length;
+			for (var i:int = 0; i < count; i++)
+				_inner.removeChild(_properties[i].self);
+			
+			_properties.length = 0;
+			_height = 0;
 		}
 		
 	}
