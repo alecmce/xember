@@ -1,18 +1,15 @@
-package ember.inspector.nativeType
+package ember.inspector.property.inputs
 {
 	import asunit.framework.Async;
-
 	import com.bit101.components.PushButton;
 	import com.newloop.roboteyes.drivers.InteractiveObjectDriver;
-
+	import flash.display.DisplayObjectContainer;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
 
-	import flash.display.DisplayObjectContainer;
-	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;
-	
 	public class BooleanTypeInputTests extends NativeTypeTestsBase
 	{
 		[Inject]

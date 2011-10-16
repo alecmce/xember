@@ -1,16 +1,16 @@
-package ember.inspector.nativeType
+package ember.inspector.property
 {
 	import com.bit101.components.Label;
-
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+
 	
-	public class NativeTypeInspector
+	public class PropertyInspector
 	{
 		private var _self:Sprite;
 		private var _label:Label;
-		private var _input:NativeTypeInput;
+		private var _input:PropertyInput;
 		
 		private var _component:Object;
 		private var _property:String;
@@ -18,7 +18,7 @@ package ember.inspector.nativeType
 		private var _isBound:Boolean;
 		private var _isFocussed:Boolean;
 		
-		public function NativeTypeInspector()
+		public function PropertyInspector()
 		{
 			_self = new Sprite();
 			
@@ -31,12 +31,12 @@ package ember.inspector.nativeType
 			return _self;
 		}
 		
-		public function get input():NativeTypeInput
+		public function get input():PropertyInput
 		{
 			return _input;
 		}
 		
-		public function set input(input:NativeTypeInput):void
+		public function set input(input:PropertyInput):void
 		{
 			if (_input == input)
 				return;
@@ -96,7 +96,7 @@ package ember.inspector.nativeType
 				_input.focus = false;
 		}
 		
-		private function addInput(input:NativeTypeInput):void
+		private function addInput(input:PropertyInput):void
 		{
 			_input = input;
 			_input.self.x = 150;
@@ -105,7 +105,7 @@ package ember.inspector.nativeType
 			_input.changed.add(onInputChanged);
 		}
 		
-		private function removeInput(input:NativeTypeInput):void
+		private function removeInput(input:PropertyInput):void
 		{
 			_self.removeChild(_input.self);
 		

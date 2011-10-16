@@ -1,28 +1,26 @@
-package ember.inspector.nativeType
+package ember.inspector.property
 {
-	import mocks.MockStringComponent;
-
 	import com.bit101.components.InputText;
 	import com.newloop.roboteyes.drivers.TextFieldDriver;
-
-	import org.hamcrest.assertThat;
-	import org.hamcrest.object.equalTo;
-	import org.hamcrest.object.isTrue;
-
+	import ember.inspector.property.inputs.StringTypeInput;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
+	import mocks.MockStringComponent;
+	import org.hamcrest.assertThat;
+	import org.hamcrest.object.equalTo;
+	import org.hamcrest.object.isTrue;
 	
-	public class NativeTypeInspectorTests
+	public class PropertyInspectorTests
 	{
 		private static const TEST:String = "test";
 		private static const ALT:String = "alt";
 		private static const LABEL:String = "label";
 		
 		private var component:MockStringComponent;
-		private var inspector:NativeTypeInspector;
+		private var inspector:PropertyInspector;
 		
 		private var driver:TextFieldDriver;
 		
@@ -34,7 +32,7 @@ package ember.inspector.nativeType
 
 			var input:StringTypeInput = new StringTypeInput();
 			
-			inspector = new NativeTypeInspector();
+			inspector = new PropertyInspector();
 			inspector.input = input;
 			
 			var self:DisplayObjectContainer = input.self as DisplayObjectContainer;

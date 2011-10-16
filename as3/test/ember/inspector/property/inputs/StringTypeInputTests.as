@@ -1,4 +1,4 @@
-package ember.inspector.nativeType
+package ember.inspector.property.inputs
 {
 	import asunit.asserts.fail;
 	import asunit.framework.Async;
@@ -13,9 +13,12 @@ package ember.inspector.nativeType
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
 
-	public class IntTypeInputTests extends NativeTypeTestsBase
+
+
+
+	public class StringTypeInputTests extends NativeTypeTestsBase
 	{
-		private static const TEST:int = 37;
+		private static const TEST:String = "test";
 		
 		private var driver:TextFieldDriver;
 		
@@ -25,7 +28,7 @@ package ember.inspector.nativeType
 		[Before]
 		public function before():void
 		{
-			input = new IntTypeInput();
+			input = new StringTypeInput();
 			
 			var self:DisplayObjectContainer = input.self as DisplayObjectContainer;
 			var text:TextField = (self.getChildAt(0) as InputText).textField;
@@ -44,21 +47,21 @@ package ember.inspector.nativeType
 		{
 			input.enabled = true;
 			input.value = TEST;
-			assertThat(driver.textIs(TEST.toString()), isTrue());
+			assertThat(driver.textIs(TEST), isTrue());
 		}
 		
 		[Test]
 		public function setting_input_value_when_disabled_has_no_effect():void
 		{
 			input.value = TEST;
-			assertThat(driver.textIs(TEST.toString()), isFalse());
+			assertThat(driver.textIs(TEST), isFalse());
 		}
 		
 		[Test]
 		public function entering_text_does_not_trigger_changed_signal():void
 		{
 			input.changed.addOnce(changed_indicates_failure);
-			driver.enterText(TEST.toString());
+			driver.enterText(TEST);
 		}
 		private function changed_indicates_failure(value:*):void
 		{
@@ -71,7 +74,7 @@ package ember.inspector.nativeType
 			input.enabled = true;
 			input.focus = true;
 			async.add(input.changed.addOnce(changed_indicates_new_value), 100);
-			driver.enterText(TEST.toString());
+			driver.enterText(TEST);
 			driver.textField.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.ENTER));
 		}
 		private function changed_indicates_new_value(value:*):void
@@ -86,7 +89,7 @@ package ember.inspector.nativeType
 			input.enabled = true;
 			input.focus = true;
 			async.add(input.changed.addOnce(changed_indicates_new_value), 100);
-			driver.enterText(TEST.toString());
+			driver.enterText(TEST);
 			driver.textField.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.TAB));
 		}
 		
@@ -96,7 +99,7 @@ package ember.inspector.nativeType
 			input.enabled = true;
 			input.focus = true;
 			async.add(input.changed.addOnce(after_special_key_focus_is_lost), 100);
-			driver.enterText(TEST.toString());
+			driver.enterText(TEST);
 			driver.textField.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.ENTER));
 		}
 		private function after_special_key_focus_is_lost(value:*):void
@@ -111,7 +114,7 @@ package ember.inspector.nativeType
 			input.enabled = true;
 			input.focus = true;
 			async.add(input.changed.addOnce(after_special_key_focus_is_lost), 100);
-			driver.enterText(TEST.toString());
+			driver.enterText(TEST);
 			driver.textField.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.TAB));
 		}
 		

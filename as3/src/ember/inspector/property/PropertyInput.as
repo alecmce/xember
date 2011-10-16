@@ -1,10 +1,10 @@
-package ember.inspector.nativeType
+package ember.inspector.property
 {
 	import org.osflash.signals.Signal;
 
 	import flash.display.DisplayObject;
 	
-	public interface NativeTypeInput
+	public interface PropertyInput
 	{
 		
 		function get self():DisplayObject;

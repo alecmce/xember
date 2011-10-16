@@ -1,10 +1,10 @@
-package ember.inspector.nativeType
+package ember.inspector.property.inputs
 {
-	
-	public class IntTypeInput extends StringTypeInput
+
+	public class UintTypeInput extends StringTypeInput
 	{
 		
-		public function IntTypeInput()
+		public function UintTypeInput()
 		{
 			super();
 			_input.restrict = "0-9";

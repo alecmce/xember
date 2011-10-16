@@ -1,5 +1,6 @@
-package ember.inspector.nativeType
+package ember.inspector.property.inputs
 {
+	import ember.inspector.property.PropertyInput;
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
@@ -7,7 +8,7 @@ package ember.inspector.nativeType
 	public class NativeTypeTestsBase
 	{
 		
-		public var input:NativeTypeInput;
+		public var input:PropertyInput;
 		
 		[Test]
 		public function by_default_focus_is_false():void

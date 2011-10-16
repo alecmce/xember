@@ -1,32 +1,35 @@
-package ember.inspector.nativeType
+package ember.inspector.property.inputs
 {
-	import com.bit101.components.InputText;
-	import org.osflash.signals.Signal;
-
+	import com.bit101.components.PushButton;
+	import ember.inspector.property.PropertyInput;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	
-	public class StringTypeInput implements NativeTypeInput
+	import org.osflash.signals.Signal;
+
+
+
+	public class BooleanTypeInput implements PropertyInput
 	{
 		private var _self:Sprite;
-		protected var _input:InputText;
+		private var _button:PushButton;
 		
 		private var _changed:Signal;
 		
 		private var _enabled:Boolean;
 		private var _focus:Boolean;
 
-		public function StringTypeInput()
+		public function BooleanTypeInput()
 		{
 			_self = new Sprite();
-			_input = new InputText(_self);
-			_input.enabled = false;
+			_button = new PushButton(_self);
+			_button.toggle = true;
+			_button.enabled = false;
 			
 			_changed = new Signal();
 		}
-
+		
 		public function get self():DisplayObject
 		{
 			return _self;
@@ -43,7 +46,7 @@ package ember.inspector.nativeType
 				return;
 			
 			_enabled = enabled;
-			_input.enabled = enabled;
+			_button.enabled = enabled;
 			if (!_enabled)
 				_focus = false;
 		}
@@ -60,14 +63,14 @@ package ember.inspector.nativeType
 			
 			_focus = focus;
 			if (_focus)
-				_input.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				_button.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			else
-				_input.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				_button.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
 
 		public function get value():*
 		{
-			return _input.text;
+			return _button.selected;
 		}
 
 		public function set value(value:*):void
@@ -75,8 +78,8 @@ package ember.inspector.nativeType
 			if (!_enabled)
 				return;
 			
-			_input.text = value;
-			_input.draw();
+			_button.selected = value;
+			_button.label = value ? "true" : "false";
 		}
 
 		public function get changed():Signal
@@ -87,10 +90,15 @@ package ember.inspector.nativeType
 		private function onKeyDown(event:KeyboardEvent):void
 		{
 			var code:uint = event.keyCode;
-			if (code == Keyboard.ENTER || code == Keyboard.TAB)
+			if (code == Keyboard.SPACE)
+			{
+				var flag:Boolean = !value;
+				value = flag;
+				_changed.dispatch(flag);
+			}
+			else if (code == Keyboard.ENTER || code == Keyboard.TAB)
 			{
 				focus = false;
-				_changed.dispatch(_input.text);
 			}
 		}
 		

@@ -1,13 +1,13 @@
 package ember.inspector
 {
 
-	import ember.inspector.nativeType.AllNativeTypeTests;
+	import ember.inspector.property.AllPropertyInspectorTests;
 	
 	[Suite]
 	public class AllInspectorTests
 	{
 		
-		public var nativeType:AllNativeTypeTests;
+		public var nativeType:AllPropertyInspectorTests;
 		
 	}
 }
