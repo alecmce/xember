@@ -1,5 +1,6 @@
 package ember.inspector
 {
+	import ember.inspector.property.PropertyInspector;
 	import ember.inspector.property.inputs.IntTypeInput;
 	import ember.io.ComponentConfigFactory;
 
@@ -8,6 +9,7 @@ package ember.inspector
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.equalTo;
 	import org.hamcrest.object.instanceOf;
+	import org.hamcrest.object.isTrue;
 	import org.hamcrest.object.notNullValue;
 	
 	public class ComponentInspectorFactoryTests

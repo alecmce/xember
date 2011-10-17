@@ -13,6 +13,9 @@ package ember.inspector
 		private var _title:Label;
 		private var _inner:Sprite;
 		
+		private var _isFocussed:Boolean;
+		private var _focusIndex:int = -1;
+		
 		private var _properties:Vector.<PropertyInspector>;
 		private var _propertyMap:Object;
 		private var _height:uint;
@@ -70,6 +73,29 @@ package ember.inspector
 			
 			_properties.length = 0;
 			_height = 0;
+		}
+
+		public function get isFocussed():Boolean
+		{
+			return _isFocussed;
+		}
+
+		public function set isFocussed(isFocussed:Boolean):void
+		{
+			if (_isFocussed == isFocussed)
+				return;
+			
+			_isFocussed = isFocussed;
+			if (_isFocussed)
+				focusNextProperty();
+			else
+				_focusIndex = -1;
+		}
+
+		private function focusNextProperty():void
+		{
+			_focusIndex >= 0 && (_properties[_focusIndex].isFocussed = false);
+			_properties[++_focusIndex].isFocussed = true;
 		}
 		
 	}
