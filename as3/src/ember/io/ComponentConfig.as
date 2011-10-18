@@ -29,8 +29,10 @@ package ember.io
 				_properties.push(property);
 				_typeMap[property] = getDefinitionByName(xml.@type.toString());
 			}
+			
+			_properties.sort.call(this, Array.CASEINSENSITIVE);
 		}
-		
+
 		public function get type():String
 		{
 			return _type;
@@ -51,6 +53,7 @@ package ember.io
 			var ember:XML = xml.metadata.(@name == "Ember")[0];
 			return ember && ember.arg.(@value == "encodeAll")[0];
 		}
+		
 	}
 }
 

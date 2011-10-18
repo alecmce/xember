@@ -1,9 +1,6 @@
 package ember.inspector
 {
-	import ember.inspector.property.PropertyInspector;
-
 	import com.bit101.components.Label;
-
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
@@ -13,10 +10,7 @@ package ember.inspector
 		private var _title:Label;
 		private var _inner:Sprite;
 		
-		private var _isFocussed:Boolean;
-		private var _focusIndex:int = -1;
-		
-		private var _properties:Vector.<PropertyInspector>;
+		private var _wrapperMap:Object;
 		private var _propertyMap:Object;
 		private var _height:uint;
 		
@@ -30,7 +24,7 @@ package ember.inspector
 			_inner.y = _title.height;
 			_self.addChild(_inner);
 			
-			_properties = new Vector.<PropertyInspector>();
+			_wrapperMap = {};
 			_propertyMap = {};
 			_height = 0;
 		}
@@ -52,12 +46,16 @@ package ember.inspector
 		
 		public function addProperty(label:String, inspector:PropertyInspector):void
 		{
-			_properties.push(inspector);
 			_propertyMap[label] = inspector;
+
+			var wrapper:PropertyWrapper = new PropertyWrapper();
+			_wrapperMap[label] = wrapper;
+			wrapper.label = label;
+			wrapper.inspector = inspector;
 			
-			inspector.self.y = _height;
-			_inner.addChild(inspector.self);
-			_height += inspector.self.height;
+			wrapper.self.y = _height;
+			_inner.addChild(wrapper.self);
+			_height += wrapper.self.height;
 		}
 		
 		public function getProperty(label:String):PropertyInspector
@@ -67,35 +65,20 @@ package ember.inspector
 		
 		public function clearProperties():void
 		{
-			var count:int = _properties.length;
-			for (var i:int = 0; i < count; i++)
-				_inner.removeChild(_properties[i].self);
+			var count:int = _inner.numChildren;
+			while (count--)
+				_inner.removeChildAt(0);
 			
-			_properties.length = 0;
-			_height = 0;
+			_wrapperMap = {};
+			_propertyMap = {};
 		}
 
-		public function get isFocussed():Boolean
+		public function update():void
 		{
-			return _isFocussed;
-		}
-
-		public function set isFocussed(isFocussed:Boolean):void
-		{
-			if (_isFocussed == isFocussed)
-				return;
+			var inspector:PropertyInspector;
 			
-			_isFocussed = isFocussed;
-			if (_isFocussed)
-				focusNextProperty();
-			else
-				_focusIndex = -1;
-		}
-
-		private function focusNextProperty():void
-		{
-			_focusIndex >= 0 && (_properties[_focusIndex].isFocussed = false);
-			_properties[++_focusIndex].isFocussed = true;
+			for each (inspector in _propertyMap)
+				inspector.update();
 		}
 		
 	}

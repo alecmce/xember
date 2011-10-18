@@ -1,7 +1,5 @@
 package ember.inspector
 {
-	import ember.inspector.property.PropertyInspector;
-	import ember.inspector.property.PropertyInspectorFactory;
 	import ember.io.ComponentConfig;
 	import ember.io.ComponentConfigFactory;
 	
@@ -30,7 +28,7 @@ package ember.inspector
 				var key:String = keys[i];
 				var klass:Class = config.getType(key);
 				
-				var prop:PropertyInspector = _properties.getInspector(key, klass);
+				var prop:PropertyInspector = _properties.getInspector(klass);
 				prop.bind(component, key);
 				
 				inspector.addProperty(key, prop);

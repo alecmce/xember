@@ -1,17 +1,14 @@
 package ember.inspector
 {
-	import ember.inspector.property.PropertyInspector;
-	import ember.inspector.property.inputs.IntTypeInput;
+	import ember.inspector.properties.IntInspector;
 	import ember.io.ComponentConfigFactory;
 
 	import mocks.MockAllNativeTypesComponent;
 
 	import org.hamcrest.assertThat;
-	import org.hamcrest.object.equalTo;
 	import org.hamcrest.object.instanceOf;
-	import org.hamcrest.object.isTrue;
 	import org.hamcrest.object.notNullValue;
-	
+
 	public class ComponentInspectorFactoryTests
 	{
 		private var configs:ComponentConfigFactory;
@@ -46,7 +43,7 @@ package ember.inspector
 			var component:MockAllNativeTypesComponent = new MockAllNativeTypesComponent();
 			var inspector:ComponentInspector = factory.getInspector(component);
 			
-			assertThat(inspector.getProperty("a"), notNullValue());
+			assertThat(inspector.getProperty("Boolean_value"), notNullValue());
 		}
 		
 		[Test]
@@ -55,18 +52,7 @@ package ember.inspector
 			var component:MockAllNativeTypesComponent = new MockAllNativeTypesComponent();
 			var inspector:ComponentInspector = factory.getInspector(component);
 			
-			assertThat(inspector.getProperty("a").input, instanceOf(IntTypeInput));
-		}
-		
-		[Test]
-		public function component_property_inspectors_are_bound_to_component_value():void
-		{
-			var component:MockAllNativeTypesComponent = new MockAllNativeTypesComponent();
-			component.a = 12;
-			
-			var inspector:ComponentInspector = factory.getInspector(component);
-			
-			assertThat(inspector.getProperty("a").input.value, equalTo(12));
+			assertThat(inspector.getProperty("int_value"), instanceOf(IntInspector));
 		}
 		
 	}

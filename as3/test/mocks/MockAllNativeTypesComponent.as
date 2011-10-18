@@ -4,11 +4,11 @@ package mocks
 	public class MockAllNativeTypesComponent
 	{
 		
-		public var a:int;
-		public var b:uint;
-		public var c:Number;
-		public var d:String;
-		public var e:Boolean;
+		public var int_value:int;
+		public var uint_value:uint;
+		public var Number_value:Number;
+		public var String_value:String;
+		public var Boolean_value:Boolean;
 		
 	}
 }
