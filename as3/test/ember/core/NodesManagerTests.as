@@ -252,6 +252,29 @@ package ember.core
 			assertThat(nodes.get(entity), nullValue());
 		}
 		
+		[Test]
+		public function when_a_node_is_removed_during_a_loop_the_loop_isnt_disrupted():void
+		{
+			var a:Entity = _entities.create("a");
+			a.addComponent(new MockComponent());
+			
+			var b:Entity = _entities.create("b");
+			b.addComponent(new MockComponent());
+			
+			var c:Entity = _entities.create("c");
+			c.addComponent(new MockComponent());
+			
+			var nodes:Nodes = _manager.get(MockNode);
+			var count:uint = 0;
+			for (var node:MockNode = nodes.head as MockNode; node; node = node.next)
+			{
+				node.entity.removeComponent(MockComponent);
+				++count;
+			}
+			
+			assertThat(count, equalTo(3));
+		}
+		
 	}
 	
 }
