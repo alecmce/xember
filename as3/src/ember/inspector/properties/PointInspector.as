@@ -3,36 +3,48 @@ package ember.inspector.properties
 	import ember.inspector.PropertyInspector;
 
 	import com.bit101.components.InputText;
+	import com.bit101.components.Label;
 
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
+	import flash.geom.Point;
 	import flash.ui.Keyboard;
-
-	public class StringInspector implements PropertyInspector
+	
+	public class PointInspector implements PropertyInspector
 	{
 		private var _self:Sprite;
-		protected var _input:InputText;
+		
+		private var _x:InputText;
+		private var _y:InputText;
 		
 		private var _bound:Boolean;
-		private var _component:Object;
-		private var _property:String;
-
 		private var _editing:Boolean;
-
-		public function StringInspector()
+		
+		private var _pt:Point;
+		
+		public function PointInspector()
 		{
 			_self = new Sprite();
-			_input = new InputText(_self);
-			_input.width = 150;
-			_input.enabled = false;
+			
+			new Label(_self, 0).text = "(";
+			new Label(_self, 75).text = ",";
+			new Label(_self, 145).text = ")";
+			
+			_x = new InputText(_self, 10);
+			_x.width = 65;
+			_x.enabled = false;
+			
+			_y = new InputText(_self, 80);
+			_y.width = 65;
+			_y.enabled = false;
 		}
 
 		public function get self():DisplayObject
 		{
 			return _self;
 		}
-		
+
 		public function bind(component:Object, property:String):void
 		{
 			_bound = component && property && component.hasOwnProperty(property);
@@ -53,27 +65,34 @@ package ember.inspector.properties
 			if (!_bound || _editing)
 				return;
 			
-			_input.text = _component[_property];
-			_input.draw();
+			_x.text = _pt.x.toString();
+			_x.draw();
+			
+			_y.text = _pt.y.toString();
+			_y.draw();
 		}
 
 		private function onBind(component:Object, property:String):void
 		{
-			_component = component;
-			_property = property;
+			_pt = component[property];
 			update();
 			
-			_input.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			_input.enabled = true;
+			_x.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			_x.enabled = true;
+			
+			_y.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			_y.enabled = true;
 		}
 		
 		private function onUnbind():void
 		{
-			_component = null;
-			_property = null;
+			_pt = null;
 			
-			_input.enabled = false;
-			_input.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			_x.enabled = false;
+			_x.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			
+			_y.enabled = false;
+			_y.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
 		
 		private function onKeyDown(event:KeyboardEvent):void
@@ -83,7 +102,8 @@ package ember.inspector.properties
 			{
 				case Keyboard.ENTER:
 					_editing = false;
-					_component[_property] = _input.text;
+					_pt.x = Number(_x.text);
+					_pt.y = Number(_y.text);
 					break;
 				case Keyboard.TAB:
 					break;
@@ -91,6 +111,5 @@ package ember.inspector.properties
 					_editing = true;
 			}
 		}
-		
 	}
 }

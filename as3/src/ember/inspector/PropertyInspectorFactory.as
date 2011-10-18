@@ -3,9 +3,11 @@ package ember.inspector
 	import ember.inspector.properties.BooleanInspector;
 	import ember.inspector.properties.IntInspector;
 	import ember.inspector.properties.NumberInspector;
+	import ember.inspector.properties.PointInspector;
 	import ember.inspector.properties.StringInspector;
 	import ember.inspector.properties.UintInspector;
 
+	import flash.geom.Point;
 	import flash.utils.Dictionary;
 
 	
@@ -22,6 +24,7 @@ package ember.inspector
 			bind(int, IntInspector);
 			bind(uint, UintInspector);
 			bind(Number, NumberInspector);
+			bind(Point, PointInspector);
 		}
 
 		public function bind(type:Class, inspector:Class):void

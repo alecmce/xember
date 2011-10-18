@@ -8,6 +8,7 @@ package
 
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;
+	import flash.geom.Point;
 	import flash.utils.Timer;
 
 	[SWF(backgroundColor="#FFFFFF", frameRate="31", width="800", height="600")]
@@ -27,6 +28,7 @@ package
 			component.Number_value = 5.123;
 			component.String_value = "hello world";
 			component.Boolean_value = true;
+			component.point = new Point(30, 30);
 			
 			var configs:ComponentConfigFactory = new ComponentConfigFactory();
 			var factory:ComponentInspectorFactory = new ComponentInspectorFactory(configs);

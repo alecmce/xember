@@ -22,6 +22,8 @@ package ember.inspector.properties
 			_self = new Sprite();
 			
 			_button = new PushButton(_self);
+			_button.width = 150;
+			_button.height = 16;
 			_button.toggle = true;
 			_button.enabled = false;
 			_button.tabEnabled = false;
