@@ -24,13 +24,14 @@ package ember.core
 			_componentRemoved = componentRemoved;
 		}
 		
-		public function addComponent(component:Object, componentClass:Class = null):void
+		public function addComponent(component:Object):void
 		{
-			componentClass ||= component["constructor"];
-			_components[componentClass] = component;
+			var klass:Class = component["constructor"];
+			
+			_components[klass] = component;
 			_listOfComponents.push(component);
-			_listOfClasses.push(componentClass);
-			_componentAdded.dispatch(this, componentClass);
+			_listOfClasses.push(klass);
+			_componentAdded.dispatch(this, klass);
 		}
 
 		public function getComponents():Vector.<Object>
