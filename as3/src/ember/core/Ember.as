@@ -1,5 +1,6 @@
 package ember.core
 {
+	import org.osflash.signals.Signal;
 	import org.robotlegs.core.IInjector;
 	
 	final public class Ember
@@ -74,6 +75,20 @@ package ember.core
 			return _systems.remove(system);
 		}
 		
+		public function get entityComponentAdded():Signal
+		{
+			return _entities.entityComponentAdded;
+		}
+		
+		public function get entityComponentRemoved():Signal
+		{
+			return _entities.entityComponentRemoved;
+		}
+		
+		public function get entityRemoved():Signal
+		{
+			return _entities.entityRemoved;
+		}
 
 	}
 }

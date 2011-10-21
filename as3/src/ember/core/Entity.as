@@ -11,6 +11,7 @@ package ember.core
 		private var _listOfComponents:Vector.<Object>;
 		private var _listOfClasses:Vector.<Class>;
 		private var _components:Dictionary;
+		
 		private var _componentAdded:Signal;
 		private var _componentRemoved:Signal;
 		

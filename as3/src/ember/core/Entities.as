@@ -12,6 +12,7 @@ package ember.core
 		
 		private var _entityComponentAdded:Signal;
 		private var _entityComponentRemoved:Signal;
+		private var _entityRemoved:Signal;
 		
 		public function Entities()
 		{
@@ -21,6 +22,7 @@ package ember.core
 			
 			_entityComponentAdded = new Signal(Entity, Class);
 			_entityComponentRemoved = new Signal(Entity, Class);
+			_entityRemoved = new Signal(Entity);
 		}
 
 		public function create(name:String = ""):Entity
@@ -91,6 +93,11 @@ package ember.core
 		{
 			return _entityComponentRemoved;
 		}
-		
+
+		public function get entityRemoved():Signal
+		{
+			return _entityRemoved;
+		}
+	
 	}
 }

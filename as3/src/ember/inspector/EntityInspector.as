@@ -1,22 +1,35 @@
 package ember.inspector
 {
+	import flash.utils.Dictionary;
+	
 	public class EntityInspector
 	{
-		private var _components:Object;
+		private var _components:Dictionary;
 		
 		public function EntityInspector()
 		{
-			_components = {};
+			_components = new Dictionary();
 		}
 		
-		public function addComponent(name:String, component:ComponentInspector):void
+		public function addComponent(component:Class, inspector:ComponentInspector):void
 		{
-			_components[name] = component;
+			_components[component] = inspector;
 		}
 
-		public function getComponent(name:String):ComponentInspector
+		public function removeComponent(component:Class):void
 		{
-			return _components[name];
+			delete _components[component];
 		}
+		
+		public function getComponent(component:Class):ComponentInspector
+		{
+			return _components[component];
+		}
+
+		public function dispose():void
+		{
+			// TODO
+		}
+
 	}
 }
