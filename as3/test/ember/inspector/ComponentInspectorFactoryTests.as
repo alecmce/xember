@@ -34,7 +34,7 @@ package ember.inspector
 			var component:MockAllNativeTypesComponent = new MockAllNativeTypesComponent();
 			var inspector:ComponentInspector = factory.getInspector(component);
 			
-			assertThat(inspector, notNullValue());
+			assertThat(inspector, instanceOf(ComponentInspector));
 		}
 		
 		[Test]

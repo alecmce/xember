@@ -9,6 +9,9 @@ package ember.inspector
 		
 		public var allTypes:AllPropertyTests;
 		
+		public var entityInspector:EntityInspectorTests;
+		public var entityInspectorFactory:EntityInspectorFactoryTests;
+		
 		public var componentInspector:ComponentInspectorTests;
 		public var componentInspectorFactory:ComponentInspectorFactoryTests;
 
