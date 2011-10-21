@@ -10,7 +10,6 @@ package ember.inspector
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
 
-	
 	public class PropertyInspectorFactory
 	{
 		private var _typeMap:Dictionary;

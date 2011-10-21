@@ -21,7 +21,8 @@ package ember.inspector.properties
 		private var _bound:Boolean;
 		private var _editing:Boolean;
 		
-		private var _pt:Point;
+		private var _component:Object;
+		private var _property:String;
 		
 		public function PointInspector()
 		{
@@ -64,17 +65,21 @@ package ember.inspector.properties
 		{
 			if (!_bound || _editing)
 				return;
+
+			var pt:Point = _component[_property];
 			
-			_x.text = _pt.x.toString();
+			_x.text = pt ? pt.x.toString() : "-";
 			_x.draw();
 			
-			_y.text = _pt.y.toString();
+			_y.text = pt ? pt.y.toString() : "-";
 			_y.draw();
 		}
 
 		private function onBind(component:Object, property:String):void
 		{
-			_pt = component[property];
+			_component = component;
+			_property = property;
+			
 			update();
 			
 			_x.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -86,7 +91,7 @@ package ember.inspector.properties
 		
 		private function onUnbind():void
 		{
-			_pt = null;
+			_bound = false;
 			
 			_x.enabled = false;
 			_x.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -102,13 +107,38 @@ package ember.inspector.properties
 			{
 				case Keyboard.ENTER:
 					_editing = false;
-					_pt.x = Number(_x.text);
-					_pt.y = Number(_y.text);
+					onEnterKey();
 					break;
 				case Keyboard.TAB:
 					break;
 				default:
 					_editing = true;
+			}
+		}
+
+		private function onEnterKey():void
+		{
+			var pt:Point = _component[_property];
+			var x:Number = Number(_x.text);
+			var y:Number = Number(_y.text);
+			var haveValues:Boolean = x == x && y == y;
+			
+			if (haveValues)
+			{
+				if (!pt)
+				{
+					_component[_property] = pt = new Point(x, y);
+				}
+				else
+				{
+					pt.x = x;
+					pt.y = y;
+				}
+			}
+			else if (pt)
+			{
+				pt.x = x == x ? x : Number.NaN;
+				pt.y = y == y ? y : Number.NaN;
 			}
 		}
 	}
