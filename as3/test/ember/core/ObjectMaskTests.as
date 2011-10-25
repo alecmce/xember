@@ -76,8 +76,8 @@ package ember.core
 		[Test]
 		public function isSubset_is_true_when_all_bits_in_second_mask_are_in_first():void
 		{
-			var domain:Vector.<uint> = Vector.<uint>([13]);			// 1101
-			var subset:Vector.<uint> = Vector.<uint>([9]);  		// 1001
+			var domain:Vector.<uint> = Vector.<uint>([13]);				// 1101
+			var subset:Vector.<uint> = Vector.<uint>([9]);  			// 1001
 			
 			assertThat(_map.isSubset(domain, subset), isTrue());
 		}
@@ -85,8 +85,8 @@ package ember.core
 		[Test]
 		public function isSubset_is_not_affected_by_extra_indices_in_domain():void
 		{
-			var domain:Vector.<uint> = Vector.<uint>([13,1]);		// 1101, 1
-			var subset:Vector.<uint> = Vector.<uint>([9]);  		// 1001, 0
+			var domain:Vector.<uint> = Vector.<uint>([13,1]);			// 1101, 1
+			var subset:Vector.<uint> = Vector.<uint>([9]);  			// 1001, 0
 			
 			assertThat(_map.isSubset(domain, subset), isTrue());
 		}
@@ -94,8 +94,17 @@ package ember.core
 		[Test]
 		public function isSubset_is_false_when_a_bit_in_second_mask_is_not_in_first():void
 		{
-			var domain:Vector.<uint> = Vector.<uint>([13]);			// 1101
-			var subset:Vector.<uint> = Vector.<uint>([10]);  		// 1010
+			var domain:Vector.<uint> = Vector.<uint>([13]);				// 1101
+			var subset:Vector.<uint> = Vector.<uint>([10]);  			// 1010
+		
+			assertThat(_map.isSubset(domain, subset), isFalse());
+		}
+		
+		[Test]
+		public function isSubset_fails_if_bit_in_second_mask_is_not_in_first_in_any_index():void
+		{
+			var domain:Vector.<uint> = Vector.<uint>([1, 13]);				// 1, 1101
+			var subset:Vector.<uint> = Vector.<uint>([1, 10]);  			// 1, 1010
 		
 			assertThat(_map.isSubset(domain, subset), isFalse());
 		}
