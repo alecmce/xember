@@ -22,6 +22,11 @@ package ember.core
 			return _entities.create(name);
 		}
 		
+		public function cloneEntity(entity:Entity, name:String = ""):Entity
+		{
+			return _entities.clone(entity, name);
+		}
+		
 		public function getEntity(name:String):Entity
 		{
 			return _entities.get(name);

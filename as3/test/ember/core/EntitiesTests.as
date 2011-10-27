@@ -1,10 +1,13 @@
 package ember.core
 {
+	import mocks.MockComponent;
+
 	import org.hamcrest.assertThat;
 	import org.hamcrest.collection.hasItem;
 	import org.hamcrest.collection.hasItems;
 	import org.hamcrest.core.not;
 	import org.hamcrest.core.throws;
+	import org.hamcrest.object.equalTo;
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
 	import org.hamcrest.object.sameInstance;
@@ -105,5 +108,42 @@ package ember.core
 			assertThat(_entities.contains(a), isFalse());
 		}
 		
+		[Test]
+		public function clone_is_new_reference():void
+		{
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockComponent());
+			var clone:Entity = _entities.clone( entity );
+			assertThat(clone == entity, isFalse());
+		}
+		
+		[Test]
+		public function clone_has_child_component():void
+		{
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockComponent());
+			var clone:Entity = _entities.clone( entity );
+			assertThat(clone.hasComponent(MockComponent), isTrue());
+		}
+		
+		[Test]
+		public function clone_child_component_is_new_reference():void
+		{
+			var entity:Entity = _entities.create();
+			entity.addComponent(new MockComponent());
+			var clone:Entity = _entities.clone( entity );
+			assertThat(clone.getComponent(MockComponent) == entity.getComponent(MockComponent), isFalse());
+		}
+		
+		[Test]
+		public function clone_child_component_has_same_properties():void
+		{
+			var entity:Entity = _entities.create();
+			var component : MockComponent = new MockComponent();
+			component.n = 5;
+			entity.addComponent(component);
+			var clone:Entity = _entities.clone( entity );
+			assertThat(clone.getComponent(MockComponent).n, equalTo(5));
+		}
 	}
 }
