@@ -1,9 +1,8 @@
-package ember.core
-{
+package ember.core {
 	import org.osflash.signals.Signal;
 
-	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
+	import flash.utils.describeType;
 	
 	final internal class Entities
 	{
@@ -45,18 +44,12 @@ package ember.core
 		public function clone(entity:Entity, name:String = ""):Entity
 		{
 			var newEntity:Entity = create(name);
-			var byteArray : ByteArray = new ByteArray();
 			for each( var component : Object in entity.getComponents() )
 			{
-				// To loop over the properties of the component - this is faster than describeType
-				byteArray.writeObject( component );
-				byteArray.position = 0;
-				var plain : Object = byteArray.readObject();
-				byteArray.clear();
-				
+				var names : XMLList = describeType( component ).variable.@name;
 				var klass : Class = component["constructor"];
 				var newComponent : * = new klass();
-				for ( var key : String in plain )
+				for each( var key : String in names )
 				{
 					newComponent[key] = component[key];
 				}
