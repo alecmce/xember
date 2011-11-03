@@ -2,3 +2,7 @@
 .settings
 bin/*.swf
 as3/bin/*.swf
+.idea
+*.iml
+as3/reports
+as3/target

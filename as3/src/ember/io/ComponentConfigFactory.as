@@ -1,10 +1,10 @@
 package ember.io
 {
-	import avmplus.getQualifiedClassName;
 
 	import flash.utils.Dictionary;
-	
-	final internal class ComponentConfigFactory
+    import flash.utils.getQualifiedClassName;
+
+    final internal class ComponentConfigFactory
 	{
 		private var _map:Dictionary;
 		
