@@ -1,6 +1,6 @@
 package ember.io
 {
-	import avmplus.getQualifiedClassName;
+	import flash.utils.getQualifiedClassName;
 
 	import flash.utils.Dictionary;
 	
