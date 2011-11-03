@@ -1,5 +1,5 @@
 require "fileutils"
-require "buildr/as3" # needs buildr-as3 v0.2.29.pre
+require "buildr/as3" # needs buildr-as3 v0.2.30.pre
 
 # You can use bundler to install the correct buildr gem: bundle install
 # Then you can run buildr isolated: bundle exec buildr [tasks] ...
@@ -23,7 +23,10 @@ define "xember" do
 	  	with( _(:libs,"as3-signals.swc"),
 	  				_(:libs,"robotlegs-framework-v1.4.0.swc") )
 
-	  #testing needs to be added, asunit4 needs to report to the flexunint4 listener
+	  test.using( :flexunit4 => true, :version => "4.1.0-8" )
+      test.compile.using( :main => _(:test,"FlexUnitTestRunner.as") ).
+        with( _(:libs, "asunit_prerelease.swc"),
+              _(:libs, "hamcrest-as3-only-1.1.3.swc" ) )
 
 	  doc_title = "Xember v#{THIS_VERSION}"
 	  doc.using :maintitle   => doc_title,
