@@ -6,6 +6,7 @@ package ember.core
 	{
 		
 		public var objectMaskTests:ObjectMaskTests;
+		public var componentTypeTests:ComponentMaskFactoryTests;
 		public var emberTests:GameTests;
 		public var entitiesTests:EntitiesTests;
 		public var entityTests:EntityTests;

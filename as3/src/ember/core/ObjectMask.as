@@ -58,6 +58,19 @@ package ember.core
 			
 			return true;
 		}
+
+		public function intersection(a:Vector.<uint>, b:Vector.<uint>):Vector.<uint>
+		{
+			var length:uint = a.length;
+			if (b.length < length)
+				length = b.length;
+
+			var result:Vector.<uint> = new Vector.<uint>();
+			for (var i:int = 0; i < length; i++)
+				result[i] = a[i] & b[i];
+			
+			return result;
+		}
 		
 	}
 }
