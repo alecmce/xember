@@ -1,7 +1,6 @@
 package ember.core
 {
 	import org.hamcrest.assertThat;
-	import org.hamcrest.object.equalTo;
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
 	
@@ -125,7 +124,61 @@ package ember.core
 			var a:Vector.<uint> = Vector.<uint>([3]);
 			var b:Vector.<uint> = Vector.<uint>([5]);
 			
-			assertThat(_map.intersection(a, b)[0], equalTo(1));
+			assertThat(_map.intersection(a, b), matchesVector(1));
+		}
+		
+		[Test]
+		public function can_get_intersection_of_sets_with_multiple_values():void
+		{
+			var a:Vector.<uint> = Vector.<uint>([5, 3]);				// 101, 011
+			var b:Vector.<uint> = Vector.<uint>([3, 2]);				// 011, 010
+			
+			assertThat(_map.intersection(a, b), matchesVector(1, 2));	// 001, 010
+		}
+		
+		[Test]
+		public function can_get_intersection_of_sets_where_first_set_is_longer():void
+		{
+			var a:Vector.<uint> = Vector.<uint>([3, 1]);				// 001, 011
+			var b:Vector.<uint> = Vector.<uint>([6]);					// 110, 000
+			
+			assertThat(_map.intersection(a, b), matchesVector(2));		// 000, 010
+		}
+		
+		[Test]
+		public function can_get_intersection_of_sets_where_second_set_is_longer():void
+		{
+			var a:Vector.<uint> = Vector.<uint>([3]);					// 000, 011
+			var b:Vector.<uint> = Vector.<uint>([6, 1]);				// 110, 001
+			
+			assertThat(_map.intersection(a, b), matchesVector(2));		// 000, 010
+		}
+		
+		[Test]
+		public function can_get_union_of_sets():void
+		{
+			var a:Vector.<uint> = Vector.<uint>([3]);					// 011
+			var b:Vector.<uint> = Vector.<uint>([5]);					// 101
+			
+			assertThat(_map.union(a, b), matchesVector(7));				// 111
+		}
+		
+		[Test]
+		public function can_get_union_of_state_where_first_set_is_longer():void
+		{
+			var a:Vector.<uint> = Vector.<uint>([5, 4]);				// 101, 100
+			var b:Vector.<uint> = Vector.<uint>([1]);					// 001, 000
+			
+			assertThat(_map.union(a, b), matchesVector(5, 4));			// 101, 100
+		}
+		
+		[Test]
+		public function can_get_union_of_state_where_second_set_is_longer():void
+		{
+			var a:Vector.<uint> = Vector.<uint>([2]);					// 010, 000
+			var b:Vector.<uint> = Vector.<uint>([5, 1]);				// 101, 001
+			
+			assertThat(_map.union(a, b), matchesVector(7, 1));			// 111, 001
 		}
 		
 	}

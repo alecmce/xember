@@ -7,12 +7,14 @@ package ember.core
 	final internal class ComponentMaskFactory
 	{
 		private var _map:Dictionary;
+		
 		private var _objectMask:ObjectMask;
 		
 		public function ComponentMaskFactory(objectMask:ObjectMask)
 		{
-			_map = new Dictionary();
 			_objectMask = objectMask;
+			
+			_map = new Dictionary();
 		}
 		
 		public function getMask(klass:Class):Vector.<uint>
