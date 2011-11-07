@@ -24,6 +24,13 @@ package ember.core
 		}
 		
 		[Test]
+		public function node_references_class():void
+		{
+			var node:InheritanceNode = tree.get(MockBase);
+			assertThat(node.klass, sameInstance(MockBase));
+		}
+		
+		[Test]
 		public function getting_node_for_base_class_doesnt_generate_children():void
 		{
 			var node:InheritanceNode = tree.get(MockBase);

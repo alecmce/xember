@@ -24,7 +24,7 @@ package ember.core
 			if (node)
 				return node;
 			
-			_map[klass] = node = new InheritanceNode();
+			_map[klass] = node = new InheritanceNode(klass);
 
 			var xml:XML = describeType(klass);
 			
@@ -33,7 +33,7 @@ package ember.core
 			for each (xml in list)
 			{
 				klass = getDefinitionByName(xml.@type) as Class;
-				var parent:InheritanceNode = _map[klass] ||= new InheritanceNode();
+				var parent:InheritanceNode = _map[klass] ||= new InheritanceNode(klass);
 				var children:Vector.<InheritanceNode> = parent.children ||= new Vector.<InheritanceNode>();
 				children.push(child);
 				
