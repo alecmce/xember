@@ -1,31 +1,31 @@
 package ember.core
 {
-	import org.osflash.signals.Signal;
+	import ember.core.ds.BitfieldMap;
 
 	import flash.utils.Dictionary;
 	
 	final internal class Entities
 	{
 		private var _list:Vector.<Entity>;
-		private var _nameMap:Dictionary;
 		private var _count:uint;
+		private var _nodesManager:NodesManager;
+		private var _bitfieldMap:BitfieldMap;
 		
-		private var _entityComponentAdded:Signal;
-		private var _entityComponentRemoved:Signal;
+		private var _nameMap:Dictionary;
 		
-		public function Entities()
+		public function Entities(entities:Vector.<Entity>, bitfieldMap:BitfieldMap, nodesManager:NodesManager)
 		{
-			_list = new Vector.<Entity>();
-			_nameMap = new Dictionary();
-			_count = 0;
+			_list = entities;
+			_count = entities.length;
+			_bitfieldMap = bitfieldMap;
+			_nodesManager = nodesManager;
 			
-			_entityComponentAdded = new Signal(Entity, Class);
-			_entityComponentRemoved = new Signal(Entity, Class);
+			_nameMap = new Dictionary();
 		}
 
 		public function create(name:String = ""):Entity
 		{
-			var entity:Entity = new Entity(name, _entityComponentAdded, _entityComponentRemoved);
+			var entity:Entity = new Entity(name, _nodesManager, _bitfieldMap);
 			_count = _list.push(entity);
 			
 			if (name != "")
@@ -80,16 +80,6 @@ package ember.core
 		public function get list():Vector.<Entity>
 		{
 			return _list;
-		}
-		
-		public function get entityComponentAdded():Signal
-		{
-			return _entityComponentAdded;
-		}
-		
-		public function get entityComponentRemoved():Signal
-		{
-			return _entityComponentRemoved;
 		}
 		
 	}

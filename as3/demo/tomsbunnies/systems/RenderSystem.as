@@ -53,7 +53,7 @@ package tomsbunnies.systems
 			_buffer.fillRect(BLANK_RECT, 0xFFFFCC);
 			
 			var node:RendererNode;
-			for (node = _nodes.head; node; node = node.next)
+			for (node = _nodes.head as RendererNode; node; node = node.next)
 			{
 				var graphic:GraphicComponent = node.graphic;
 				_buffer.copyPixels(graphic.asset, graphic.rect, node.spatial.position, null, null, true);

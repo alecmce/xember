@@ -1,12 +1,14 @@
 package ember.core
 {
+	import ember.core.ds.AllDSTests;
+	import ember.core.ds.InheritanceTreeTests;
 	
 	[Suite]
 	public class AllCoreTests
 	{
+		public var ds:AllDSTests;
 		
 		public var inheritanceTreeTests:InheritanceTreeTests;
-		public var objectMaskTests:ObjectMaskTests;
 		public var componentTypeTests:ComponentMaskFactoryTests;
 		public var emberTests:GameTests;
 		public var entitiesTests:EntitiesTests;

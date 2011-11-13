@@ -1,11 +1,13 @@
 package ember.core
 {
-	import flash.display.Sprite;
+	import ember.core.ds.BitfieldMap;
+
 	import mocks.MockComponent;
 	import mocks.MockIgnoredComponent;
 	import mocks.MockNode;
 	import mocks.MockOptionalComponent;
 	import mocks.MockOptionalNode;
+
 	import org.hamcrest.assertThat;
 	import org.hamcrest.core.throws;
 	import org.hamcrest.object.equalTo;
@@ -14,9 +16,8 @@ package ember.core
 	import org.hamcrest.object.notNullValue;
 	import org.hamcrest.object.sameInstance;
 
-
-
-
+	import flash.display.Sprite;
+	
 	public class NodesFactoryTests
 	{
 		private var _entities:Entities;
@@ -25,8 +26,12 @@ package ember.core
 		[Before]
 		public function before():void
 		{
-			_entities = new Entities();
-			_factory = new NodesFactory();
+			var list:Vector.<Entity> = new Vector.<Entity>();
+			var bitfield:BitfieldMap = new BitfieldMap();
+			_factory = new NodesFactory(list);
+			var nodesManager:NodesManager = new NodesManager(_factory);
+			
+			_entities = new Entities(list, bitfield, nodesManager);
 		}
 		
 		[After]
@@ -111,7 +116,7 @@ package ember.core
 			for (var i:int = 0; i < 5; i++)
 				createEntity();
 
-			var nodes:Nodes = _factory.generateSet(MockNode, _entities.list);
+			var nodes:Nodes = _factory.generateSet(MockNode);
 			assertThat(nodes.count, equalTo(5));
 		}
 		private function createEntity():Entity
@@ -126,7 +131,7 @@ package ember.core
 		{
 			_entities.create();
 			
-			var nodes:Nodes = _factory.generateSet(MockNode, _entities.list);
+			var nodes:Nodes = _factory.generateSet(MockNode);
 			assertThat(nodes.count, equalTo(0));
 		}
 		

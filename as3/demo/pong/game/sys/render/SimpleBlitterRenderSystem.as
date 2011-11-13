@@ -68,7 +68,7 @@ package pong.game.sys.render
 			_data.lock();
 			_data.fillRect(_data.rect, 0);
 			
-			for (var node:RenderNode = _nodes.head; node; node = node.next)
+			for (var node:RenderNode = _nodes.head as RenderNode; node; node = node.next)
 			{
 				var render:RenderComponent = node.render;
 				var position:b2Vec2 = node.physical.body.GetPosition();

@@ -89,7 +89,7 @@ package pong.game.sys.player
 		
 		private function iterate():void
 		{
-			for (var node:PlayerNode = _nodes.head; node; node = node.next)
+			for (var node:PlayerNode = _nodes.head as PlayerNode; node; node = node.next)
 			{
 				var player:PlayerComponent = node.player;
 				

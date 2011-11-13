@@ -1,5 +1,8 @@
 package ember.core
 {
+	import ember.core.ds.BitfieldMap;
+	import ember.core.ds.BitfieldUtil;
+
 	import mocks.extending.MockBase;
 	import mocks.extending.MockExtendsA;
 	import mocks.extending.MockExtendsB;
@@ -11,14 +14,16 @@ package ember.core
 	
 	public class ComponentMaskFactoryTests
 	{
-		private var mask:ObjectMask;
+		private var bitfield:BitfieldMap;
+		private var util:BitfieldUtil;
 		private var factory:ComponentMaskFactory;
 		
 		[Before]
 		public function before():void
 		{
-			mask = new ObjectMask();
-			factory = new ComponentMaskFactory(mask);
+			bitfield = new BitfieldMap();
+			util = new BitfieldUtil();
+			factory = new ComponentMaskFactory(bitfield);
 		}
 		
 		[After]
@@ -63,7 +68,7 @@ package ember.core
 			var a:Vector.<uint> = factory.getMask(MockExtendsA);
 			var b:Vector.<uint> = factory.getMask(MockExtendsB);
 			
-			var result:Vector.<uint> = mask.intersection(a, b);
+			var result:Vector.<uint> = util.intersection(a, b);
 			var isValue:Boolean = false;
 			for (var i:int = 0; i < result.length; i++)
 				isValue ||= result[i] != 0;

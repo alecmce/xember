@@ -14,8 +14,8 @@ package ember.core
 		
 		private var _entityMap:Dictionary;
 		
-		private var _head:*;
-		private var _tail:*;
+		private var _head:Object;
+		private var _tail:Object;
 		
 		private var _count:uint;
 		
@@ -27,12 +27,12 @@ package ember.core
 			_entityMap = new Dictionary();
 		}
 		
-		public function get head():*
+		public function get head():Object
 		{
 			return _head;
 		}
 
-		public function get tail():*
+		public function get tail():Object
 		{
 			return _tail;
 		}
@@ -52,6 +52,7 @@ package ember.core
 			
 			++_count;
 			_entityMap[entity] = node;
+			entity.nodes[this] = this;
 			
 			if (_nodeAdded)
 				_nodeAdded.dispatch(node);
@@ -70,6 +71,7 @@ package ember.core
 			var node:Object = _entityMap[entity];
 			removeFromLinkedList(node);
 			
+			delete entity.nodes[this];
 			delete _entityMap[entity];
 			--_count;
 			

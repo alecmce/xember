@@ -1,5 +1,7 @@
 package ember.core
 {
+	import ember.core.ds.BitfieldMap;
+
 	import org.robotlegs.core.IInjector;
 	
 	final public class Game
@@ -10,8 +12,13 @@ package ember.core
 
 		public function Game(injector:IInjector)
 		{
-			_entities = new Entities();
-			_nodes = new NodesManager(_entities);
+			var list:Vector.<Entity> = new Vector.<Entity>();
+			var bitfieldMap:BitfieldMap = new BitfieldMap();
+			var factory:NodesFactory = new NodesFactory(list);
+			var nodesManager:NodesManager = new NodesManager(factory);
+			
+			_entities = new Entities(list, bitfieldMap, nodesManager);
+			_nodes = new NodesManager(factory);
 			_systems = new Systems(injector);
 			
 			injector.mapValue(Game, this);

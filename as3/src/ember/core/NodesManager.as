@@ -4,30 +4,25 @@ package ember.core
 
 	final internal class NodesManager
 	{
-		private var _entities:Entities;
-		private var _nodesMap:Dictionary;
 		private var _factory:NodesFactory;
 		
+		private var _nodesMap:Dictionary;
 		private var _required:NodesComponentMap;
 		private var _optional:NodesComponentMap;
 		
-		public function NodesManager(entities:Entities)
+		public function NodesManager(factory:NodesFactory)
 		{
-			_entities = entities;
-			_entities.entityComponentAdded.add(onEntityComponentAdded);
-			_entities.entityComponentRemoved.add(onEntityComponentRemoved);
-			
-			_required = new NodesComponentMap();
-			_optional = new NodesComponentMap();
+			_factory = factory;
 			
 			_nodesMap = new Dictionary();
-			_factory = new NodesFactory();
+			_required = new NodesComponentMap();
+			_optional = new NodesComponentMap();
 		}
 
 		public function get(nodeClass:Class):Nodes
 		{
-			var nodes:Nodes = _nodesMap[nodeClass] ||= _factory.generateSet(nodeClass, _entities.list);
-
+			var nodes:Nodes = _nodesMap[nodeClass] ||= _factory.generateSet(nodeClass);
+			
 			var config:NodesConfig = nodes.config;
 			_required.add(config.requiredComponents, nodes);
 			_optional.add(config.optionalComponents, nodes);
@@ -35,7 +30,21 @@ package ember.core
 			return nodes;
 		}
 		
-		private function onEntityComponentAdded(entity:Entity, component:Class):void
+		public function removeEntity(entity:Entity):void
+		{
+			var list:Dictionary = entity.nodes;
+			
+			for each (var nodes:Nodes in list)
+				nodes.remove(entity);
+		}
+
+		public function clear():void
+		{
+			for each (var nodes:Nodes in _nodesMap)
+				nodes.clear();
+		}
+		
+		internal function componentAddedToEntity(entity:Entity, component:Class, bits:Vector.<uint>):void
 		{
 			var list:Vector.<Nodes>, nodes:Nodes;
 			
@@ -55,7 +64,7 @@ package ember.core
 			}
 		}
 		
-		private function onEntityComponentRemoved(entity:Entity, component:Class):void
+		internal function componentRemovedFromEntity(entity:Entity, component:Class, bits:Vector.<uint>):void
 		{
 			var list:Vector.<Nodes>, nodes:Nodes, node:Object;
 			
@@ -74,19 +83,6 @@ package ember.core
 				if (node)
 					nodes.config.optionalComponents.clearComponent(node, component);
 			}
-		}
-
-		public function removeEntity(entity:Entity):void
-		{
-			var components:Vector.<Class> = entity.getClasses();
-			for each (var component:Class in components)
-				onEntityComponentRemoved(entity, component);
-		}
-
-		public function clear():void
-		{
-			for each (var nodes:Nodes in _nodesMap)
-				nodes.clear();
 		}
 		
 	}

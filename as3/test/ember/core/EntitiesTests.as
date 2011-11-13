@@ -1,5 +1,7 @@
 package ember.core
 {
+	import ember.core.ds.BitfieldMap;
+
 	import org.hamcrest.assertThat;
 	import org.hamcrest.collection.hasItem;
 	import org.hamcrest.collection.hasItems;
@@ -13,18 +15,30 @@ package ember.core
 	{
 		private static const BRIAN:String = "brian";
 		
+		private var _list:Vector.<Entity>;
+		private var _bitfieldMap:BitfieldMap;
+		private var _factory:NodesFactory;
+		private var _nodesManager:NodesManager;
 		private var _entities:Entities;
 		
 		[Before]
 		public function before():void
 		{
-			_entities = new Entities();
+			_list = new Vector.<Entity>();
+			_bitfieldMap = new BitfieldMap();
+			_factory = new NodesFactory(_list);
+			_nodesManager = new NodesManager(_factory);
+			_entities = new Entities(_list, _bitfieldMap, _nodesManager);
 		}
 		
 		[After]
 		public function after():void
 		{
 			_entities = null;
+			_nodesManager = null;
+			_factory = null;
+			_bitfieldMap = null;
+			_list = null;
 		}
 		
 		[Test]

@@ -40,7 +40,7 @@ package pong.game.sys.physics
 			_nodes.nodeAdded.add(onNodeAdded);
 			_nodes.nodeRemoved.add(onNodeRemoved);
 
-			for (var node:PhysicsNode = _nodes.head; node; node = node.next)
+			for (var node:PhysicsNode = _nodes.head as PhysicsNode; node; node = node.next)
 			{
 				onNodeAdded(node);
 			}

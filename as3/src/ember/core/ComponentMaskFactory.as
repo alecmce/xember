@@ -1,5 +1,7 @@
 package ember.core
 {
+	import ember.core.ds.BitfieldMap;
+
 	import flash.utils.Dictionary;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
@@ -8,12 +10,11 @@ package ember.core
 	{
 		private var _map:Dictionary;
 		
-		private var _objectMask:ObjectMask;
+		private var _objectMask:BitfieldMap;
 		
-		public function ComponentMaskFactory(objectMask:ObjectMask)
+		public function ComponentMaskFactory(objectMask:BitfieldMap)
 		{
 			_objectMask = objectMask;
-			
 			_map = new Dictionary();
 		}
 		

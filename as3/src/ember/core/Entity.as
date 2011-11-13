@@ -1,72 +1,77 @@
 package ember.core
 {
-	import org.osflash.signals.Signal;
+	import ember.core.ds.BitfieldMap;
 
 	import flash.utils.Dictionary;
 	
 	final public class Entity
 	{
 		private var _name:String;
+		private var _nodesManager:NodesManager;
+		private var _bitfieldMap:BitfieldMap;
 		
-		private var _listOfComponents:Vector.<Object>;
-		private var _listOfClasses:Vector.<Class>;
 		private var _components:Dictionary;
-		private var _componentAdded:Signal;
-		private var _componentRemoved:Signal;
+		private var _bits:Vector.<uint>;
 		
-		public function Entity(name:String, componentAdded:Signal, componentRemoved:Signal)
+		internal var nodes:Dictionary;
+				 
+		public function Entity(name:String, nodesManager:NodesManager, bitfieldMap:BitfieldMap)
 		{
 			_name = name;
-			_listOfComponents = new Vector.<Object>();
-			_listOfClasses = new Vector.<Class>();
+			_nodesManager = nodesManager;
+			_bitfieldMap = bitfieldMap;
+			
 			_components = new Dictionary();
-			_componentAdded = componentAdded;
-			_componentRemoved = componentRemoved;
+			_bits = new Vector.<uint>();
+			
+			nodes = new Dictionary();
+		}
+		
+		public function get name():String
+		{
+			return _name;
 		}
 		
 		public function addComponent(component:Object):void
 		{
 			var klass:Class = component["constructor"];
 			
+			if (_components[klass] != null)
+				throw "Error: Cannot add multiple components of the same type to an entity";
+			
 			_components[klass] = component;
-			_listOfComponents.push(component);
-			_listOfClasses.push(klass);
-			_componentAdded.dispatch(this, klass);
+			_bitfieldMap.map(klass, _bits);
+			_nodesManager.componentAddedToEntity(this, klass, _bits);
 		}
 
-		public function getComponents():Vector.<Object>
+		public function getComponent(klass:Class):Object
 		{
-			return _listOfComponents;
-		}
-		
-		public function getClasses():Vector.<Class>
-		{
-			return _listOfClasses;
+			return _components[klass];
 		}
 
-		public function getComponent(component:Class):Object
+		public function removeComponent(klass:Class):void
 		{
-			return _components[component];
-		}
-
-		public function removeComponent(component:Class):void
-		{
-			if (_components[component] == null)
+			if (_components[klass] == null)
 				return;
 			
-			delete _components[component];
-			_listOfComponents.splice(_listOfComponents.indexOf(component), 1);
-			_componentRemoved.dispatch(this, component);
+			_bitfieldMap.unmap(klass, _bits);
+			delete _components[klass];
+			_nodesManager.componentRemovedFromEntity(this, klass, _bits);
 		}
 
 		public function hasComponent(component:Class):Boolean
 		{
 			return _components[component] != null;
 		}
-
-		public function get name():String
+		
+		public function getComponents():Vector.<Object>
 		{
-			return _name;
+			var list:Vector.<Object> = new Vector.<Object>();
+			
+			for each (var component:Object in _components)
+				list.push(component);
+				
+			return list;
 		}
 
 	}

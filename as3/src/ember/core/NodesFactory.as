@@ -6,22 +6,26 @@ package ember.core
 	
 	final internal class NodesFactory
 	{
+		private var _entities:Vector.<Entity>;
+		
 		private var _nodeClassConfigurations:Dictionary;
 		
-		public function NodesFactory()
+		public function NodesFactory(entities:Vector.<Entity>)
 		{
+			_entities = entities;
+			
 			_nodeClassConfigurations = new Dictionary();
 		}
 		
-		public function generateSet(nodeClass:Class, list:Vector.<Entity>):Nodes
+		public function generateSet(nodeClass:Class):Nodes
 		{
 			var config:NodesConfig = getClassConfiguration(nodeClass);
 			var nodes:Nodes = new Nodes(nodeClass, config);
 			
-			var len:int = list.length;
+			var len:int = _entities.length;
 			for (var i:int = 0; i < len; i++)
 			{
-				var entity:Entity = list[i];
+				var entity:Entity = _entities[i];
 				
 				if (config.requiredComponents.areComponentsIn(entity))
 					nodes.add(entity);

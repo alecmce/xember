@@ -1,38 +1,53 @@
 package ember.core
 {
+	import asunit.framework.Async;
+
+	import ember.core.ds.BitfieldMap;
+
 	import mocks.MockComponent;
 
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
 	import org.hamcrest.object.sameInstance;
-	import org.osflash.signals.Signal;
+
+
 
 	public class EntityTests
 	{
-		private var added:Signal;
-		private var removed:Signal;
-		private var mask:ObjectMask;
+		private var list:Vector.<Entity>;
+		private var bitfield:BitfieldMap;
+		private var factory:NodesFactory;
+		private var nodesManager:NodesManager;
+		private var entities:Entities;
+		
+		[Inject]
+		public var async:Async;
 		
 		[Before]
 		public function before():void
 		{
-			added = new Signal();
-			removed = new Signal();
-			mask = new ObjectMask();
+			list = new Vector.<Entity>();
+			bitfield = new BitfieldMap();
+			factory = new NodesFactory(list);
+			nodesManager = new NodesManager(factory);
+			entities = new Entities(list, bitfield, nodesManager);
 		}
 		
 		[After]
 		public function after():void
 		{
-			added = null;
-			removed = null;
+			entities = null;
+			nodesManager = null;
+			factory = null;
+			bitfield = null;
+			list = null;
 		}
 		
 		[Test]
 		public function can_add_component_to_entity():void
 		{
-			var entity:Entity = new Entity("", added, removed);
+			var entity:Entity = new Entity("", nodesManager, bitfield);
 			entity.addComponent(new MockComponent());
 			assertThat(entity.hasComponent(MockComponent), isTrue());
 		}
@@ -40,7 +55,7 @@ package ember.core
 		[Test]
 		public function can_reference_component_instance_by_class():void
 		{
-			var entity:Entity = new Entity("", added, removed);
+			var entity:Entity = new Entity("", nodesManager, bitfield);
 			var component:MockComponent = new MockComponent();
 			
 			entity.addComponent(component);
@@ -50,18 +65,11 @@ package ember.core
 		[Test]
 		public function can_remove_component_from_entity():void
 		{
-			var entity:Entity = new Entity("", added, removed);
+			var entity:Entity = new Entity("", nodesManager, bitfield);
 			entity.addComponent(new MockComponent());
 			entity.removeComponent(MockComponent);
 			assertThat(entity.hasComponent(MockComponent), isFalse());
 		}
-		
-//		[Test]
-//		public function entity_components_are_described_by_mask():void
-//		{
-//			var entity:Entity = new Entity("", added, removed);
-//			
-//		}
 		
 	}
 }

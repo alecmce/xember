@@ -1,5 +1,7 @@
 package ember.core
 {
+	import ember.core.ds.BitfieldMap;
+
 	import mocks.MockComponent;
 	import mocks.MockNode;
 	import mocks.MockOptionalComponent;
@@ -11,8 +13,7 @@ package ember.core
 	import org.hamcrest.object.notNullValue;
 	import org.hamcrest.object.nullValue;
 	import org.hamcrest.object.sameInstance;
-
-
+	
 	public class NodesManagerTests
 	{
 		private var _entities:Entities;
@@ -21,8 +22,12 @@ package ember.core
 		[Before]
 		public function before():void
 		{
-			_entities = new Entities();
-			_manager = new NodesManager(_entities);
+			var list:Vector.<Entity> = new Vector.<Entity>();
+			var bitfield:BitfieldMap = new BitfieldMap();
+			var factory:NodesFactory = new NodesFactory(list);
+			_manager = new NodesManager(factory);
+			
+			_entities = new Entities(list, bitfield, _manager);
 		}
 		
 		[After]
@@ -51,7 +56,7 @@ package ember.core
 			
 			var nodes:Nodes = _manager.get(MockNode);
 			var foundCount:uint = 0;
-			for (var node:MockNode = nodes.head; node; node = node.next)
+			for (var node:MockNode = nodes.head as MockNode; node; node = node.next)
 				list.indexOf(node.entity) != -1 && ++foundCount;
 			
 			assertThat(foundCount, equalTo(7));
@@ -144,7 +149,7 @@ package ember.core
 
 			var nodes:Nodes = _manager.get(MockOptionalNode);
 			
-			assertThat(nodes.head.optional, sameInstance(component));
+			assertThat((nodes.head as MockOptionalNode).optional, sameInstance(component));
 		}
 		
 		[Test]
@@ -159,7 +164,7 @@ package ember.core
 			var nodes:Nodes = _manager.get(MockOptionalNode);
 			
 			entity.removeComponent(MockOptionalComponent);
-			assertThat(nodes.head.optional, nullValue());
+			assertThat((nodes.head as MockOptionalNode).optional, nullValue());
 		}
 		
 		[Test]

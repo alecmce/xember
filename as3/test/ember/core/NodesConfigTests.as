@@ -1,9 +1,12 @@
 package ember.core
 {
+	import ember.core.ds.BitfieldMap;
+
 	import mocks.MockComponent;
 	import mocks.MockNode;
 	import mocks.MockOptionalComponent;
 	import mocks.MockOptionalNode;
+
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
@@ -17,7 +20,12 @@ package ember.core
 		[Before]
 		public function before():void
 		{
-			_entities = new Entities();
+			var list:Vector.<Entity> = new Vector.<Entity>();
+			var bitfield:BitfieldMap = new BitfieldMap();
+			var factory:NodesFactory = new NodesFactory(list);
+			var nodesManager:NodesManager = new NodesManager(factory);
+			
+			_entities = new Entities(list, bitfield, nodesManager);
 		}
 		
 		[After]
@@ -87,8 +95,7 @@ package ember.core
 			var required:MockComponent = new MockComponent();
 			var optional:MockOptionalComponent = new MockOptionalComponent();
 			
-			var entities:Entities = new Entities();
-			var entity:Entity = entities.create();
+			var entity:Entity = _entities.create();
 			entity.addComponent(required);
 			entity.addComponent(optional);
 

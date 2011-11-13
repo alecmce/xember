@@ -1,10 +1,10 @@
-package ember.core
+package ember.core.ds
 {
 	import flash.utils.getDefinitionByName;
 	import flash.utils.Dictionary;
 	import flash.utils.describeType;
 	
-	final internal class InheritanceTree
+	final public class InheritanceTree
 	{
 		private var _map:Dictionary;
 
@@ -13,28 +13,28 @@ package ember.core
 			_map = new Dictionary();
 		}
 		
-		public function get(klass:Class):InheritanceNode
+		public function get(klass:Class):InheritanceTreeNode
 		{
 			return _map[klass] || generate(klass);
 		}
 		
-		private function generate(klass:Class):InheritanceNode
+		private function generate(klass:Class):InheritanceTreeNode
 		{
-			var node:InheritanceNode = _map[klass];
+			var node:InheritanceTreeNode = _map[klass];
 			if (node)
 				return node;
 			
-			_map[klass] = node = new InheritanceNode(klass);
+			_map[klass] = node = new InheritanceTreeNode(klass);
 
 			var xml:XML = describeType(klass);
 			
-			var child:InheritanceNode = node;
+			var child:InheritanceTreeNode = node;
 			var list:XMLList = xml.factory.extendsClass.(@type != "Object");
 			for each (xml in list)
 			{
 				klass = getDefinitionByName(xml.@type) as Class;
-				var parent:InheritanceNode = _map[klass] ||= new InheritanceNode(klass);
-				var children:Vector.<InheritanceNode> = parent.children ||= new Vector.<InheritanceNode>();
+				var parent:InheritanceTreeNode = _map[klass] ||= new InheritanceTreeNode(klass);
+				var children:Vector.<InheritanceTreeNode> = parent.children ||= new Vector.<InheritanceTreeNode>();
 				children.push(child);
 				
 				child = parent;
